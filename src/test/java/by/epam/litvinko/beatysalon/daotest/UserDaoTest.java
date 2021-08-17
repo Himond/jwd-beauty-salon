@@ -1,7 +1,7 @@
 package by.epam.litvinko.beatysalon.daotest;
 
 import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
-import by.epam.litvinko.beautysalon.dao.UserDao;
+import by.epam.litvinko.beautysalon.dao.impl.UserDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -17,7 +17,7 @@ public class UserDaoTest {
 
     private Connection connection = null;
     private DatabaseConnectionPool connectionPool = DatabaseConnectionPool.getInstance();
-    private UserDao userDao = UserDao.getInstance();
+    private UserDaoImpl userDao = UserDaoImpl.getInstance();
     private User expected;
     private User newUser;
 
@@ -33,7 +33,7 @@ public class UserDaoTest {
         builder.setID(3)
                 .setRole(Role.CLIENT)
                 .setUserName("client1")
-                .setPassword("client1")
+                .setPassword("$2a$12$4tIZJUQjXKo6xR6/yY6bZeVPVS1d9shjIaevwPnhsQ48adG3ophx2")
                 .setEmail("client1@mail.ru")
                 .setFirstName("client1")
                 .setLastName("client1")
@@ -42,7 +42,8 @@ public class UserDaoTest {
                 .setPhoto(null);
         expected = builder.build();
 
-        builder.setID(17)
+        User.Builder builder1 = User.newBuilder();
+        builder1.setID(17)
                 .setRole(Role.CLIENT)
                 .setUserName("client3")
                 .setPassword("client3")
@@ -50,7 +51,7 @@ public class UserDaoTest {
                 .setFirstName("client3")
                 .setLastName("client3")
                 .setIsActive(true);
-        newUser = builder.build();
+        newUser = builder1.build();
 
     }
 
@@ -62,7 +63,7 @@ public class UserDaoTest {
     @Test
     public void findUserByIdTest() throws DaoException {
         User actual = userDao.findById(3).get();
-        Assert.assertEquals(actual, expected);;
+        Assert.assertEquals(expected, actual);;
     }
 
     @Test
@@ -85,7 +86,7 @@ public class UserDaoTest {
 
     @Test
     public void deleteUserByIdTest() throws DaoException {
-        boolean actual = userDao.delete(16);
+        boolean actual = userDao.delete(5);
         Assert.assertTrue(actual);
     }
 
@@ -101,4 +102,21 @@ public class UserDaoTest {
 
     }
 
+    @Test
+    public void findAllUsersByRoleTest() throws DaoException {
+        int actual = userDao.findAllByRoll(Role.CLIENT).size();
+        Assert.assertEquals(2, actual);
+    }
+
+    @Test
+    public void signInByLoginTest() throws DaoException {
+        User actual = userDao.signInByLogin("client1", "client1").get();
+        Assert.assertEquals(expected, actual);;
+    }
+
+    @Test
+    public void signInByEmailTest() throws DaoException {
+        User actual = userDao.signInByEmail("client1@mail.ru", "client1").get();
+        Assert.assertEquals(expected, actual);;
+    }
 }

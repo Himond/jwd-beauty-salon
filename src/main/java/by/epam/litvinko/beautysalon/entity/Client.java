@@ -74,7 +74,7 @@ public class Client extends User {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Client{");
         sb.append("id='").append(getId()).append('\'');
-        sb.append(", userID='").append(userId).append('\'');
+        sb.append(", userId='").append(userId).append('\'');
         sb.append(", userName='").append(getUserName()).append('\'');
         sb.append(", password='").append(getPassword()).append('\'');
         sb.append(", email='").append(getEmail()).append('\'');

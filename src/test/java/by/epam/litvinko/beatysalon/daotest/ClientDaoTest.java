@@ -1,0 +1,76 @@
+package by.epam.litvinko.beatysalon.daotest;
+
+import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
+import by.epam.litvinko.beautysalon.dao.impl.ClientDaoImpl;
+import by.epam.litvinko.beautysalon.entity.Client;
+import by.epam.litvinko.beautysalon.entity.Role;
+import by.epam.litvinko.beautysalon.entity.User;
+import by.epam.litvinko.beautysalon.exception.DaoException;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.sql.Connection;
+import java.time.LocalDate;
+
+public class ClientDaoTest {
+
+    private Connection connection = null;
+    private DatabaseConnectionPool connectionPool = DatabaseConnectionPool.getInstance();
+    private ClientDaoImpl clientDao = ClientDaoImpl.getInstance();
+    private Client expected;
+    private Client newClient;
+
+
+    @Before
+    public void before(){
+        connectionPool.initPool();
+        connection = connectionPool.getConnection();
+        clientDao.setConnection(connection);
+
+        Client.Builder builder1 = Client.newBuilder();
+        builder1.setUserId(5)
+                .setPhone("297858858")
+                .setDateOfBirthday(LocalDate.now())
+                .setIsRegular(true);
+        newClient = builder1.build();
+    }
+
+    @After
+    public void after(){
+        connectionPool.releaseConnection(connection);
+    }
+
+
+    @Test
+    public void findAllClientsTest() throws DaoException {
+        int actual = clientDao.findAll().size();
+        Assert.assertEquals(2, actual);
+    }
+
+    @Test
+    public void findClientByIdTest() throws DaoException {
+        User actual = clientDao.findById(1).get();
+        Assert.assertNotNull(actual);
+    }
+
+    @Test
+    public void findClientByUserIdTest() throws DaoException {
+        User actual = clientDao.findClientByUserId(3).get();
+        Assert.assertNotNull(actual);
+    }
+
+    @Test
+    public void createClientTest() throws DaoException {
+        boolean actual = clientDao.create(newClient);
+        Assert.assertTrue(actual);
+    }
+
+    @Test
+    public void updateClientRegularTest() throws DaoException {
+        boolean actual = clientDao.create(newClient);
+        Assert.assertTrue(actual);
+    }
+
+}

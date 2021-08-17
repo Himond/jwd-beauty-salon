@@ -80,6 +80,10 @@ public class ColumnName {
     public static final String SERVICE_REVIEW_REVIEW = "review";
     public static final String SERVICE_REVIEW_IS_ACTIVE = "is_active";
 
+    //Service Role
+    public static final String ROLE_ID = "id";
+    public static final String ROLE_ROLE = "role";
+
     private ColumnName() {
     }
 

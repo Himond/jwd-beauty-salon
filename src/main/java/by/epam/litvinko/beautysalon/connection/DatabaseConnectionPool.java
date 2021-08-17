@@ -39,7 +39,7 @@ public class DatabaseConnectionPool {
                 freeConnections.put(proxyConnection);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.error("Something wrong with current thread" + e);
+                logger.error("Something wrong with current thread", e);
             } catch (DatabaseConnectionException e) {
                 logger.error("can't create connection with exception: ", e);
             }
@@ -69,7 +69,7 @@ public class DatabaseConnectionPool {
             busyConnections.put(proxyConnection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Something wrong with current thread" + e);
+            logger.error("Something wrong with current thread", e);
         }
         return proxyConnection;
     }
@@ -84,7 +84,7 @@ public class DatabaseConnectionPool {
             freeConnections.put((ProxyConnection) connection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Something wrong with current thread" + e);
+            logger.error("Something wrong with current thread", e);
         }
     }
 
@@ -94,9 +94,9 @@ public class DatabaseConnectionPool {
                 freeConnections.take().closeConnection();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.error("Something wrong with current thread" + e);
+                logger.error("Something wrong with current thread", e);
             } catch (SQLException e) {
-                logger.error("Exception in connection close method" + e);
+                logger.error("Exception in connection close method", e);
             }
         }
         deregisterDrivers();
@@ -107,7 +107,7 @@ public class DatabaseConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("Driver deregistration exception " + driver + " " + e);
+                logger.error("Driver deregistration exception ", e);
             }
         });
     }

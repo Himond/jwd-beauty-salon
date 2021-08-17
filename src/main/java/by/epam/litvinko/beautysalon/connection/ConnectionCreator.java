@@ -39,12 +39,12 @@ public class ConnectionCreator {
     private ConnectionCreator() {
     }
 
-    public static Connection createConnection() throws DatabaseConnectionException {
+    static Connection createConnection() throws DatabaseConnectionException {
         Connection connection;
         try {
             connection = DriverManager.getConnection(DATABASE_URL, properties);
         }catch (SQLException e){
-            logger.error("Unable to establish connection with URL = " + DATABASE_URL);
+            logger.error("Unable to establish connection with URL = " + DATABASE_URL, e);
             throw new DatabaseConnectionException("Unable to establish connection with URL = " + DATABASE_URL, e);
         }
         return new ProxyConnection(connection);

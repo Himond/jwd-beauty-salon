@@ -18,10 +18,10 @@ public class PasswordEncryptor {
     }
 
     public String getHash(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
     public static String generateRandomPassword() {
-        return RandomStringUtils.randomAlphanumeric(10).toUpperCase();
+        return RandomStringUtils.randomAlphanumeric(12).toUpperCase();
     }
 }
