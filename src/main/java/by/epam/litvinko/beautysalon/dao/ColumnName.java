@@ -4,7 +4,6 @@ public class ColumnName {
 
     //Users Table
     public static final String USERS_ID = "id";
-    public static final String USERS_ROLE = "role_id";
     public static final String USERS_USERNAME = "username";
     public static final String USERS_PASSWORD = "password";
     public static final String USERS_EMAIL = "email";
@@ -24,7 +23,6 @@ public class ColumnName {
     //Master Table
     public static final String MASTER_ID = "id";
     public static final String MASTER_USERS_ID = "user_id";
-    public static final String MASTER_POSITION_ID = "position_id";
     public static final String MASTER_DESCRIPTION = "description";
 
     //Category Table
@@ -45,7 +43,7 @@ public class ColumnName {
 
     //Coupon Table
     public static final String COUPON_ID = "id";
-    public static final String COUPON_CODE = "coupon_code";
+    public static final String COUPON_CODE = "code";
     public static final String COUPON_VALID_FROM = "valid_from";
     public static final String COUPON_VALID_TO = "valid_to";
     public static final String COUPON_DISCOUNT = "discount";
@@ -80,9 +78,13 @@ public class ColumnName {
     public static final String SERVICE_REVIEW_REVIEW = "review";
     public static final String SERVICE_REVIEW_IS_ACTIVE = "is_active";
 
-    //Service Role
+    //Role
     public static final String ROLE_ID = "id";
     public static final String ROLE_ROLE = "role";
+
+    //Position
+    public static final String POSITION_ID = "id";
+    public static final String POSITION_POSITION = "position";
 
     private ColumnName() {
     }

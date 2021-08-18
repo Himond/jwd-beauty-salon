@@ -59,18 +59,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
     private static final String UPDATE_CLIENT_REGULAR = "UPDATE client SET is_regular = ? WHERE user_id = ?";
 
-    private static ClientDaoImpl instance;
-
-    private ClientDaoImpl(){
-    }
-
-    public static ClientDaoImpl getInstance(){
-        if(instance == null){
-            instance = new ClientDaoImpl();
-        }
-        return instance;
-    }
-
     @Override
     public List<Client> findAll() throws DaoException {
         List<Client> clientList = new ArrayList<>();
@@ -118,7 +106,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
     @Override
     public boolean create(Client entity) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -128,17 +116,17 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
             statement.setString(2, entity.getPhone());
             statement.setDate(3, Date.valueOf(entity.getDateOfBirthday()));
             statement.setBoolean(4, entity.isRegular());
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return  result == 1;
+        return  result;
     }
 
     @Override
     public boolean delete(Client entity) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -146,17 +134,17 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
         try(PreparedStatement statement = connection.prepareStatement(DELETE_CLIENT_BY_USER_ID)) {
             statement.setInt(1, entity.getUserId());
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return result == 1;
+        return result;
     }
 
     @Override
     public boolean delete(Integer id) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -164,12 +152,12 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
         try(PreparedStatement statement = connection.prepareStatement(DELETE_CLIENT_BY_ID)) {
             statement.setInt(1, id);
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return result == 1;
+        return result;
     }
 
     @Override
@@ -191,7 +179,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
                 throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
             }
         } else {
-            logger.info("User id = " + entity.getId() + " don't exist.");
+            logger.info("Client id = " + entity.getId() + " don't exist.");
         }
         client = findById(entity.getId());
         return client;
@@ -236,7 +224,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
                 throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
             }
         } else {
-            logger.info("User id = " + userId + " don't exist.");
+            logger.info("Client id = " + userId + " don't exist.");
         }
     }
 

@@ -3,13 +3,9 @@ package by.epam.litvinko.beatysalon.daotest;
 import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
 import by.epam.litvinko.beautysalon.dao.impl.ClientDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Client;
-import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -18,7 +14,7 @@ public class ClientDaoTest {
 
     private Connection connection = null;
     private DatabaseConnectionPool connectionPool = DatabaseConnectionPool.getInstance();
-    private ClientDaoImpl clientDao = ClientDaoImpl.getInstance();
+    private ClientDaoImpl clientDao = new ClientDaoImpl();
     private Client expected;
     private Client newClient;
 
@@ -46,7 +42,7 @@ public class ClientDaoTest {
     @Test
     public void findAllClientsTest() throws DaoException {
         int actual = clientDao.findAll().size();
-        Assert.assertEquals(2, actual);
+        Assert.assertEquals(3, actual);
     }
 
     @Test

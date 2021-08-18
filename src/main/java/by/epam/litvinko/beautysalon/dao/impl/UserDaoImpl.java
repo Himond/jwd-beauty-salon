@@ -71,16 +71,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     private static UserDaoImpl instance;
 
-    private UserDaoImpl(){
-    }
-
-    public static UserDaoImpl getInstance(){
-        if(instance == null){
-            instance = new UserDaoImpl();
-        }
-        return instance;
-    }
-
     @Override
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
@@ -129,7 +119,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     @Override
     public boolean create(User entity) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -144,17 +134,17 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setBoolean(7, entity.isActive());
             statement.setDate(8, Date.valueOf(LocalDate.now()));
             statement.setBytes(9, entity.getPhoto());
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return  result == 1;
+        return  result;
     }
 
     @Override
     public boolean delete(User entity) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -162,18 +152,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
         try(PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_EMAIL)) {
             statement.setString(1, entity.getEmail());
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return result == 1;
+        return result;
 
     }
 
     @Override
     public boolean delete(Integer id) throws DaoException {
-        int result;
+        boolean result;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
@@ -181,12 +171,12 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
         try (PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_ID)){
             statement.setInt(1, id);
-            result = statement.executeUpdate();
+            result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
-        return result == 1;
+        return result;
     }
 
     @Override

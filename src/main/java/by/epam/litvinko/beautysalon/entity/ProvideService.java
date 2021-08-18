@@ -130,7 +130,7 @@ public class ProvideService extends Entity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("ProvideService{");
         sb.append("id=").append(getId());
-        sb.append("categoryId=").append(categoryId);
+        sb.append(", categoryId=").append(categoryId);
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
@@ -150,11 +150,6 @@ public class ProvideService extends Entity {
     public class Builder{
 
         public Builder() {
-        }
-
-        public ProvideService.Builder setId(int id){
-            ProvideService.this.setId(id);
-            return this;
         }
 
         public ProvideService.Builder setCategoryId(int categoryId){

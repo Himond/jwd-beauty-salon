@@ -17,7 +17,7 @@ public class UserDaoTest {
 
     private Connection connection = null;
     private DatabaseConnectionPool connectionPool = DatabaseConnectionPool.getInstance();
-    private UserDaoImpl userDao = UserDaoImpl.getInstance();
+    private UserDaoImpl userDao = new UserDaoImpl();
     private User expected;
     private User newUser;
 
@@ -28,6 +28,7 @@ public class UserDaoTest {
         connection = connectionPool.getConnection();
 
         userDao.setConnection(connection);
+
 
         User.Builder builder = User.newBuilder();
         builder.setID(3)
@@ -44,12 +45,12 @@ public class UserDaoTest {
 
         User.Builder builder1 = User.newBuilder();
         builder1.setID(17)
-                .setRole(Role.CLIENT)
-                .setUserName("client3")
-                .setPassword("client3")
-                .setEmail("client3@mail.ru")
-                .setFirstName("client3")
-                .setLastName("client3")
+                .setRole(Role.MASTER)
+                .setUserName("master2")
+                .setPassword("master2")
+                .setEmail("master23@mail.ru")
+                .setFirstName("master2")
+                .setLastName("master2")
                 .setIsActive(true);
         newUser = builder1.build();
 

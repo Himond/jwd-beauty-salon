@@ -8,7 +8,7 @@ public class Coupon extends Entity{
     private LocalDateTime validFrom;
     private LocalDateTime validTo;
     private int discount;
-    private double isActive;
+    private boolean isActive;
 
     public Coupon() {
     }
@@ -53,12 +53,12 @@ public class Coupon extends Entity{
         this.discount = discount;
     }
 
-    public double getIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(double isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Coupon extends Entity{
         Coupon coupon = (Coupon) o;
 
         if (discount != coupon.discount) return false;
-        if (Double.compare(coupon.isActive, isActive) != 0) return false;
+        if (isActive != coupon.isActive) return false;
         if (code != null ? !code.equals(coupon.code) : coupon.code != null) return false;
         if (validFrom != null ? !validFrom.equals(coupon.validFrom) : coupon.validFrom != null) return false;
         return validTo != null ? validTo.equals(coupon.validTo) : coupon.validTo == null;
@@ -79,13 +79,11 @@ public class Coupon extends Entity{
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        long temp;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (validFrom != null ? validFrom.hashCode() : 0);
         result = 31 * result + (validTo != null ? validTo.hashCode() : 0);
         result = 31 * result + discount;
-        temp = Double.doubleToLongBits(isActive);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (isActive ? 1 : 0);
         return result;
     }
 
@@ -135,7 +133,7 @@ public class Coupon extends Entity{
             return this;
         }
 
-        public Coupon.Builder setIsActive(double isActive){
+        public Coupon.Builder setIsActive(boolean isActive){
             Coupon.this.isActive = isActive;
             return this;
         }
