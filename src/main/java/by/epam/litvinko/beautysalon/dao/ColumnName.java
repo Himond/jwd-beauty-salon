@@ -64,13 +64,6 @@ public class ColumnName {
     public static final String ORDER_ITEM_SERVICE_ID = "service_id";
     public static final String ORDER_ITEM_MASTER_ID = "master_id";
 
-    //Master review Table
-    public static final String MASTER_REVIEW_ID = "id";
-    public static final String MASTER_REVIEW_CLIENT_ID = "client_id";
-    public static final String MASTER_REVIEW_MASTER_ID = "master_id";
-    public static final String MASTER_REVIEW_REVIEW = "review";
-    public static final String MASTER_REVIEW_IS_ACTIVE = "is_active";
-
     //Service review Table
     public static final String SERVICE_REVIEW_ID = "id";
     public static final String SERVICE_REVIEW_CLIENT_ID = "client_id";

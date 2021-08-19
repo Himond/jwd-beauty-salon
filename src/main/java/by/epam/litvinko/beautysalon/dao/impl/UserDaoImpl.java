@@ -20,7 +20,6 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     private static Logger logger = LogManager.getLogger();
-    private PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
 
     private static final String SELECT_ALL_USER = "SELECT users.id, role.role, users.username, " +
             "users.password, users.email, users.first_name, " +
@@ -123,7 +122,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(INSERT_USER)){
             statement.setInt(1, entity.getRole().getId());
             statement.setString(2, entity.getUserName());
-            statement.setString(3, encryptor.getHash(entity.getPassword()));
+            statement.setString(3, entity.getPassword());
             statement.setString(4, entity.getEmail());
             statement.setString(5, entity.getFirstName());
             statement.setString(6, entity.getLastName());
@@ -168,7 +167,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         if (user.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID)){
                 statement.setString(1, entity.getUserName());
-                statement.setString(2,  encryptor.getHash(entity.getPassword()));
+                statement.setString(2, entity.getPassword());
                 statement.setString(3, entity.getEmail());
                 statement.setString(4, entity.getFirstName());
                 statement.setString(5, entity.getLastName());
