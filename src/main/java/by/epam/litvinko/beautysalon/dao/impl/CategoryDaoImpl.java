@@ -32,7 +32,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
             "VALUES (?)";
 
     private static final String DELETE_CATEGORY_BY_NAME = "DELETE FROM salon_category WHERE name = ?;";
-    private static final String DELETE_CATEGORY_BY_ID = "DELETE FROM salon_category WHERE id = ?;";
 
     private static final String UPDATE_CATEGORY_BY_ID = "UPDATE category SET name = ?, " +
             "WHERE id = ?;";
@@ -102,23 +101,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
         return result;
     }
 
-    @Override
-    public boolean delete(Category entity) throws DaoException {
-        boolean result;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_CATEGORY_BY_NAME)) {
-            statement.setString(1, entity.getName());
-            result = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean delete(Integer id) throws DaoException {

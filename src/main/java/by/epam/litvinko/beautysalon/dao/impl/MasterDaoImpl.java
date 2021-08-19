@@ -1,7 +1,6 @@
 package by.epam.litvinko.beautysalon.dao.impl;
 
 import by.epam.litvinko.beautysalon.dao.AbstractDao;
-import by.epam.litvinko.beautysalon.dao.MasterDao;
 import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
 import by.epam.litvinko.beautysalon.entity.Role;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
 
-public class MasterDaoImpl extends AbstractDao<Integer, Master> implements MasterDao {
+public class MasterDaoImpl extends AbstractDao<Integer, Master>{
 
     private static Logger logger = LogManager.getLogger();
 
@@ -42,20 +41,9 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
             "JOIN role ON users.role_id = role.id " +
             "WHERE master.id = ?;";
 
-    private static final String SELECT_CLIENT_BY_USER_ID = "SELECT master.id, master.user_id, " +
-            "position.position, master.description, users.id, role.role, " +
-            "users.username, users.password, users.email, users.first_name, users.last_name, " +
-            "users.is_active, users.data_joined, users.photo " +
-            "FROM master " +
-            "JOIN position ON master.position_id = position.id " +
-            "JOIN users ON master.user_id = users.id " +
-            "JOIN role ON users.role_id = role.id " +
-            "WHERE master.user_id = ?;";
-
     private static final String INSERT_MASTER = "INSERT INTO master(user_id, position_id, description) " +
             "VALUES (?, ?, ?)";
 
-    private static final String DELETE_MASTER_BY_USER_ID = "DELETE FROM master WHERE user_id = ?;";
     private static final String DELETE_MASTER_BY_ID = "DELETE FROM master WHERE id = ?;";
 
     private static final String UPDATE_CLIENT_BY_ID = "UPDATE master SET user_id = ?, " +
@@ -107,27 +95,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
         return Optional.ofNullable(master);
     }
 
-    @Override
-    public Optional<Master> findMasterByUserId(Integer userId) throws DaoException {
-        Master master = null;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_CLIENT_BY_USER_ID)){
-            statement.setInt(1, userId);
-            statement.executeQuery();
-            try (ResultSet resultSet = statement.getResultSet()){
-                while (resultSet.next()) {
-                    master = buildMaster(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return Optional.ofNullable(master);
-    }
 
     @Override
     public boolean create(Master entity) throws DaoException {
@@ -146,24 +113,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return  result;
-    }
-
-    @Override
-    public boolean delete(Master entity) throws DaoException {
-        boolean result;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_MASTER_BY_USER_ID)) {
-            statement.setInt(1, entity.getUserId());
-            result = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return result;
     }
 
     @Override

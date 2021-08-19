@@ -45,7 +45,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             "email, first_name, last_name, is_active, data_joined, photo) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String DELETE_USER_BY_EMAIL = "DELETE FROM users WHERE email = ?;";
 
     private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?;";
 
@@ -53,23 +52,20 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             "password = ?, email = ?, first_name = ?, last_name = ?, is_active = ?, data_joined = ?, photo = ? " +
             "WHERE id = ?;";
 
-    private static final String SQL_SIGN_IN_BY_LOGIN = "SELECT users.id, role.role, users.username, " +
+    private static final String SELECT_USER_BY_LOGIN = "SELECT users.id, role.role, users.username, " +
             "users.password, users.email, users.first_name, " +
             "users.last_name, users.is_active, users.data_joined, users.photo " +
             "FROM users " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE users.username = ?;" ;
 
-    private static final String SQL_SIGN_IN_BY_EMAIL = "SELECT users.id, role.role, users.username, " +
+    private static final String SELECT_USER_BY_EMAIL = "SELECT users.id, role.role, users.username, " +
             "users.password, users.email, users.first_name, " +
             "users.last_name, users.is_active, users.data_joined, users.photo " +
             "FROM users " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE users.email = ?;" ;
 
-    private static final String UPDATE_USER_ACTIVITY = "UPDATE users SET is_active = ? WHERE id = ?";
-
-    private static UserDaoImpl instance;
 
     @Override
     public List<User> findAll() throws DaoException {
@@ -142,24 +138,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         return  result;
     }
 
-    @Override
-    public boolean delete(User entity) throws DaoException {
-        boolean result;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_EMAIL)) {
-            statement.setString(1, entity.getEmail());
-            result = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return result;
-
-    }
 
     @Override
     public boolean delete(Integer id) throws DaoException {
@@ -211,21 +189,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     }
 
     @Override
-    public Optional<User> signInByLogin(String login, String password) throws DaoException {
+    public Optional<User> findUserByLogin(String login) throws DaoException {
         User user = null;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
         }
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SIGN_IN_BY_LOGIN)){
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_LOGIN)){
             statement.setString(1, login);
             statement.executeQuery();
             try (ResultSet resultSet = statement.getResultSet()){
                 while (resultSet.next()) {
-                    User resultUser = buildUser(resultSet);
-                    if(encryptor.checkHash(password, resultUser.getPassword())){
-                        user = resultUser;
-                    }
+                    user = buildUser(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -236,21 +211,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     }
 
     @Override
-    public Optional<User> signInByEmail(String email, String password) throws DaoException {
+    public Optional<User> findUserByEmail(String email) throws DaoException {
         User user = null;
         Connection connection = super.connection;
         if (connection == null) {
             throw new DaoException("Connection not established.");
         }
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SIGN_IN_BY_EMAIL)){
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_EMAIL)){
             statement.setString(1, email);
             statement.executeQuery();
             try (ResultSet resultSet = statement.getResultSet()){
                 while (resultSet.next()) {
-                    User resultUser = buildUser(resultSet);
-                    if(encryptor.checkHash(password, resultUser.getPassword())){
-                        user = resultUser;
-                    }
+                    user = buildUser(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -267,7 +239,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         if (connection == null) {
             throw new DaoException("Connection not established.");
         }
-
         try(PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ROLE)) {
             statement.setString(1, role.getRole());
             try (ResultSet resultSet = statement.executeQuery()){
@@ -282,28 +253,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         }
         return users;
     }
-
-    @Override
-    public void updateActivity(int id, boolean isActive) throws DaoException {
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-        Optional<User> user = findById(id);
-        if (user.isPresent()) {
-            try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_ACTIVITY)){
-                statement.setBoolean(1, isActive);
-                statement.setInt(2, id);
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
-                throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
-            }
-        } else {
-            logger.info("User id = " + id + " don't exist.");
-        }
-    }
-
 
     private User buildUser(ResultSet resultSet) throws SQLException {
         User user;

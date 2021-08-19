@@ -54,12 +54,6 @@ public class MasterDaoTest {
     }
 
     @Test
-    public void findClientByUserIdTest() throws DaoException {
-        User actual = masterDao.findMasterByUserId(2).get();
-        Assert.assertNotNull(actual);
-    }
-
-    @Test
     public void createMasterTest() throws DaoException {
         boolean actual = masterDao.create(newMaster);
         Assert.assertTrue(actual);

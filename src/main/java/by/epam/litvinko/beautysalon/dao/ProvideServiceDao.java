@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ProvideServiceDao {
 
-    void updateServiceAvailable(Integer serviceId, boolean toggle) throws DaoException;
     List<ProvideService> findAllByCategory(Category category) throws DaoException;
+
 }

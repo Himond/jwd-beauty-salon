@@ -152,6 +152,11 @@ public class ProvideService extends Entity {
         public Builder() {
         }
 
+        public ProvideService.Builder setID(int id){
+            ProvideService.this.setId(id);
+            return this;
+        }
+
         public ProvideService.Builder setCategoryId(int categoryId){
             ProvideService.this.categoryId = categoryId;
             return this;

@@ -18,7 +18,6 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
     public abstract List<T> findAll() throws DaoException;
     public abstract Optional<T> findById(K id) throws DaoException;
     public abstract boolean create(T entity) throws DaoException;
-    public abstract boolean delete(T entity) throws DaoException;
     public abstract boolean delete(K id) throws DaoException;
     public abstract Optional<T> update(T entity) throws DaoException;
 

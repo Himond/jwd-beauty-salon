@@ -79,11 +79,6 @@ public class UserDaoTest {
         Assert.assertTrue(actual);
     }
 
-    @Test
-    public void deleteUserByEmailTest() throws DaoException {
-        boolean actual = userDao.delete(newUser);
-        Assert.assertTrue(actual);
-    }
 
     @Test
     public void deleteUserByIdTest() throws DaoException {
@@ -111,13 +106,13 @@ public class UserDaoTest {
 
     @Test
     public void signInByLoginTest() throws DaoException {
-        User actual = userDao.signInByLogin("client1", "client1").get();
+        User actual = userDao.findUserByLogin("client1").get();
         Assert.assertEquals(expected, actual);;
     }
 
     @Test
     public void signInByEmailTest() throws DaoException {
-        User actual = userDao.signInByEmail("client1@mail.ru", "client1").get();
+        User actual = userDao.findUserByEmail("client1@mail.ru").get();
         Assert.assertEquals(expected, actual);;
     }
 }

@@ -15,7 +15,6 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
 
-
 public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> implements ProvideServiceDao {
 
     private static Logger logger = LogManager.getLogger();
@@ -25,14 +24,14 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service JOIN salon_category ON salon_service.category_id = salon_category.id;";
 
-    private static final String SELECT_SERVICE_BY_CATEGORY_ID = "SELECT salon_service.id, salon_category.name, salon_service.name, salon_service.name, " +
+    private static final String SELECT_SERVICE_BY_CATEGORY_ID = "SELECT salon_service.id, salon_service.category_id, salon_category.name, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +
             "JOIN salon_category ON salon_service.category_id = salon_category.id " +
             "WHERE salon_service.category_id = ?;";
 
-    private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_category.name, salon_service.name, salon_service.name, " +
+    private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_service.category_id, salon_category.name, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +
@@ -43,15 +42,11 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "price, service_time, available, created, updated, image) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String DELETE_SERVICE_BY_NAME = "DELETE FROM salon_service WHERE name = ?;";
 
     private static final String DELETE_SERVICE_BY_ID = "DELETE FROM salon_service WHERE id = ?;";
 
     private static final String UPDATE_SERVICE_BY_ID = "UPDATE salon_service SET category_id = ?, " +
             "name = ?, description = ?, price = ?, service_time = ?, available = ?, created = ?, updated = ?, image = ? " +
-            "WHERE id = ?;";
-
-    private static final String UPDATE_SERVICE_AVAILABLE = "UPDATE salon_service SET available = ? " +
             "WHERE id = ?;";
 
     @Override
@@ -125,23 +120,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
         return  result;
     }
 
-    @Override
-    public boolean delete(ProvideService entity) throws DaoException {
-        boolean result;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_SERVICE_BY_NAME)) {
-            statement.setString(1, entity.getName());
-            result = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean delete(Integer id) throws DaoException {
@@ -193,27 +171,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     }
 
     @Override
-    public void updateServiceAvailable(Integer serviceId, boolean toggle) throws DaoException {
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-        Optional<ProvideService> service = findById(serviceId);
-        if (service.isPresent()) {
-            try (PreparedStatement statement = connection.prepareStatement(UPDATE_SERVICE_AVAILABLE)){
-                statement.setBoolean(1, toggle);
-                statement.setInt(2, serviceId);
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
-                throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
-            }
-        } else {
-            logger.info("Service id = " + serviceId + " don't exist.");
-        }
-    }
-
-    @Override
     public List<ProvideService> findAllByCategory(Category category) throws DaoException {
         List<ProvideService> serviceList = new ArrayList<>();
         Connection connection = super.connection;
@@ -238,7 +195,8 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     private ProvideService buildProvideService(ResultSet resultSet) throws SQLException {
         ProvideService service;
         ProvideService.Builder builder = ProvideService.newBuilder();
-        builder.setCategoryId(resultSet.getInt(SERVICE_CATEGORY_ID))
+        builder.setID(resultSet.getInt(SERVICE_ID))
+                .setCategoryId(resultSet.getInt(SERVICE_CATEGORY_ID))
                 .setName(resultSet.getString(SERVICE_NAME))
                 .setDescription(resultSet.getString(SERVICE_DESCRIPTION))
                 .setPrice(resultSet.getBigDecimal(SERVICE_PRICE))

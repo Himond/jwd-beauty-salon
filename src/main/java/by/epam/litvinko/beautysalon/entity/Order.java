@@ -1,18 +1,16 @@
 package by.epam.litvinko.beautysalon.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Order extends Entity{
 
     private int clientId;
     private int couponId;
-    private LocalDateTime created;
-    private LocalDateTime dateOfService;
+    private LocalDate created;
     private boolean isPaid;
     private boolean isActive;
 
     public Order(){
-
     }
 
     public int getClientId() {
@@ -31,20 +29,12 @@ public class Order extends Entity{
         this.couponId = couponId;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
-    }
-
-    public LocalDateTime getDateOfService() {
-        return dateOfService;
-    }
-
-    public void setDateOfService(LocalDateTime dateOfService) {
-        this.dateOfService = dateOfService;
     }
 
     public boolean isPaid() {
@@ -75,8 +65,7 @@ public class Order extends Entity{
         if (couponId != order.couponId) return false;
         if (isPaid != order.isPaid) return false;
         if (isActive != order.isActive) return false;
-        if (created != null ? !created.equals(order.created) : order.created != null) return false;
-        return dateOfService != null ? dateOfService.equals(order.dateOfService) : order.dateOfService == null;
+        return created != null ? created.equals(order.created) : order.created == null;
     }
 
     @Override
@@ -85,7 +74,6 @@ public class Order extends Entity{
         result = 31 * result + clientId;
         result = 31 * result + couponId;
         result = 31 * result + (created != null ? created.hashCode() : 0);
-        result = 31 * result + (dateOfService != null ? dateOfService.hashCode() : 0);
         result = 31 * result + (isPaid ? 1 : 0);
         result = 31 * result + (isActive ? 1 : 0);
         return result;
@@ -97,7 +85,6 @@ public class Order extends Entity{
         sb.append("clientId=").append(clientId);
         sb.append(", couponId=").append(couponId);
         sb.append(", created=").append(created);
-        sb.append(", dateOfService=").append(dateOfService);
         sb.append(", isPaid=").append(isPaid);
         sb.append(", isActive=").append(isActive);
         sb.append('}');
@@ -128,13 +115,8 @@ public class Order extends Entity{
             return this;
         }
 
-        public Order.Builder setCreated(LocalDateTime created){
+        public Order.Builder setCreated(LocalDate created){
             Order.this.created = created;
-            return this;
-        }
-
-        public Order.Builder setDateOfService(LocalDateTime dateOfService){
-            Order.this.dateOfService = dateOfService;
             return this;
         }
 

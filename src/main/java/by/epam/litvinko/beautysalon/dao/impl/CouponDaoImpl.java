@@ -32,7 +32,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
             "valid_to, discount) " +
             "VALUES (?, ?, ?, ?)";
 
-    private static final String DELETE_COUPON_BY_CODE = "DELETE FROM coupon WHERE code = ?;";
 
     private static final String DELETE_COUPON_BY_ID = "DELETE FROM coupon WHERE id = ?;";
 
@@ -103,23 +102,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
         return  result;
     }
 
-    @Override
-    public boolean delete(Coupon entity) throws DaoException {
-        boolean result;
-        Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_COUPON_BY_CODE)) {
-            statement.setString(1, entity.getCode());
-            result = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
-            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean delete(Integer id) throws DaoException {

@@ -52,12 +52,6 @@ public class ClientDaoTest {
     }
 
     @Test
-    public void findClientByUserIdTest() throws DaoException {
-        User actual = clientDao.findClientByUserId(3).get();
-        Assert.assertNotNull(actual);
-    }
-
-    @Test
     public void createClientTest() throws DaoException {
         boolean actual = clientDao.create(newClient);
         Assert.assertTrue(actual);
