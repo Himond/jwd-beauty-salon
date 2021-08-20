@@ -1,4 +1,4 @@
-package by.epam.litvinko.beautysalon.dao;
+package by.epam.litvinko.beautysalon.model.dao;
 
 import by.epam.litvinko.beautysalon.entity.*;
 import by.epam.litvinko.beautysalon.exception.DaoException;

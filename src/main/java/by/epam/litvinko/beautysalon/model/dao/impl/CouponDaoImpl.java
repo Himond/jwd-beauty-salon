@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Coupon;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
 
@@ -43,9 +43,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
     public List<Coupon> findAll() throws DaoException {
         List<Coupon> couponList = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_COUPON)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -64,9 +61,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
     public Optional<Coupon> findById(Integer id) throws DaoException {
         Coupon coupon = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(SELECT_COUPON_BY_ID)){
             statement.setInt(1, id);
             statement.executeQuery();
@@ -86,9 +80,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
     public boolean create(Coupon entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_COUPON)){
             statement.setString(1, entity.getCode());
             statement.setDate(2, Date.valueOf(entity.getValidFrom().toLocalDate()));
@@ -107,10 +98,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_COUPON_BY_ID)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -125,9 +112,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
     public Optional<Coupon> update(Coupon entity) throws DaoException {
         Optional<Coupon> coupon;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         coupon = findById(entity.getId());
         if (coupon.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_COUPON_BY_ID)){

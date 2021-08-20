@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Category;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
 
@@ -41,9 +41,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
         List<Category> categoryList = new ArrayList<>();
         Category category;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_CATEGORY)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -64,9 +61,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
     public Optional<Category> findById(Integer id) throws DaoException {
         Category category = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(SELECT_CATEGORY_BY_ID)){
             statement.setInt(1, id);
             statement.executeQuery();
@@ -88,9 +82,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
     public boolean create(Category entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_CATEGORY)){
             statement.setString(1, entity.getName());
             result = statement.executeUpdate() == 1;
@@ -106,10 +97,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_CATEGORY_BY_NAME)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -124,9 +111,6 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
     public Optional<Category> update(Category entity) throws DaoException {
         Optional<Category> category;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         category = findById(entity.getId());
         if (category.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_CATEGORY_BY_ID)){

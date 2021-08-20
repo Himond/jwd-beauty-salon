@@ -1,9 +1,7 @@
 package by.epam.litvinko.beatysalon.daotest;
 
-import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
-import by.epam.litvinko.beautysalon.dao.impl.CategoryDaoImpl;
-import by.epam.litvinko.beautysalon.dao.impl.CouponDaoImpl;
-import by.epam.litvinko.beautysalon.entity.Category;
+import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
+import by.epam.litvinko.beautysalon.model.dao.impl.CouponDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Coupon;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.junit.After;
@@ -22,7 +20,6 @@ public class CouponDaoTest {
 
     @Before
     public void before(){
-        connectionPool.initPool();
         connection = connectionPool.getConnection();
         couponDao.setConnection(connection);
 

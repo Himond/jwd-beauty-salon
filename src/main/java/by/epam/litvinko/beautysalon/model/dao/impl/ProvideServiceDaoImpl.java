@@ -1,7 +1,7 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
-import by.epam.litvinko.beautysalon.dao.ProvideServiceDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.ProvideServiceDao;
 import by.epam.litvinko.beautysalon.entity.*;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> implements ProvideServiceDao {
 
@@ -53,9 +53,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public List<ProvideService> findAll() throws DaoException {
         List<ProvideService> serviceList = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_SERVICE)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -75,9 +72,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public Optional<ProvideService> findById(Integer id) throws DaoException {
         ProvideService service = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
 
         try (PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_ID)){
             statement.setInt(1, id);
@@ -99,9 +93,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public boolean create(ProvideService entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_SERVICE)){
             statement.setInt(1, entity.getCategoryId());
             statement.setString(2, entity.getName());
@@ -125,9 +116,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
 
         try(PreparedStatement statement = connection.prepareStatement(DELETE_SERVICE_BY_ID)) {
             statement.setInt(1, id);
@@ -143,9 +131,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public Optional<ProvideService> update(ProvideService entity) throws DaoException {
         Optional<ProvideService> service;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         service = findById(entity.getId());
         if (service.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_SERVICE_BY_ID)){
@@ -174,9 +159,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     public List<ProvideService> findAllByCategory(Category category) throws DaoException {
         List<ProvideService> serviceList = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_CATEGORY_ID)) {
             statement.setInt(1, category.getId());
             try (ResultSet resultSet = statement.executeQuery()){

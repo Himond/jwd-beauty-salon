@@ -1,7 +1,7 @@
 package by.epam.litvinko.beatysalon.daotest;
 
-import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
-import by.epam.litvinko.beautysalon.dao.impl.ClientDaoImpl;
+import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
+import by.epam.litvinko.beautysalon.model.dao.impl.ClientDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -21,7 +21,6 @@ public class ClientDaoTest {
 
     @Before
     public void before(){
-        connectionPool.initPool();
         connection = connectionPool.getConnection();
         clientDao.setConnection(connection);
 

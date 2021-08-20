@@ -1,4 +1,4 @@
-package by.epam.litvinko.beautysalon.connection;
+package by.epam.litvinko.beautysalon.model.connection;
 
 import by.epam.litvinko.beautysalon.exception.DatabaseConnectionException;
 import org.apache.logging.log4j.LogManager;

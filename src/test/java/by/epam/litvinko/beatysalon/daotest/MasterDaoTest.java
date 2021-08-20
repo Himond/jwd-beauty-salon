@@ -1,7 +1,7 @@
 package by.epam.litvinko.beatysalon.daotest;
 
-import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
-import by.epam.litvinko.beautysalon.dao.impl.MasterDaoImpl;
+import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
+import by.epam.litvinko.beautysalon.model.dao.impl.MasterDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
 import by.epam.litvinko.beautysalon.entity.User;
@@ -25,7 +25,6 @@ public class MasterDaoTest {
 
     @Before
     public void before(){
-        connectionPool.initPool();
         connection = connectionPool.getConnection();
         masterDao.setConnection(connection);
 

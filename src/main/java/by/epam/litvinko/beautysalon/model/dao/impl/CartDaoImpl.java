@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Cart;
 import by.epam.litvinko.beautysalon.entity.ProvideService;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -34,9 +34,6 @@ public class CartDaoImpl extends AbstractDao<Integer, Cart> {
     public boolean create(Cart entity) throws DaoException {
         boolean result = false;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_ITEM)){
             for (ProvideService provideService: entity.getService().keySet()){
                 statement.setInt(1, entity.getOrderID());

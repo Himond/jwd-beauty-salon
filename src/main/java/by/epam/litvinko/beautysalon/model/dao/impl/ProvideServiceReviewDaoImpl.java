@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.ProvideServiceReview;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideServiceReview> {
 
@@ -39,9 +39,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
     public List<ProvideServiceReview> findAll() throws DaoException {
         List<ProvideServiceReview> reviews = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_REVIEW)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -65,10 +62,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
     public Optional<ProvideServiceReview> findById(Integer id) throws DaoException {
         ProvideServiceReview review = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try (PreparedStatement statement = connection.prepareStatement(SELECT_REVIEW_BY_ID)){
             statement.setInt(1, id);
             statement.executeQuery();
@@ -94,9 +87,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
     public boolean create(ProvideServiceReview entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_REVIEW)){
             statement.setInt(1, entity.getServiceId());
             statement.setInt(2, entity.getClientId());
@@ -114,10 +104,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_REVIEW_BY_ID)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -132,9 +118,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
     public Optional<ProvideServiceReview> update(ProvideServiceReview entity) throws DaoException {
         Optional<ProvideServiceReview> review;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         review = findById(entity.getId());
         if (review.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_REVIEW_BY_ID)){

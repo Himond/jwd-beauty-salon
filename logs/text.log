@@ -1,4 +1,4 @@
-14:52:46.408 [main] ERROR by.epam.litvinko.beautysalon.dao.impl.CartDaoImpl - Prepare statement cannot be retrieved from the connection.
+14:52:46.408 [main] ERROR by.epam.litvinko.beautysalon.model.dao.impl.CartDaoImpl - Prepare statement cannot be retrieved from the connection.
 java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`beauty_salon`.`order_item`, CONSTRAINT `order_item_service_id_fk` FOREIGN KEY (`service_id`) REFERENCES `salon_service` (`id`))
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
@@ -7,7 +7,7 @@ java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child 
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1350) ~[mysql-connector-java-8.0.26.jar:8.0.26]
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025) ~[mysql-connector-java-8.0.26.jar:8.0.26]
-	at by.epam.litvinko.beautysalon.dao.impl.CartDaoImpl.create(OrderItemDaoImpl.java:69) [classes/:?]
+	at by.epam.litvinko.beautysalon.model.dao.impl.CartDaoImpl.create(OrderItemDaoImpl.java:69) [classes/:?]
 	at by.epam.litvinko.beatysalon.daotest.OrderItemDaoTest.createOrderTest(OrderItemDaoTest.java:81) [test-classes/:?]
 	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
 	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78) ~[?:?]

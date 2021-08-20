@@ -1,4 +1,4 @@
-package by.epam.litvinko.beautysalon.dao;
+package by.epam.litvinko.beautysalon.model.dao;
 
 import by.epam.litvinko.beautysalon.entity.Entity;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -16,9 +16,13 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
     protected Connection connection;
 
     public abstract List<T> findAll() throws DaoException;
+
     public abstract Optional<T> findById(K id) throws DaoException;
+
     public abstract boolean create(T entity) throws DaoException;
+
     public abstract boolean delete(K id) throws DaoException;
+
     public abstract Optional<T> update(T entity) throws DaoException;
 
     public void closeStatement(Statement statement){

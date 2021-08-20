@@ -1,4 +1,4 @@
-package by.epam.litvinko.beautysalon.connection;
+package by.epam.litvinko.beautysalon.model.connection;
 
 import by.epam.litvinko.beautysalon.exception.DatabaseConnectionException;
 import org.apache.logging.log4j.LogManager;
@@ -27,21 +27,15 @@ public class DatabaseConnectionPool {
 
 
     private DatabaseConnectionPool() {
-    }
-
-    public void initPool() {
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         busyConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 Connection connection = ConnectionCreator.createConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
-                freeConnections.put(proxyConnection);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                logger.error("Something wrong with current thread", e);
+                freeConnections.add(proxyConnection);
             } catch (DatabaseConnectionException e) {
-                logger.error("can't create connection with exception: ", e);
+                logger.error("Can't create connection with exception: ", e);
             }
         }
         if (freeConnections.isEmpty()) {
@@ -74,10 +68,10 @@ public class DatabaseConnectionPool {
         return proxyConnection;
     }
 
-    public void releaseConnection(Connection connection) {
+    public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.error("wild connection is detected");
-            throw new RuntimeException("wild connection is detected : " + connection);
+            return false;
         }
         busyConnections.remove(connection);
         try {
@@ -86,6 +80,7 @@ public class DatabaseConnectionPool {
             Thread.currentThread().interrupt();
             logger.error("Something wrong with current thread", e);
         }
+        return true;
     }
 
     public void destroyPool() {

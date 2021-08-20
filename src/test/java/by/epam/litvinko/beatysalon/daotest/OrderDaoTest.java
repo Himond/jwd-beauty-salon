@@ -1,7 +1,7 @@
 package by.epam.litvinko.beatysalon.daotest;
 
-import by.epam.litvinko.beautysalon.connection.DatabaseConnectionPool;
-import by.epam.litvinko.beautysalon.dao.impl.OrderDaoImpl;
+import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
+import by.epam.litvinko.beautysalon.model.dao.impl.OrderDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Order;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.junit.After;
@@ -19,7 +19,6 @@ public class OrderDaoTest {
 
     @Before
     public void before(){
-        connectionPool.initPool();
         connection = connectionPool.getConnection();
         orderDao.setConnection(connection);
 

@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
 import by.epam.litvinko.beautysalon.entity.Role;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class MasterDaoImpl extends AbstractDao<Integer, Master>{
 
@@ -55,9 +55,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
     public List<Master> findAll() throws DaoException {
         List<Master> masterList = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_MASTER)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -76,9 +73,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
     public Optional<Master> findById(Integer id) throws DaoException {
         Master master = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
 
         try (PreparedStatement statement = connection.prepareStatement(SELECT_MASTER_BY_ID)){
             statement.setInt(1, id);
@@ -100,9 +94,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
     public boolean create(Master entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_MASTER)){
             statement.setInt(1, entity.getUserId());
             statement.setInt(2, entity.getPosition().getId());
@@ -119,10 +110,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_MASTER_BY_ID)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -137,9 +124,6 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
     public Optional<Master> update(Master entity) throws DaoException {
         Optional<Master> master;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         master = findById(entity.getId());
         if (master.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_CLIENT_BY_ID)){

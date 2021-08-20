@@ -1,4 +1,4 @@
-package by.epam.litvinko.beautysalon.dao;
+package by.epam.litvinko.beautysalon.model.dao;
 
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.entity.User;

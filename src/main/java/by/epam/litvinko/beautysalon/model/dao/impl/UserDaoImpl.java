@@ -1,15 +1,14 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
-import by.epam.litvinko.beautysalon.dao.UserDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.UserDao;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import by.epam.litvinko.beautysalon.entity.User;
-import by.epam.litvinko.beautysalon.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,10 +69,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USER)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -92,10 +87,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public Optional<User> findById(Integer id) throws DaoException {
         User user = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try (PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ID)){
             statement.setInt(1, id);
             statement.executeQuery();
@@ -116,9 +107,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public boolean create(User entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_USER)){
             statement.setInt(1, entity.getRole().getId());
             statement.setString(2, entity.getUserName());
@@ -142,9 +130,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
 
         try (PreparedStatement statement = connection.prepareStatement(DELETE_USER_BY_ID)){
             statement.setInt(1, id);
@@ -160,9 +145,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public Optional<User> update(User entity) throws DaoException {
         Optional<User> user;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         user = findById(entity.getId());
         if (user.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID)){
@@ -191,9 +173,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public Optional<User> findUserByLogin(String login) throws DaoException {
         User user = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_LOGIN)){
             statement.setString(1, login);
             statement.executeQuery();
@@ -213,9 +192,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public Optional<User> findUserByEmail(String email) throws DaoException {
         User user = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_EMAIL)){
             statement.setString(1, email);
             statement.executeQuery();
@@ -235,9 +211,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public List<User> findAllByRoll(Role role) throws DaoException {
         List<User> users = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_ROLE)) {
             statement.setString(1, role.getRole());
             try (ResultSet resultSet = statement.executeQuery()){

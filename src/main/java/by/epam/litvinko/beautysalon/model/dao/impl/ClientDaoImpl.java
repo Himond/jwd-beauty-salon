@@ -1,6 +1,6 @@
-package by.epam.litvinko.beautysalon.dao.impl;
+package by.epam.litvinko.beautysalon.model.dao.impl;
 
-import by.epam.litvinko.beautysalon.dao.AbstractDao;
+import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import static by.epam.litvinko.beautysalon.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ClientDaoImpl extends AbstractDao<Integer, Client>{
 
@@ -50,9 +50,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public List<Client> findAll() throws DaoException {
         List<Client> clientList = new ArrayList<>();
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_CLIENT)) {
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
@@ -71,9 +68,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public Optional<Client> findById(Integer id) throws DaoException {
         Client client = null;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
 
         try (PreparedStatement statement = connection.prepareStatement(SELECT_CLIENT_BY_ID)){
             statement.setInt(1, id);
@@ -95,9 +89,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public boolean create(Client entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         try (PreparedStatement statement = connection.prepareStatement(INSERT_CLIENT)){
             statement.setInt(1, entity.getUserId());
             statement.setString(2, entity.getPhone());
@@ -116,10 +107,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_CLIENT_BY_ID)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -134,9 +121,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public Optional<Client> update(Client entity) throws DaoException {
         Optional<Client> client;
         Connection connection = super.connection;
-        if (connection == null) {
-            throw new DaoException("Connection not established.");
-        }
         client = findById(entity.getId());
         if (client.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_CLIENT_BY_ID)){
