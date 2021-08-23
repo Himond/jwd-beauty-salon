@@ -3,8 +3,9 @@ package by.epam.litvinko.beautysalon.model.dao.impl;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.ProvideServiceReview;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideServiceReview> {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ProvideServiceReviewDaoImpl.class);
 
     private static final String SELECT_ALL_REVIEW = "SELECT id, service_id, client_id, review, " +
             "is_active, salon_service.price, salon_service.service_time " +

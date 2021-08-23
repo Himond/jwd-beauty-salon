@@ -5,8 +5,9 @@ import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class MasterDaoImpl extends AbstractDao<Integer, Master>{
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(MasterDaoImpl.class);
 
     private static final String SELECT_ALL_MASTER = "SELECT master.id, master.user_id, " +
             "position.position, master.description, users.id, role.role, " +

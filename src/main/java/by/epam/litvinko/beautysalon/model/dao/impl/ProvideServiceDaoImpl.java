@@ -4,8 +4,8 @@ import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.model.dao.ProvideServiceDao;
 import by.epam.litvinko.beautysalon.entity.*;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> implements ProvideServiceDao {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ProvideServiceDaoImpl.class);
 
     private static final String SELECT_ALL_SERVICE = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +

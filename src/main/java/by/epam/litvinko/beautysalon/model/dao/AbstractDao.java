@@ -2,8 +2,9 @@ package by.epam.litvinko.beautysalon.model.dao;
 
 import by.epam.litvinko.beautysalon.entity.Entity;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,7 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractDao<K extends Number, T extends Entity>{
-    private static final Logger logger = LogManager.getLogger();
+
+    //private static final Logger logger = LogManager.getLogger(AbstractDao.class);
+
     protected Connection connection;
 
     public abstract List<T> findAll() throws DaoException;
@@ -30,11 +33,11 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
             if (statement != null) {
                 statement.close();
             } else {
-                logger.warn("Statement is null.");
+                //logger.warn("Statement is null.");
             }
 
         } catch (SQLException e) {
-            logger.error("Statement can't be closed.", e);
+            //logger.error("Statement can't be closed.", e);
         }
     }
 
@@ -46,7 +49,7 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error("Connection can't be moved back in pool.", e);
+           // logger.error("Connection can't be moved back in pool.", e);
 
         }
     }

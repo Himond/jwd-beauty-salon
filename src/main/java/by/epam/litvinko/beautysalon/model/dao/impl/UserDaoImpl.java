@@ -5,8 +5,8 @@ import by.epam.litvinko.beautysalon.model.dao.UserDao;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import by.epam.litvinko.beautysalon.entity.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 import java.sql.*;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
-    private static Logger logger = LogManager.getLogger();
+    //private static Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     private static final String SELECT_ALL_USER = "SELECT users.id, role.role, users.username, " +
             "users.password, users.email, users.first_name, " +
@@ -77,7 +77,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return users;
@@ -96,7 +96,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
 
@@ -119,7 +119,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setBytes(9, entity.getPhoto());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return  result;
@@ -135,7 +135,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return result;
@@ -159,11 +159,11 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 statement.setInt(9, entity.getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
-                logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+                //logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
                 throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
             }
         } else {
-            logger.info("User id = " + entity.getId() + " don't exist.");
+            //logger.info("User id = " + entity.getId() + " don't exist.");
         }
         user = findById(entity.getId());
         return user;
@@ -182,7 +182,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return Optional.ofNullable(user);
@@ -201,7 +201,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return Optional.ofNullable(user);
@@ -220,7 +220,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            //logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return users;

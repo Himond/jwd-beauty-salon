@@ -3,8 +3,8 @@ package by.epam.litvinko.beautysalon.model.dao.impl;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Category;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(CategoryDaoImpl.class);
 
     private static final String SELECT_ALL_CATEGORY= "SELECT id, name " +
             "FROM salon_category;";

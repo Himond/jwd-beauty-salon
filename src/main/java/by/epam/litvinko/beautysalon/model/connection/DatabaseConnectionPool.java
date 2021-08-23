@@ -1,8 +1,9 @@
 package by.epam.litvinko.beautysalon.model.connection;
 
 import by.epam.litvinko.beautysalon.exception.DatabaseConnectionException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DatabaseConnectionPool {
 
-    private static Logger logger = LogManager.getLogger();
+    //private static Logger logger = LogManager.getLogger(DatabaseConnectionPool.class);
     private static final int DEFAULT_POOL_SIZE = 5;
     private static DatabaseConnectionPool instance = new DatabaseConnectionPool();
 
@@ -31,15 +32,18 @@ public class DatabaseConnectionPool {
         busyConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
+                System.out.println("ConnectionPool");
                 Connection connection = ConnectionCreator.createConnection();
+                System.out.println("ConnectionPool2");
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
+                System.out.println("ConnectionPool3");
                 freeConnections.add(proxyConnection);
             } catch (DatabaseConnectionException e) {
-                logger.error("Can't create connection with exception: ", e);
+                //logger.error("Can't create connection with exception: ", e);
             }
         }
         if (freeConnections.isEmpty()) {
-            logger.fatal("can't create connections, empty pool");
+            //logger.fatal("can't create connections, empty pool");
             throw new RuntimeException("can't create connections, empty pool");
         }
     }
@@ -63,14 +67,14 @@ public class DatabaseConnectionPool {
             busyConnections.put(proxyConnection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Something wrong with current thread", e);
+            //logger.error("Something wrong with current thread", e);
         }
         return proxyConnection;
     }
 
     public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
-            logger.error("wild connection is detected");
+            //logger.error("wild connection is detected");
             return false;
         }
         busyConnections.remove(connection);
@@ -78,7 +82,7 @@ public class DatabaseConnectionPool {
             freeConnections.put((ProxyConnection) connection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Something wrong with current thread", e);
+            //logger.error("Something wrong with current thread", e);
         }
         return true;
     }
@@ -89,9 +93,9 @@ public class DatabaseConnectionPool {
                 freeConnections.take().closeConnection();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.error("Something wrong with current thread", e);
+                //logger.error("Something wrong with current thread", e);
             } catch (SQLException e) {
-                logger.error("Exception in connection close method", e);
+                //logger.error("Exception in connection close method", e);
             }
         }
         deregisterDrivers();
@@ -102,7 +106,7 @@ public class DatabaseConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("Driver deregistration exception ", e);
+                //logger.error("Driver deregistration exception ", e);
             }
         });
     }

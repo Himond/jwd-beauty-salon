@@ -3,8 +3,9 @@ package by.epam.litvinko.beautysalon.model.dao.impl;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Order;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class OrderDaoImpl extends AbstractDao<Integer, Order> {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(OrderDaoImpl.class);
 
     private static final String SELECT_ALL_ORDER = "SELECT id, client_id, coupon_id, created, " +
             "is_paid, is_active " +

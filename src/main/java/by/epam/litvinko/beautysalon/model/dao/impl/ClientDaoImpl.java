@@ -4,8 +4,8 @@ import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class ClientDaoImpl extends AbstractDao<Integer, Client>{
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ClientDaoImpl.class);
 
     private static final String SELECT_ALL_CLIENT = "SELECT client.id, client.user_id, " +
             "client.phone, client.date_of_birthday, client.is_regular,  users.id, role.role, " +

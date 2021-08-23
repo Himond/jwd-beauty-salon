@@ -1,6 +1,5 @@
 package by.epam.litvinko.beatysalon.daotest;
 
-import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
 import by.epam.litvinko.beautysalon.model.dao.EntityTransaction;
 import by.epam.litvinko.beautysalon.model.dao.impl.*;
 import by.epam.litvinko.beautysalon.entity.*;

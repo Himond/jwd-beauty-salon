@@ -4,8 +4,8 @@ import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Cart;
 import by.epam.litvinko.beautysalon.entity.ProvideService;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class CartDaoImpl extends AbstractDao<Integer, Cart> {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(CartDaoImpl.class);
 
     private static final String INSERT_ORDER_ITEM = "INSERT INTO order_item(order_id, service_id, master_id) " +
             "VALUES ( ?, ?, ?)";

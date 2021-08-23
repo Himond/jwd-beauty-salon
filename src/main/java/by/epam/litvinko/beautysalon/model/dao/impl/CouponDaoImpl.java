@@ -3,8 +3,8 @@ package by.epam.litvinko.beautysalon.model.dao.impl;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Coupon;
 import by.epam.litvinko.beautysalon.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
 public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
 
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(CouponDaoImpl.class);
 
     private static final String SELECT_ALL_COUPON = "SELECT id, code, valid_from, valid_to, " +
             "discount, is_active " +
