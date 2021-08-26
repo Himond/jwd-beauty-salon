@@ -33,9 +33,9 @@ public class SignInCommand implements Command {
                 request.getSession().setAttribute(RequestAttribute.ROLE, user.getRole());
                 router = new Router(PagePath.MAIN_PAGE, RouterType.REDIRECT);
             }else {
-                request.getSession().setAttribute(RequestAttribute.WRONG_DATA, true);
+                request.getSession().setAttribute("errorLoginPassMessage", MessageManager.EN.getMessage("message.loginerror"));
                 router = new Router(PagePath.LOGIN_PAGE, RouterType.REDIRECT);
-                //request.setAttribute("errorLoginPassMessage", MessageManager.EN.getMessage("message.loginerror"));
+
             }
         }catch (ServiceException e) {
             logger.error("Error at SignInCommand", e);

@@ -49,4 +49,5 @@ public class CategoryDaoTest {
         boolean actual = categoryDao.create(category);
         Assert.assertTrue(actual);
     }
+
 }

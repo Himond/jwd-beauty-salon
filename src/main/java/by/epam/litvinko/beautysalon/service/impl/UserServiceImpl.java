@@ -16,7 +16,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
-
     private UserDaoImpl userDao = new UserDaoImpl();
     private EntityTransaction transaction = new EntityTransaction();
     private final PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
             }
         } catch (DaoException e) {
             logger.error("Can't handle signIn request at UserService.", e);
-            throw new ServiceException("Can't handle signIn request at UserService", e);
+            throw new ServiceException("Can't handle signIn request at UserService.", e);
         }
         return Optional.empty();
     }
