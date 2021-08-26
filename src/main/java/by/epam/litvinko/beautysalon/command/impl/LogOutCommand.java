@@ -10,6 +10,7 @@ public class LogOutCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
+        request.getSession().invalidate();
         Router router = new Router(PagePath.LOGIN_PAGE, Router.RouterType.REDIRECT);
         return router;
     }

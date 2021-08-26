@@ -18,23 +18,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> signIn(String login, String password) throws ServiceException {
-        System.out.println("_______________service");
-
-        User user;
-
+        Optional<User> user;
         try {
             transaction.init(userDao);
-            user = userDao.findUserByLogin(login).get();
+            user = userDao.findUserByLogin(login);
             transaction.end();
-            System.out.println(user);
-            if (!passwordEncryptor.checkHash(password, user.getPassword())) {
-                return Optional.empty();
+            if(user.isPresent() && passwordEncryptor.checkHash(password, user.get().getPassword())){
+                return user;
             }
-
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't handle signIn request at UserService", e);
         }
-        return Optional.of(user);
+        return Optional.empty();
     }
 
 }

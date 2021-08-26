@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class EntityTransaction {
 
-    //private static Logger logger = LogManager.getLogger(EntityTransaction.class);
+    private static Logger logger = LogManager.getLogger(EntityTransaction.class);
     private Connection connection;
 
     public void initTransaction(AbstractDao dao, AbstractDao... daos) throws DaoException {
@@ -21,7 +21,7 @@ public class EntityTransaction {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            //logger.error("Unable to install autocommit for connection: ", e);
+            logger.error("Unable to install autocommit for connection: ", e);
             throw new DaoException("Unable to install autocommit for connection: ", e);
         }
         dao.setConnection(connection);
@@ -44,7 +44,7 @@ public class EntityTransaction {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            //logger.error("Unable to install autocommit for connection: ", e);
+            logger.error("Unable to install autocommit for connection: ", e);
             throw new DaoException("Unable to install autocommit for connection: ", e);
         }
         DatabaseConnectionPool.getInstance().releaseConnection(connection);
@@ -63,7 +63,7 @@ public class EntityTransaction {
         try {
             connection.commit();
         } catch (SQLException e) {
-            //logger.error("Failed to commit: ", e);
+            logger.error("Failed to commit: ", e);
             throw new DaoException("Failed to commit: ", e);
         }
     }
@@ -72,7 +72,7 @@ public class EntityTransaction {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            //logger.error("Failed to rollback: ", e);
+            logger.error("Failed to rollback: ", e);
             throw new DaoException("Failed to rollback: ", e);
         }
     }

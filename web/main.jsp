@@ -14,10 +14,10 @@
 <body>
 <h3>Welcome</h3>
 <hr/>
-${User}, hello!
+${user.getUserName()}, hello ${role}!
 <hr/>
 <form name="LoginForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="logout"/>
+    <input type="hidden" name="command" value="log_out"/>
 
     <br/>
     <input type="submit" value="Logout"/>

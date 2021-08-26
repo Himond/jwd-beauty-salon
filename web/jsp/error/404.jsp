@@ -11,6 +11,6 @@
     <title>404</title>
 </head>
 <body>
-
+    Ошибка 404
 </body>
 </html>

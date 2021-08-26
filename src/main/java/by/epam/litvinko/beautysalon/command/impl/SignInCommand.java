@@ -3,9 +3,13 @@ package by.epam.litvinko.beautysalon.command.impl;
 import by.epam.litvinko.beautysalon.command.*;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
+import by.epam.litvinko.beautysalon.manager.MessageManager;
 import by.epam.litvinko.beautysalon.service.UserService;
 import by.epam.litvinko.beautysalon.service.impl.UserServiceImpl;
 import by.epam.litvinko.beautysalon.command.Router.RouterType;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -13,18 +17,15 @@ import java.util.Optional;
 
 public class SignInCommand implements Command {
 
+    private static final Logger logger = LogManager.getLogger(SignInCommand.class);
+
     @Override
     public Router execute(HttpServletRequest request) {
-        System.out.println("====> SignIn Command");
         Router router;
         String username = request.getParameter(RequestParameter.USERNAME);
         String password = request.getParameter(RequestParameter.PASSWORD);
-        System.out.println(username);
-        System.out.println(password);
         UserService service = new UserServiceImpl();
-        System.out.println("before try");
         try {
-            System.out.println("inside try");
             Optional<User> optionalUser = service.signIn(username, password);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
@@ -34,12 +35,13 @@ public class SignInCommand implements Command {
             }else {
                 request.getSession().setAttribute(RequestAttribute.WRONG_DATA, true);
                 router = new Router(PagePath.LOGIN_PAGE, RouterType.REDIRECT);
+                //request.setAttribute("errorLoginPassMessage", MessageManager.EN.getMessage("message.loginerror"));
             }
         }catch (ServiceException e) {
+            logger.error("Error at SignInCommand", e);
             request.setAttribute(RequestAttribute.EXCEPTION, e);
             router = new Router(PagePath.ERROR_PAGE, RouterType.REDIRECT);
         }
-        System.out.println("Exit");
         return router;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public abstract class AbstractDao<K extends Number, T extends Entity>{
 
-    //private static final Logger logger = LogManager.getLogger(AbstractDao.class);
+    private static final Logger logger = LogManager.getLogger(AbstractDao.class);
 
     protected Connection connection;
 
@@ -33,11 +33,11 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
             if (statement != null) {
                 statement.close();
             } else {
-                //logger.warn("Statement is null.");
+                logger.warn("Statement is null.");
             }
 
         } catch (SQLException e) {
-            //logger.error("Statement can't be closed.", e);
+            logger.error("Statement can't be closed.", e);
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractDao<K extends Number, T extends Entity>{
         try {
             connection.close();
         } catch (SQLException e) {
-           // logger.error("Connection can't be moved back in pool.", e);
+           logger.error("Connection can't be moved back in pool.", e);
 
         }
     }

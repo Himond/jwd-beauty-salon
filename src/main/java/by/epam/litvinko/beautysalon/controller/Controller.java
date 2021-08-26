@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Controller", urlPatterns = "/controller")
+
+@WebServlet(urlPatterns = {"/controller", "*.do"})
 public class Controller extends HttpServlet {
 
     private final CommandProvider COMMAND_PROVIDER = CommandProvider.getInstance();
@@ -26,8 +27,8 @@ public class Controller extends HttpServlet {
         String commandName = request.getParameter(RequestParameter.COMMAND);
         System.out.println(commandName);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
-        System.out.println(command.toString());
         Router router = command.execute(request);
+
         switch (router.getRouterType()) {
             case REDIRECT:
                 response.sendRedirect(router.getPagePath());

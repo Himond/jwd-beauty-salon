@@ -12,9 +12,9 @@ public class CommandProvider {
     private final EnumMap<CommandType, Command> commands = new EnumMap(CommandType.class);
 
     public CommandProvider() {
-        commands.put(CommandType.SIGN_IN_COMMAND, new SignInCommand());
+        commands.put(CommandType.SIGN_IN, new SignInCommand());
         commands.put(CommandType.DEFAULT, new DefaultCommand());
-        commands.put(CommandType.LOG_OUT_COMMAND, new LogOutCommand());
+        commands.put(CommandType.LOG_OUT, new LogOutCommand());
 
     }
 
@@ -26,7 +26,6 @@ public class CommandProvider {
     }
 
     public Command getCommand(String commandName) {
-        System.out.println("Command provider");
         if (commandName == null) {
             return commands.get(CommandType.DEFAULT);
         }
