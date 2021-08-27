@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+
     private UserDaoImpl userDao = new UserDaoImpl();
     private EntityTransaction transaction = new EntityTransaction();
     private final PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();

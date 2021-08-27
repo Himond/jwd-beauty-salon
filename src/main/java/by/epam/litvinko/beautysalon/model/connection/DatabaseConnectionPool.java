@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,8 +30,8 @@ public class DatabaseConnectionPool {
 
 
     private DatabaseConnectionPool() {
-        freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
-        busyConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
+        freeConnections = new LinkedBlockingQueue<>(DEFAULT_POOL_SIZE);
+        busyConnections = new LinkedBlockingQueue<>(DEFAULT_POOL_SIZE);
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 Connection connection = ConnectionCreator.createConnection();
