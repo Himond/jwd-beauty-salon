@@ -3,6 +3,7 @@ package by.epam.litvinko.beautysalon.command;
 import by.epam.litvinko.beautysalon.command.impl.DefaultCommand;
 import by.epam.litvinko.beautysalon.command.impl.LogOutCommand;
 import by.epam.litvinko.beautysalon.command.impl.SignInCommand;
+import by.epam.litvinko.beautysalon.command.impl.SignUpCommand;
 
 import java.util.EnumMap;
 
@@ -15,7 +16,7 @@ public class CommandProvider {
         commands.put(CommandType.SIGN_IN, new SignInCommand());
         commands.put(CommandType.DEFAULT, new DefaultCommand());
         commands.put(CommandType.LOG_OUT, new LogOutCommand());
-
+        commands.put(CommandType.SIGN_UP, new SignUpCommand());
     }
 
     public static CommandProvider getInstance() {

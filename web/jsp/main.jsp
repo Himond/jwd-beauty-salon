@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>Welcome</title>
+    <link rel="shortcut icon" href="../static/core/img/ico.png" type="image/png">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
 <h3>Welcome</h3>
 <hr/>
-${user.getUserName()}, hello ${role}!
+${user.getFirstName()}, hello ${role}!
 <hr/>
 <form name="LoginForm" method="POST" action="${pageContext.request.contextPath}/controller">
     <input type="hidden" name="command" value="log_out"/>
@@ -15,6 +16,6 @@ ${user.getUserName()}, hello ${role}!
     <br/>
     <input type="submit" value="Logout"/>
 </form>
-
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

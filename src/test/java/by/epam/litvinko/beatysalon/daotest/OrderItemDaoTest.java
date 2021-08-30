@@ -53,10 +53,18 @@ public class OrderItemDaoTest {
             }
             transaction.commit();
         } catch (DaoException e) {
-            transaction.rollback();
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }finally {
-            transaction.endTransaction();
+            try {
+                transaction.endTransaction();
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
         }
 
     }

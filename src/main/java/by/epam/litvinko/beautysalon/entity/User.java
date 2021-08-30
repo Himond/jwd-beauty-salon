@@ -16,8 +16,8 @@ public class User extends Entity{
     private byte[] photo;
 
     public User() {
+        this.role = Role.CLIENT;
     }
-
 
     public Role getRole() {
         return role;

@@ -107,7 +107,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public boolean create(User entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_USER)){
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_USER,  Statement.RETURN_GENERATED_KEYS)){
             statement.setInt(1, entity.getRole().getId());
             statement.setString(2, entity.getUserName());
             statement.setString(3, entity.getPassword());
@@ -118,6 +118,14 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setDate(8, Date.valueOf(LocalDate.now()));
             statement.setBytes(9, entity.getPhoto());
             result = statement.executeUpdate() == 1;
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            int userId;
+            if (generatedKeys.next()) {
+                userId = generatedKeys.getInt(1);
+                entity.setId(userId);
+            } else {
+                throw new SQLException("Can not make new user.");
+            }
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
