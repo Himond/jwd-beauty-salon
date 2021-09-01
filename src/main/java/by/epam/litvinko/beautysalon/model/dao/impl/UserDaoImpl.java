@@ -40,8 +40,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             "WHERE users.id = ?;" ;
 
     private static final String INSERT_USER = "INSERT INTO users(role_id, username, password, " +
-            "email, first_name, last_name, is_active, data_joined, photo) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "email, first_name, last_name, data_joined, photo) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?;";
@@ -114,9 +114,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setString(4, entity.getEmail());
             statement.setString(5, entity.getFirstName());
             statement.setString(6, entity.getLastName());
-            statement.setBoolean(7, entity.isActive());
-            statement.setDate(8, Date.valueOf(LocalDate.now()));
-            statement.setBytes(9, entity.getPhoto());
+            statement.setDate(7, Date.valueOf(LocalDate.now()));
+            statement.setBytes(8, entity.getPhoto());
             result = statement.executeUpdate() == 1;
             ResultSet generatedKeys = statement.getGeneratedKeys();
             int userId;

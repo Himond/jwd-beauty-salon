@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 
 public enum MessageManager {
 
-    EN( ResourceBundle.getBundle("message", Locale.getDefault())),
-    RU( ResourceBundle.getBundle("message", new Locale("ru", "RU")));
+    EN_EN( ResourceBundle.getBundle("message", new Locale("en", "EN"), ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES))),
+    RU_RU( ResourceBundle.getBundle("message", new Locale("ru", "RU")));
 
     private ResourceBundle bundle;
 
@@ -17,4 +17,5 @@ public enum MessageManager {
     public String getMessage(String key) {
         return bundle.getString(key);
     }
+
 }

@@ -8,7 +8,7 @@ public class SimpleJdbcMain {
         PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
         System.out.println(encryptor.getHash("admin"));
 
-        String s = MessageManager.RU.getMessage("message.loginerror");
+        String s = MessageManager.EN_EN.getMessage("message.loginerror");
         System.out.println(s);
     }
 }

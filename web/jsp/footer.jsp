@@ -6,7 +6,7 @@
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
-<fmt:setBundle basename="locale"/>
+<fmt:setBundle basename="pagecontent"/>
 
 <html>
 <head>
@@ -15,8 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-    <link href="../static/fontawesome/css/fontawesome.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/static/fontawesome/css/fontawesome.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/core/css/main.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap-social.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/fontawesome/css/fontawesome.min.css">
@@ -110,7 +110,7 @@
     <ul class="list-unstyled list-inline text-center py-2">
     <c:choose>
         <c:when test="${empty user}">
-            <button class="btn btn-dark btn-lg btn-rounded"  data-bs-toggle="modal" data-bs-target="#modalSignUp" type="submit">Create an account</button>
+            <button class="btn btn-dark btn-lg btn-rounded"  data-bs-toggle="modal" data-bs-target="#modalSignUp" type="submit"><fmt:message key="button.name.createAnAccount"/></button>
             <!-- Modal -->
             <div class="modal fade" style="padding: 15px" id="modalSignUp" role="dialog" tabindex="-1" aria-labelledby="modalLabelSignUp" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -119,24 +119,24 @@
                             <form class="transparent" method="POST" action="${pageContext.request.contextPath}/controller">
                                 <input type="hidden" name="command" value="sign_up">
                                 <div class="form-inner">
-                                    <h6>Sign up to Salon</h6>
+                                    <h6><fmt:message key="salon.signIn.register"/></h6>
                                     <br/>
-                                    <label for="username_sign_up">Login</label>
-                                    <input type="text" name="username" maxlength="30" id="username_sign_up" required>
-                                    <label for="firstname_sign_up">Name</label>
-                                    <input type="text" name="first_name" maxlength="20" id="firstname_sign_up" required>
-                                    <label for="lastname_sign_up">Surname</label>
-                                    <input type="text" name="last_name" maxlength="20" id="lastname_sign_up" required>
-                                    <label for="phone_sign_up">Phone</label>
-                                    <input type="tel" name="phone"  id="phone_sign_up" placeholder="+375291234567" required>
-                                    <label for="email_sign_up">Email</label>
-                                    <input type="email" name="email"  id="email_sign_up" placeholder="example@example.com" required>
-                                    <label for="password_sign_up">Password</label>
-                                    <input  type="password" name="password" id="password_sign_up" minlength="2" maxlength="30" required>
-                                    <label for="password_sign_up_rep">Repeat password</label>
-                                    <input  type="password" name="password_rep" minlength="2" maxlength="30" id="password_sign_up_rep" required>
+                                    <label for="username_sign_up"><fmt:message key="placeholder.name.username"/></label>
+                                    <input type="text" name="username" pattern="^[a-zA-Z0-9_]{4,16}$" id="username_sign_up" required>
+                                    <label for="firstname_sign_up"><fmt:message key="placeholder.name.firstName"/></label>
+                                    <input type="text" name="first_name"  pattern="^[a-zA-Z\u0430-\u044F\u0410-\u042F-\s]{2,30}$" id="firstname_sign_up" required>
+                                    <label for="lastname_sign_up"><fmt:message key="placeholder.name.lastName"/></label>
+                                    <input type="text" name="last_name"  pattern="^[a-zA-Z\u0430-\u044F\u0410-\u042F-\s]{2,30}$" id="lastname_sign_up" required>
+                                    <label for="phone_sign_up"><fmt:message key="placeholder.name.phone"/></label>
+                                    <input type="tel" name="phone" pattern="^\+\d{12}$"  id="phone_sign_up" placeholder="+375291234567" required>
+                                    <label for="email_sign_up"><fmt:message key="placeholder.name.email"/></label>
+                                    <input type="email" name="email" pattern="^(?=.{3,30}$)[^\s]+@[^\s]+\.[^\s]+$" id="email_sign_up" placeholder="example@example.com" required>
+                                    <label for="password_sign_up"><fmt:message key="placeholder.name.password"/></label>
+                                    <input  type="password" name="password" pattern="^.{4,18}$" id="password_sign_up"  required>
+                                    <label for="password_sign_up_rep"><fmt:message key="placeholder.name.passwordRe"/></label>
+                                    <input  type="password" name="password_rep" pattern="^.{4,18}$"  id="password_sign_up_rep" required>
                                     <hr>
-                                    <button type="submit" class="btn btn-outline-dark">Sign Up</button>
+                                    <button type="submit" class="btn btn-outline-dark"><fmt:message key="button.name.register"/></button>
                                 </div>
                             </form>
                         </div>
@@ -170,8 +170,8 @@
 
     </ul>
 
-    <div class="footer-copyright text-center py-3"  > <b><i>© Minsk 2021:</i></b>
-        <b><i><a href="https://vk.com/himond" style="text-decoration: none;" > <h5 style="color: black"><b>Litvinko Ihar</b></h5> </a></i></b>
+    <div class="footer-copyright text-center py-3" > <b><i><fmt:message key="footer.copyRight"/></i></b>
+        <b><i><a href="https://vk.com/himond" style="text-decoration: none;" > <h5 style="color: black"><b><fmt:message key="footer.author"/></b></h5> </a></i></b>
     </div>
 </footer>
 </body>

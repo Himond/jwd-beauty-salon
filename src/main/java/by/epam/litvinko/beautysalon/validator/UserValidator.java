@@ -1,6 +1,9 @@
 package by.epam.litvinko.beautysalon.validator;
 
+import by.epam.litvinko.beautysalon.command.RequestParameter;
 import by.epam.litvinko.beautysalon.manager.PropertyManager;
+
+import java.util.Map;
 
 public class UserValidator {
 
@@ -10,10 +13,28 @@ public class UserValidator {
     private static final String REGEXP_EMAIL = "regexp.email";
     private static final String REGEXP_PASSWORD = "regexp.password";
     private static final PropertyManager manager = PropertyManager.getInstance();
+    private static final String EMPTY_ROW = "";
 
-
-    public static boolean validate(String username, String firstName, String lastName, String email, String phone, String password) {
-        return validateUsername(username) && validateFIO(firstName) && validateFIO(lastName) && validateEmail(email) && validatePhoneNumber(phone) && validatePassword(password);
+    public static boolean validate(Map<String, String> formData) {
+        if (!validateUsername(formData.get(RequestParameter.USERNAME))) {
+            formData.put(RequestParameter.USERNAME, EMPTY_ROW);
+        }
+        if (!validatePassword(formData.get(RequestParameter.PASSWORD))) {
+            formData.put(RequestParameter.PASSWORD, EMPTY_ROW);
+        }
+        if (!validateFIO(formData.get(RequestParameter.FIRSTNAME))) {
+            formData.put(RequestParameter.FIRSTNAME, EMPTY_ROW);
+        }
+        if (!validateFIO(formData.get(RequestParameter.LASTNAME))) {
+            formData.put(RequestParameter.LASTNAME, EMPTY_ROW);
+        }
+        if (!validateEmail(formData.get(RequestParameter.EMAIL))) {
+            formData.put(RequestParameter.EMAIL, EMPTY_ROW);
+        }
+        if (!validatePhoneNumber(formData.get(RequestParameter.PHONE))) {
+            formData.put(RequestParameter.PHONE, EMPTY_ROW);
+        }
+        return !formData.containsValue(EMPTY_ROW);
     }
 
     public static boolean validateUsername(String username) {

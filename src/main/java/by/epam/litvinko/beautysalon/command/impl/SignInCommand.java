@@ -12,6 +12,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -24,6 +25,7 @@ public class SignInCommand implements Command {
         Router router;
         String username = request.getParameter(RequestParameter.USERNAME);
         String password = request.getParameter(RequestParameter.PASSWORD);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
         UserService service = new UserServiceImpl();
         try {
             Optional<UserDto> optionalUser = service.signIn(username, password);
@@ -31,9 +33,9 @@ public class SignInCommand implements Command {
                 UserDto user = optionalUser.get();
                 request.getSession().setAttribute(RequestAttribute.USER, user);
                 request.getSession().setAttribute(RequestAttribute.ROLE, user.getRole());
-                router = new Router(PagePath.MAIN_PAGE, RouterType.REDIRECT);
+                router = new Router(PagePath.LOGIN_PAGE, RouterType.REDIRECT);
             }else {
-                request.getSession().setAttribute("errorLoginPassMessage", MessageManager.EN.getMessage("message.loginerror"));
+                request.getSession().setAttribute(RequestAttribute.WRONG_USERNAME_OR_PASSWORD_SING_IN, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(RequestAttribute.WRONG_USERNAME_OR_PASSWORD_SING_IN_PATH));
                 router = new Router(PagePath.LOGIN_PAGE, RouterType.REDIRECT);
 
             }

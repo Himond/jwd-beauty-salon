@@ -6,13 +6,10 @@
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
-<fmt:setBundle basename="locale"/>
-
+<fmt:setBundle basename="pagecontent"/>
 
 <html>
 <head>
-    <title>Title</title>
-
     <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/static/core/img/ico.png"/>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -56,19 +53,20 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><h5>Beauty salon</h5></a>
+                    <a class="nav-link active" aria-current="page" href="#"><h5><fmt:message key="salon.base"/></h5></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5>Services</h5></b></a>
+                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.services"/></h5></b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5>Contacts</h5></b></a>
+                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5>Profile</h5></b></a>
+                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
                 </li>
             </ul>
         </div>
+
 
         <li class="navbar-nav flex-row ml-md-auto d-none d-md-flex form-row text-center">
             <div class="col-12">
@@ -82,19 +80,20 @@
         <div class="form-row text-center navbar-nav flex-row ml-md-auto d-none d-md-flex" style="padding-left:20px">
             <div class="col-12">
                 <li class="list-inline-item">
-                    <a class="btn btn-social-icon btn-vk btn-circle" href="https://vk.com/viktoria_makijag" >
-                        <span class="fab fa-vk"></span>
-                    </a>
+                    <form  action="${pageContext.request.contextPath}/controller" method="post">
+                        <input type="hidden" name="command" value="change_locale_command">
+                        <button class="btn btn-social-icon btn-circle" style="margin-top: 16px" type="submit" name="locale" value="en_En" >
+                            <img src="${pageContext.request.contextPath}/static/core/img/EN.png" alt="">
+                        </button>
+                    </form>
                 </li>
                 <li class="list-inline-item">
-                    <a class="btn btn-social-icon btn-facebook btn-circle" href="https://www.facebook.com/gorbacheva.makijag">
-                        <span class="fab fa-facebook"></span>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a class="btn btn-social-icon btn-instagram btn-circle" href="https://www.instagram.com/gorbaceva_muah/">
-                        <span class="fab fa-instagram"></span>
-                    </a>
+                    <form  action="${pageContext.request.contextPath}/controller" method="post">
+                        <input type="hidden" name="command" value="change_locale_command">
+                        <button class="btn btn-social-icon btn-circle" style="margin-top: 16px" type="submit" name="locale" value="ru_Ru" >
+                            <img src="${pageContext.request.contextPath}/static/core/img/RU.png" alt="">
+                        </button>
+                    </form>
                 </li>
             </div>
         </div>
@@ -103,7 +102,7 @@
             <div class="col-12">
                  <c:choose>
                      <c:when test="${empty user}">
-                         <button class="btn btn-outline-light"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit">Sign In</button>
+                         <button class="btn btn-outline-light"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"><fmt:message key="button.name.enter"/></button>
                          <!-- Modal -->
                          <div class="modal fade" style="padding: 15px" id="exampleModal" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                              <div class="modal-dialog" role="document">
@@ -112,17 +111,17 @@
                                          <form class="transparent" method="POST" action="${pageContext.request.contextPath}/controller">
                                              <input type="hidden" name="command" value="sign_in">
                                              <div class="form-inner">
-                                                 <h6>Sign in to Salon</h6>
+                                                 <h6><fmt:message key="salon.signIn.enter"/></h6>
                                                  <br/>
-                                                 <label for="id_username_enter">Login</label>
-                                                 <input type="text" name="username" maxlength="30" id="id_username_enter" placeholder="example@example.com" required>
-                                                 <label for="id_password_enter">Password</label>
-                                                 <input  type="password" name="password" id="id_password_enter" minlength="2" maxlength="30" required>
+                                                 <label for="id_username_enter"><fmt:message key="placeholder.name.username"/></label>
+                                                 <input type="text" name="username" pattern="^[a-zA-Z0-9_]{4,16}$" id="id_username_enter" required>
+                                                 <label for="id_password_enter"><fmt:message key="placeholder.name.password"/></label>
+                                                 <input  type="password" name="password" pattern="^.{4,18}$" id="id_password_enter" minlength="2" maxlength="30" required>
                                                  <hr>
-                                                 <button type="submit" class="btn btn-outline-dark">Sign In</button>
+                                                 <button type="submit" class="btn btn-outline-dark"><fmt:message key="salon.signIn.enter"/></button>
                                                  <hr>
-                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;">Forgot password?</a></label>
-                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;">Create an account?</a></label>
+                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
+                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
                                              </div>
                                          </form>
                                      </div>
@@ -133,7 +132,7 @@
                      <c:otherwise>
                          <form name="LogOutForm" method="POST" action="${pageContext.request.contextPath}/controller">
                              <input type="hidden" name="command" value="log_out"/>
-                             <button type="submit" style="margin-top: 14px" class="btn btn-outline-light">Logout</button>
+                             <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.exit"/></button>
                          </form>
                      </c:otherwise>
                  </c:choose>
@@ -141,5 +140,6 @@
         </div>
     </div>
 </nav>
+
 </body>
 </html>

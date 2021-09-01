@@ -1,5 +1,6 @@
 package by.epam.litvinko.beautysalon.service.impl;
 
+import by.epam.litvinko.beautysalon.command.RequestParameter;
 import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.DaoException;
@@ -17,6 +18,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -31,79 +34,84 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> signIn(String userName, String password) throws ServiceException {
-        if (!UserValidator.validateUsername(userName) || !UserValidator.validatePassword(password)) {
-            throw new ServiceException("User data didn't passed validation");
-        } else {
-            try {
-                transaction.init(userDao);
-                Optional<User> user = userDao.findUserByLogin(userName);
-                transaction.end();
-                if(user.isPresent() && passwordEncryptor.checkHash(password, user.get().getPassword())){
-                    UserDto userDto = converter.convert(user.get());
-                    return Optional.of(userDto);
-                }
-            } catch (DaoException e) {
-                logger.error("Can't handle signIn request at UserService.", e);
-                throw new ServiceException("Can't handle signIn request at UserService.", e);
+        try {
+            transaction.init(userDao);
+            Optional<User> user = userDao.findUserByLogin(userName);
+            transaction.end();
+            if(user.isPresent() && passwordEncryptor.checkHash(password, user.get().getPassword())){
+                UserDto userDto = converter.convert(user.get());
+                return Optional.of(userDto);
             }
+        } catch (DaoException e) {
+            logger.error("Can't handle signIn request at UserService.", e);
+            throw new ServiceException("Can't handle signIn request at UserService.", e);
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<UserDto> signUp(String userName, String firstName, String lastName, String email, String phone, String password) throws ServiceException {
-        if (!UserValidator.validate(userName, firstName, lastName, email, phone, password)) {
-            throw new ServiceException("User data didn't passed validation");
-        }else {
-            boolean check;
-            try {
+    public Optional<UserDto> signUp(String userName, String password, String firstName, String lastName, String email, String phone) throws ServiceException {
+        boolean check;
+        try {
+            transaction.init(userDao);
+            Optional<User> user = userDao.findUserByLogin(userName);
+            transaction.end();
+            if (user.isEmpty()){
                 transaction.initTransaction(userDao, clientDao);
-                User createUser = User.newBuilder()
+                User newUser = User.newBuilder()
                         .setUserName(userName)
                         .setFirstName(firstName)
                         .setLastName(lastName)
                         .setEmail(email)
                         .setPassword(passwordEncryptor.getHash(password))
                         .setDateJoined(LocalDate.now()).build();
-                check = userDao.create(createUser);
-                if(check){
-                        Client createClient = Client.newBuilder()
-                                .setUserId(createUser.getId())
-                                .setPhone(phone).build();
-                        clientDao.create(createClient);
-                }
+                check = userDao.create(newUser);
+                Client newClient = Client.newBuilder()
+                        .setUserId(newUser.getId())
+                        .setPhone(phone).build();
+                clientDao.create(newClient);
                 transaction.commit();
-            } catch (DaoException e) {
-                try {
-                    transaction.rollback();
-                } catch (DaoException ex) {
-                    logger.error("Unable to rollback.", e);
+                if (check){
+                    newUser.setActive(true);
+                    UserDto userDto = converter.convert(newUser);
+                    return Optional.of(userDto);
                 }
-                logger.error("Can't handle signIn request at UserService.", e);
-                throw new ServiceException("Can't handle signIn request at UserService.", e);
-            }finally {
+            }
+        } catch (DaoException e) {
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Unable to rollback.", e);
+            }
+            logger.error("Can't handle signIn request at UserService.", e);
+            throw new ServiceException("Can't handle signIn request at UserService.", e);
+        }finally {
                 try {
                     transaction.endTransaction();
                 } catch (DaoException e) {
                     logger.error("Error closing transaction.", e);
                 }
             }
-            if (check){
-                try {
-                    transaction.init(userDao);
-                    Optional<User> user = userDao.findUserByLogin(userName);
-                    transaction.end();
-                    if (user.isPresent()){
-                        UserDto userDto = converter.convert(user.get());
-                        return Optional.of(userDto);
-                    }
-                } catch (DaoException e) {
-                    logger.error("Can't handle signIn request at UserService.", e);
-                    throw new ServiceException("Can't handle signIn request at UserService.", e);
-                }
-            }
-        }
         return Optional.empty();
     }
+
+    @Override
+    public Map<String, String> isFormValid(String username, String password, String firstName, String lastName, String email, String phone) {
+        Map<String, String> userParameters = new HashMap<>();
+        userParameters.put(RequestParameter.USERNAME, username);
+        userParameters.put(RequestParameter.PASSWORD, password);
+        userParameters.put(RequestParameter.FIRSTNAME, firstName);
+        userParameters.put(RequestParameter.LASTNAME, lastName);
+        userParameters.put(RequestParameter.EMAIL, email);
+        userParameters.put(RequestParameter.PHONE, phone);
+        UserValidator.validate(userParameters);
+        return userParameters;
+    }
+
+    @Override
+    public boolean isPasswordsEquals(String password, String passwordRep) {
+        return password.equals(passwordRep);
+    }
+
 
 }

@@ -37,8 +37,8 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
             "JOIN role ON users.role_id = role.id " +
             "WHERE client.id = ?;";
 
-    private static final String INSERT_CLIENT = "INSERT INTO client(user_id, phone, date_of_birthday, is_regular) " +
-            "VALUES (?, ?, ?, ?)";
+    private static final String INSERT_CLIENT = "INSERT INTO client(user_id, phone) " +
+            "VALUES (?, ?)";
 
     private static final String DELETE_CLIENT_BY_ID = "DELETE FROM client WHERE id = ?;";
 
@@ -92,8 +92,6 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
         try (PreparedStatement statement = connection.prepareStatement(INSERT_CLIENT)){
             statement.setInt(1, entity.getUserId());
             statement.setString(2, entity.getPhone());
-            statement.setDate(3, Date.valueOf(entity.getDateOfBirthday()));
-            statement.setBoolean(4, entity.isRegular());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
