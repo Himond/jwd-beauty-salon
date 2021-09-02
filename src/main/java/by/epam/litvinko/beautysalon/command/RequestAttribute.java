@@ -22,6 +22,14 @@ public class RequestAttribute {
     public static final String PREV_REQUEST = "current_page";
     public static final String LOCALE = "locale";
 
+    public static final String EMAIL_SENT = "emailSent";
+    public static final String EMAIL_NOT_EXISTS = "emailNotExists";
+    public static final String CHANGE_PASSWORD_ERROR = "changePasswordError";
+
+    public static final String EMAIL_SENT_PATH = "message.emailSent";
+    public static final String EMAIL_NOT_EXISTS_PATH = "message.emailNotExists";
+    public static final String CHANGE_PASSWORD_ERROR_PATH = "message.changePasswordError";
+
     private RequestAttribute() {
     }
 }

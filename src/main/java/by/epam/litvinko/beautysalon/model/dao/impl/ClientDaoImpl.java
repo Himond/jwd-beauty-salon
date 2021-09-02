@@ -4,6 +4,7 @@ import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.dao.ClientDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
-public class ClientDaoImpl extends AbstractDao<Integer, Client>{
+public class ClientDaoImpl extends AbstractDao<Integer, Client> implements ClientDao {
 
     private static Logger logger = LogManager.getLogger(ClientDaoImpl.class);
 
@@ -36,6 +37,15 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
             "JOIN users ON client.user_id = users.id " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE client.id = ?;";
+
+    private static final String SELECT_CLIENT_BY_USER_ID = "SELECT client.id, client.user_id, " +
+            "client.phone, client.date_of_birthday, client.is_regular,  users.id, role.role, " +
+            "users.username, users.password, users.email, users.first_name, users.last_name, " +
+            "users.is_active, users.data_joined, users.photo " +
+            "FROM client " +
+            "JOIN users ON client.user_id = users.id " +
+            "JOIN role ON users.role_id = role.id " +
+            "WHERE client.user_id = ?;";
 
     private static final String INSERT_CLIENT = "INSERT INTO client(user_id, phone) " +
             "VALUES (?, ?)";
@@ -89,10 +99,17 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
     public boolean create(Client entity) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_CLIENT)){
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_CLIENT,  Statement.RETURN_GENERATED_KEYS)){
             statement.setInt(1, entity.getUserId());
             statement.setString(2, entity.getPhone());
             result = statement.executeUpdate() == 1;
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int clientId = generatedKeys.getInt(1);
+                entity.setId(clientId);
+            } else {
+                throw new SQLException("Can not make new client.");
+            }
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
@@ -137,13 +154,32 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
         return client;
     }
 
+    @Override
+    public Optional<Client> findClientByUserId(Integer id) throws DaoException {
+        Client client = null;
+        Connection connection = super.connection;
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_CLIENT_BY_USER_ID)){
+            statement.setInt(1, id);
+            statement.executeQuery();
+            try (ResultSet resultSet = statement.getResultSet()){
+                while (resultSet.next()) {
+                    client = buildClient(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return Optional.ofNullable(client);
+    }
+
+
 
     private Client buildClient(ResultSet resultSet) throws SQLException {
         Client client;
         Client.Builder builder = Client.newBuilder();
         builder.setUserId(resultSet.getInt(CLIENT_USERS_ID))
                 .setPhone(resultSet.getString(CLIENT_PHONE))
-                .setDateOfBirthday(LocalDate.parse(resultSet.getString(CLIENT_DATE_OF_BIRTHDAY)))
                 .setIsRegular(resultSet.getBoolean(CLIENT_IS_REGULAR))
                 .setID(resultSet.getInt(CLIENT_ID))
                 .setRole(Role.valueOf(resultSet.getString(ROLE_ROLE).toUpperCase(Locale.ROOT)))
@@ -156,8 +192,12 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client>{
                 .setDateJoined(LocalDate.parse(resultSet.getString(USERS_DATA_JOINED)))
                 .setPhoto(resultSet.getBytes(USERS_PHOTO));
         client = builder.build();
+        if (resultSet.getString(CLIENT_DATE_OF_BIRTHDAY)!= null){
+            client.setDateOfBirthday(LocalDate.parse(resultSet.getString(CLIENT_DATE_OF_BIRTHDAY)));
+        }
         return client;
     }
+
 
 
 }

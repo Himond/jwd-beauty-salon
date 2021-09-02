@@ -64,6 +64,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             "JOIN role ON users.role_id = role.id " +
             "WHERE users.email = ?;" ;
 
+    private static final String SET_PASSWORD_BY_ID = "UPDATE Users SET password = ? WHERE id = ?";
 
     @Override
     public List<User> findAll() throws DaoException {
@@ -118,9 +119,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setBytes(8, entity.getPhoto());
             result = statement.executeUpdate() == 1;
             ResultSet generatedKeys = statement.getGeneratedKeys();
-            int userId;
             if (generatedKeys.next()) {
-                userId = generatedKeys.getInt(1);
+                int userId = generatedKeys.getInt(1);
                 entity.setId(userId);
             } else {
                 throw new SQLException("Can not make new user.");
@@ -231,6 +231,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return users;
+    }
+
+    @Override
+    public void setPasswordById(Integer id, String password) throws DaoException {
+        Connection connection = super.connection;
+        try (PreparedStatement statement = connection.prepareStatement(SET_PASSWORD_BY_ID)){
+                statement.setString(1, password);
+                statement.setInt(2, id);
+                statement.executeUpdate();
+        } catch (SQLException e) {
+                logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+                throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+        }
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

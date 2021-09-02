@@ -9,9 +9,11 @@ public class UserConverter implements Converter<UserDto, User> {
     @Override
     public UserDto convert(User entity) {
         UserDto userDto = new UserDto();
+        userDto.setId(entity.getId());
         userDto.setRole(entity.getRole());
         userDto.setFirstName(entity.getFirstName());
         userDto.setLastName(entity.getLastName());
+        userDto.setEmail(entity.getEmail());
         userDto.setActive(entity.isActive());
         userDto.setPhoto(entity.getPhoto());
         return userDto;

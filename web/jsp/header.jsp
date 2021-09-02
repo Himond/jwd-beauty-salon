@@ -61,9 +61,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
-                </li>
+                <c:if test="${user.getRole() == 'MASTER' or user.getRole() == 'CLIENT'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
+                    </li>
+                </c:if>
+
             </ul>
         </div>
 
@@ -81,7 +84,7 @@
             <div class="col-12">
                 <li class="list-inline-item">
                     <form  action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="hidden" name="command" value="change_locale_command">
+                        <input type="hidden" name="command" value="change_locale">
                         <button class="btn btn-social-icon btn-circle" style="margin-top: 16px" type="submit" name="locale" value="en_En" >
                             <img src="${pageContext.request.contextPath}/static/core/img/EN.png" alt="">
                         </button>
@@ -89,7 +92,7 @@
                 </li>
                 <li class="list-inline-item">
                     <form  action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="hidden" name="command" value="change_locale_command">
+                        <input type="hidden" name="command" value="change_locale">
                         <button class="btn btn-social-icon btn-circle" style="margin-top: 16px" type="submit" name="locale" value="ru_Ru" >
                             <img src="${pageContext.request.contextPath}/static/core/img/RU.png" alt="">
                         </button>

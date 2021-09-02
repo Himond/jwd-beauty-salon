@@ -12,6 +12,7 @@ public final class RequestParameter {
     public static final String LASTNAME = "last_name";
     public static final String IMAGE = "image";
     public static final String LOCALE = "locale";
+    public static final String RECOVER_EMAIL = "recoverEmail";
 
     private RequestParameter() {
     }

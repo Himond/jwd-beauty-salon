@@ -14,7 +14,8 @@ public class CommandProvider {
         commands.put(CommandType.DEFAULT, new DefaultCommand());
         commands.put(CommandType.LOG_OUT, new LogOutCommand());
         commands.put(CommandType.SIGN_UP, new SignUpCommand());
-        commands.put(CommandType.CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
+        commands.put(CommandType.CHANGE_LOCALE, new ChangeLocaleCommand());
+        commands.put(CommandType.FORGET_PASSWORD, new ForgetPasswordCommand());
     }
 
     public static CommandProvider getInstance() {

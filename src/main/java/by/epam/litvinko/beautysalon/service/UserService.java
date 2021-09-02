@@ -12,5 +12,7 @@ public interface UserService {
     Optional<UserDto> signUp(String username, String firstName, String lastName, String email, String phone, String password) throws ServiceException;
     Map<String, String> isFormValid(String username, String firstName, String lastName, String email, String phone, String password);
     boolean isPasswordsEquals(String password, String passwordRep);
+    boolean isEmailValid(String email);
+    boolean forgetPassword(String email) throws ServiceException;
 
 }

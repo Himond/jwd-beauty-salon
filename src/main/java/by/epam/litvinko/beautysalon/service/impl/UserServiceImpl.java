@@ -12,6 +12,7 @@ import by.epam.litvinko.beautysalon.service.UserService;
 import by.epam.litvinko.beautysalon.service.converter.Converter;
 import by.epam.litvinko.beautysalon.service.converter.impl.UserConverter;
 import by.epam.litvinko.beautysalon.service.dto.UserDto;
+import by.epam.litvinko.beautysalon.util.MailSender;
 import by.epam.litvinko.beautysalon.util.PasswordEncryptor;
 import by.epam.litvinko.beautysalon.validator.UserValidator;
 import org.apache.log4j.LogManager;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-    private UserDaoImpl userDao = new UserDaoImpl();
-    private ClientDaoImpl clientDao = new ClientDaoImpl();
+    private final UserDaoImpl userDao = new UserDaoImpl();
+    private final ClientDaoImpl clientDao = new ClientDaoImpl();
     private final EntityTransaction transaction = new EntityTransaction();
     private final PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();
     private final Converter<UserDto, User> converter = new UserConverter();
@@ -96,6 +97,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean forgetPassword(String email) throws ServiceException {
+        try {
+            transaction.init(userDao);
+            Optional<User> optionalUser = userDao.findUserByEmail(email);
+            transaction.end();
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                String newPassword = PasswordEncryptor.generateRandomPassword();
+                userDao.setPasswordById(user.getId(), passwordEncryptor.getHash(newPassword));
+                MailSender.send(email, MailSender.messageForgetPassword(user.getUserName(), newPassword));
+                return true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException("Can't handle forgetPassword request at UserService", e);
+        }
+        return false;
+    }
+
+    @Override
     public Map<String, String> isFormValid(String username, String password, String firstName, String lastName, String email, String phone) {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put(RequestParameter.USERNAME, username);
@@ -108,10 +128,18 @@ public class UserServiceImpl implements UserService {
         return userParameters;
     }
 
+
     @Override
     public boolean isPasswordsEquals(String password, String passwordRep) {
         return password.equals(passwordRep);
     }
+
+    @Override
+    public boolean isEmailValid(String email) {
+        return UserValidator.validateEmail(email);
+    }
+
+
 
 
 }

@@ -32,6 +32,7 @@
                 <label for="id_password_enter"><fmt:message key="placeholder.name.password"/></label>
                 <input  type="password" name="password" pattern="^.{4,18}$" id="id_password_enter" minlength="2" maxlength="30" required>
                     ${errorLoginPassMessage}
+                    ${emailSent}
                 <hr>
                 <button type="submit" class="btn btn-outline-dark"><fmt:message key="salon.signIn.enter"/></button>
                 <hr>

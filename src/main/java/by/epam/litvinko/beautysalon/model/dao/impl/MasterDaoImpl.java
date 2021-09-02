@@ -5,6 +5,7 @@ import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.dao.MasterDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
-public class MasterDaoImpl extends AbstractDao<Integer, Master>{
+public class MasterDaoImpl extends AbstractDao<Integer, Master> implements MasterDao {
 
     private static Logger logger = LogManager.getLogger(MasterDaoImpl.class);
 
@@ -41,6 +42,16 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
             "JOIN users ON master.user_id = users.id " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE master.id = ?;";
+
+    private static final String SELECT_MASTER_BY_USER_ID = "SELECT master.id, master.user_id, " +
+            "position.position, master.description, users.id, role.role, " +
+            "users.username, users.password, users.email, users.first_name, users.last_name, " +
+            "users.is_active, users.data_joined, users.photo " +
+            "FROM master " +
+            "JOIN position ON master.position_id = position.id " +
+            "JOIN users ON master.user_id = users.id " +
+            "JOIN role ON users.role_id = role.id " +
+            "WHERE master.user_id = ?;";
 
     private static final String INSERT_MASTER = "INSERT INTO master(user_id, position_id, description) " +
             "VALUES (?, ?, ?)";
@@ -143,6 +154,26 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
         return master;
     }
 
+    @Override
+    public Optional<Master> findMasterByUserId(Integer id) throws DaoException {
+        Master master = null;
+        Connection connection = super.connection;
+
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_MASTER_BY_USER_ID)){
+            statement.setInt(1, id);
+            statement.executeQuery();
+            try (ResultSet resultSet = statement.getResultSet()){
+                while (resultSet.next()) {
+                    master = buildMaster(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return Optional.ofNullable(master);
+    }
+
     private Master buildMaster(ResultSet resultSet) throws SQLException {
         Master master;
         Master.Builder builder = Master.newBuilder();
@@ -162,6 +193,7 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master>{
         master = builder.build();
         return master;
     }
+
 
 
 }

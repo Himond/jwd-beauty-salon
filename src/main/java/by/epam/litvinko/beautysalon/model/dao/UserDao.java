@@ -12,5 +12,6 @@ public interface UserDao {
     Optional<User> findUserByLogin(String login) throws DaoException;
     Optional<User> findUserByEmail(String email) throws DaoException;
     List<User> findAllByRoll(Role role) throws DaoException;
+    void setPasswordById(Integer id, String password) throws DaoException;
 
 }
