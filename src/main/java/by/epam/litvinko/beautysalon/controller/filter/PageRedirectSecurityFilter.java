@@ -5,9 +5,11 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-//@WebFilter( urlPatterns = { "/jsp/login.jsp" },
-  //   initParams = { @WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
+//@WebFilter( urlPatterns = { "/jsp/*" },
+     //initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
 public class PageRedirectSecurityFilter implements Filter {
 
     private String indexPath;
@@ -19,7 +21,6 @@ public class PageRedirectSecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        System.out.println(indexPath);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);

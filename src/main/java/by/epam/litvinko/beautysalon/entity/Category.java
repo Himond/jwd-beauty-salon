@@ -1,6 +1,6 @@
 package by.epam.litvinko.beautysalon.entity;
 
-public class Category extends Entity{
+public class Category extends AbstractEntity {
 
     private String name;
 

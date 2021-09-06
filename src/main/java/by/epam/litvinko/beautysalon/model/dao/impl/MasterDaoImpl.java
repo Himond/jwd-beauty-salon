@@ -180,7 +180,7 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
         builder.setUserId(resultSet.getInt(MASTER_USERS_ID))
                 .setPosition(Position.valueOf(resultSet.getString(POSITION_POSITION).toUpperCase(Locale.ROOT)))
                 .setDescription(resultSet.getString(MASTER_DESCRIPTION))
-                .setID(resultSet.getInt(MASTER_ID))
+                .setId(resultSet.getInt(MASTER_ID))
                 .setRole(Role.valueOf(resultSet.getString(ROLE_ROLE).toUpperCase(Locale.ROOT)))
                 .setUserName(resultSet.getString(USERS_USERNAME))
                 .setPassword(resultSet.getString(USERS_PASSWORD))

@@ -1,6 +1,6 @@
 package by.epam.litvinko.beautysalon.controller.filter;
 
-import by.epam.litvinko.beautysalon.command.RequestAttribute;
+import by.epam.litvinko.beautysalon.controller.command.RequestAttribute;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;

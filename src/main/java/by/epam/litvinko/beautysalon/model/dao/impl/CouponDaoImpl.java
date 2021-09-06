@@ -137,7 +137,7 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
         Coupon coupon;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Coupon.Builder builder = Coupon.newBuilder();
-        builder.setID(resultSet.getInt(COUPON_ID))
+        builder.setId(resultSet.getInt(COUPON_ID))
                 .setCode(resultSet.getString(COUPON_CODE))
                 .setValidFrom(LocalDateTime.parse(resultSet.getString(COUPON_VALID_FROM), formatter))
                 .setValidTo(LocalDateTime.parse(resultSet.getString(COUPON_VALID_TO), formatter))

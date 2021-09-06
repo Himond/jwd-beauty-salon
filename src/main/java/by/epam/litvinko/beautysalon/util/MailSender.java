@@ -61,9 +61,10 @@ public class MailSender {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             message.setSubject(MAIL_SUBJECT);
             message.setText(messageText);
+            System.out.println("TUTUTUTUT");
             Transport.send(message);
         } catch (MessagingException e) {
-            System.out.println("MESSSEGE ERROR " +  e.getMessage());
+            System.out.println("MESSAGE ERROR " +  e.getMessage());
             logger.log(Level.ERROR, "MessagingException: " + e.getMessage());
         }
     }

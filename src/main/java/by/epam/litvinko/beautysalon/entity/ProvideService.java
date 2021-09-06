@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class ProvideService extends Entity {
+public class ProvideService extends AbstractEntity {
 
     private int categoryId;
     private String name;
@@ -152,7 +152,7 @@ public class ProvideService extends Entity {
         public Builder() {
         }
 
-        public ProvideService.Builder setID(int id){
+        public ProvideService.Builder setId(int id){
             ProvideService.this.setId(id);
             return this;
         }

@@ -51,7 +51,7 @@
             <div class="card-header"><h3><fmt:message key="signUp.page.rowOne"/></h3></div>
             <div class="card-body">
                 <h5 class="card-title"><fmt:message key="signUp.page.rowTwo"/></h5>
-                <h3>${user.getFirstName()} ${user.getLastName()}.</h3>
+                <h3>${user.firstName()} ${user.lastName()}.</h3>
                 <hr>
                 <h5 class="card-text"><fmt:message key="signUp.page.rowThree"/></h5>
             </div>

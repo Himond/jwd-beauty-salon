@@ -29,7 +29,7 @@ public class UserDaoTest {
 
 
         User.Builder builder = User.newBuilder();
-        builder.setID(3)
+        builder.setId(3)
                 .setRole(Role.CLIENT)
                 .setUserName("client1")
                 .setPassword("$2a$12$4tIZJUQjXKo6xR6/yY6bZeVPVS1d9shjIaevwPnhsQ48adG3ophx2")
@@ -42,7 +42,7 @@ public class UserDaoTest {
         expected = builder.build();
 
         User.Builder builder1 = User.newBuilder();
-        builder1.setID(17)
+        builder1.setId(17)
                 .setRole(Role.MASTER)
                 .setUserName("master2")
                 .setPassword("master2")

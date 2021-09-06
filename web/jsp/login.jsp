@@ -36,15 +36,15 @@
                 <hr>
                 <button type="submit" class="btn btn-outline-dark"><fmt:message key="salon.signIn.enter"/></button>
                 <hr>
-                <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
-                <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
+                <label><a href="${pageContext.request.contextPath}/jsp/forgot_password.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
+                <label><a href="${pageContext.request.contextPath}/jsp/signup.jsp.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
             </div>
         </form>
 
     </c:when>
     <c:otherwise>
         <div class="form-inner">
-            <h6 class="text-center" style="color:black"><fmt:message key="signIn.page.rowOne"/> ${user.getFirstName()}!</h6>
+            <h6 class="text-center" style="color:black"><fmt:message key="signIn.page.rowOne"/> ${user.firstName()}!</h6>
         </div>
         <hr>
         <div class="row row-cols-1 row-cols-md-3 g-4">

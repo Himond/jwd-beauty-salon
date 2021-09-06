@@ -3,7 +3,7 @@ package by.epam.litvinko.beautysalon.entity;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class User extends Entity{
+public class User extends AbstractEntity {
 
     private Role role;
     private String userName;
@@ -151,7 +151,7 @@ public class User extends Entity{
         public Builder() {
         }
 
-        public User.Builder setID(int id){
+        public User.Builder setId(int id){
             User.this.setId(id);
             return this;
         }

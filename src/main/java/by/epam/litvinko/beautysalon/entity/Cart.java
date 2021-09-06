@@ -3,17 +3,17 @@ package by.epam.litvinko.beautysalon.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cart extends Entity {
+public class Cart extends AbstractEntity {
 
-    private int orderID;
+    private int orderId;
     private Map<ProvideService, Master> services = new HashMap<>();
 
-    public int getOrderID() {
-        return orderID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public Map<ProvideService, Master> getService() {

@@ -2,7 +2,7 @@ package by.epam.litvinko.beautysalon.entity;
 
 import java.time.LocalDate;
 
-public class Order extends Entity{
+public class Order extends AbstractEntity {
 
     private int clientId;
     private int couponId;
@@ -100,7 +100,7 @@ public class Order extends Entity{
         public Builder() {
         }
 
-        public Order.Builder setID(int id){
+        public Order.Builder setId(int id){
             Order.this.setId(id);
             return this;
         }

@@ -177,7 +177,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     private ProvideService buildProvideService(ResultSet resultSet) throws SQLException {
         ProvideService service;
         ProvideService.Builder builder = ProvideService.newBuilder();
-        builder.setID(resultSet.getInt(SERVICE_ID))
+        builder.setId(resultSet.getInt(SERVICE_ID))
                 .setCategoryId(resultSet.getInt(SERVICE_CATEGORY_ID))
                 .setName(resultSet.getString(SERVICE_NAME))
                 .setDescription(resultSet.getString(SERVICE_DESCRIPTION))

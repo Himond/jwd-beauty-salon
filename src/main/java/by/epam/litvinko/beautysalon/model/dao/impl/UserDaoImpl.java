@@ -249,7 +249,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     private User buildUser(ResultSet resultSet) throws SQLException {
         User user;
         User.Builder builder = User.newBuilder();
-        builder.setID(resultSet.getInt(USERS_ID))
+        builder.setId(resultSet.getInt(USERS_ID))
                 .setRole(Role.valueOf(resultSet.getString(ROLE_ROLE).toUpperCase(Locale.ROOT)))
                 .setUserName(resultSet.getString(USERS_USERNAME))
                 .setPassword(resultSet.getString(USERS_PASSWORD))

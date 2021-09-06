@@ -181,7 +181,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
         builder.setUserId(resultSet.getInt(CLIENT_USERS_ID))
                 .setPhone(resultSet.getString(CLIENT_PHONE))
                 .setIsRegular(resultSet.getBoolean(CLIENT_IS_REGULAR))
-                .setID(resultSet.getInt(CLIENT_ID))
+                .setId(resultSet.getInt(CLIENT_ID))
                 .setRole(Role.valueOf(resultSet.getString(ROLE_ROLE).toUpperCase(Locale.ROOT)))
                 .setUserName(resultSet.getString(USERS_USERNAME))
                 .setPassword(resultSet.getString(USERS_PASSWORD))

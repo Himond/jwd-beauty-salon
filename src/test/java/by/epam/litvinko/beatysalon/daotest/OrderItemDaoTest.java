@@ -48,7 +48,7 @@ public class OrderItemDaoTest {
         try {
             orderDao.create(order);
             if (order.getId() != 0){
-                cart.setOrderID(order.getId());
+                cart.setOrderId(order.getId());
                 itemDao.create(cart);
             }
             transaction.commit();

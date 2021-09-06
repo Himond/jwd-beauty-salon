@@ -36,7 +36,7 @@ public class CartDaoImpl extends AbstractDao<Integer, Cart> {
         Connection connection = super.connection;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_ITEM)){
             for (ProvideService provideService: entity.getService().keySet()){
-                statement.setInt(1, entity.getOrderID());
+                statement.setInt(1, entity.getOrderId());
                 statement.setInt(2, provideService.getId());
                 statement.setInt(3, entity.getService().get(provideService).getId());
                 result = statement.executeUpdate() == 1;

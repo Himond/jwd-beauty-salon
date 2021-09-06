@@ -1,6 +1,6 @@
 package by.epam.litvinko.beautysalon.entity;
 
-public class ProvideServiceReview extends Entity{
+public class ProvideServiceReview extends AbstractEntity {
 
     private int clientId;
     private int serviceId;

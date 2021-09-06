@@ -1,6 +1,6 @@
 package by.epam.litvinko.beautysalon.model.dao;
 
-import by.epam.litvinko.beautysalon.entity.Entity;
+import by.epam.litvinko.beautysalon.entity.AbstractEntity;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDao<K extends Number, T extends Entity>{
+public abstract class AbstractDao<K extends Number, T extends AbstractEntity>{
 
     private static final Logger logger = LogManager.getLogger(AbstractDao.class);
 

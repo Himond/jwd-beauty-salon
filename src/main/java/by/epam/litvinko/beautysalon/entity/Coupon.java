@@ -2,7 +2,7 @@ package by.epam.litvinko.beautysalon.entity;
 
 import java.time.LocalDateTime;
 
-public class Coupon extends Entity{
+public class Coupon extends AbstractEntity {
 
     private String code;
     private LocalDateTime validFrom;
@@ -108,7 +108,7 @@ public class Coupon extends Entity{
         public Builder() {
         }
 
-        public Coupon.Builder setID(int id){
+        public Coupon.Builder setId(int id){
             Coupon.this.setId(id);
             return this;
         }

@@ -41,7 +41,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0d0d0d radial-gradient(circle farthest-corner at 100px 50px, #0d0d0d, #412a10);">
     <div class="navbar-header ">
-        <a class="navbar-brand center-block" href="">
+        <a class="navbar-brand center-block" href="${pageContext.request.contextPath}/jsp/main.jsp">
             <img src="${pageContext.request.contextPath}/static/core/img/main_logo3.jpg" width="220" height="68"   alt="">
         </a>
     </div>
@@ -53,7 +53,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><h5><fmt:message key="salon.base"/></h5></a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/jsp/main.jsp"><h5><fmt:message key="salon.base"/></h5></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b><h5><fmt:message key="salon.services"/></h5></b></a>
@@ -61,9 +61,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
-                <c:if test="${user.getRole() == 'MASTER' or user.getRole() == 'CLIENT'}">
+                <c:if test="${user.role() == 'MASTER' or user.role() == 'CLIENT'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/jsp/profile.jsp"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
                     </li>
                 </c:if>
 
@@ -123,8 +123,8 @@
                                                  <hr>
                                                  <button type="submit" class="btn btn-outline-dark"><fmt:message key="salon.signIn.enter"/></button>
                                                  <hr>
-                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
-                                                 <label><a href="" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
+                                                 <label><a href="${pageContext.request.contextPath}/jsp/forgot_password.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
+                                                 <label><a href="${pageContext.request.contextPath}/jsp/signup.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
                                              </div>
                                          </form>
                                      </div>
