@@ -11,6 +11,10 @@ public interface ClientService {
 
     Optional<ClientDto> signIn(UserDto user) throws ServiceException;
     Optional<ClientDto> signUp(String userName, String firstName, String lastName, String email, String phone, String password) throws ServiceException;
+    Optional<ClientDto> editData(String userId, String firstName, String lastName, String email, String phone, String birthday) throws ServiceException;
+    Optional<ClientDto> findClientByUserId(String userId) throws ServiceException;
     Map<String, String> isFormValid(String userName, String firstName, String lastName, String email, String phone, String password);
+    Map<String, String> isEditFormValid(String firstName, String lastName, String email, String phone, String date);
     boolean isPasswordsEquals(String password, String passwordRep);
+
 }

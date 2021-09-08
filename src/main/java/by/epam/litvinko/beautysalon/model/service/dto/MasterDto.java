@@ -7,7 +7,7 @@ import by.epam.litvinko.beautysalon.entity.Role;
 import java.io.Serializable;
 
 public record MasterDto(int userId, Role role, String firstName, String lastName, String email,
-                        boolean isActive, byte[] photo, Position position, String description) implements Serializable, Cloneable {
+                        boolean isActive, String photo, Position position, String description) implements Serializable, Cloneable {
 
     public static MasterDto create(Master master){
         MasterDto masterDto = new MasterDto(master.getUserId(), master.getRole(), master.getFirstName(),

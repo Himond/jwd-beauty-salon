@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 public record UserDto(int id, Role role, String firstName,
-                     String lastName, String email, boolean isActive, byte[] photo) implements Serializable, Cloneable {
+                      String lastName, String email, boolean isActive, String photo) implements Serializable, Cloneable {
 
     public static UserDto create(User user){
         UserDto userDto = new UserDto(user.getId(), user.getRole(), user.getFirstName(),

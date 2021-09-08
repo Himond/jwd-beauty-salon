@@ -8,6 +8,7 @@ import by.epam.litvinko.beautysalon.model.dao.ClientDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,8 +53,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
     private static final String DELETE_CLIENT_BY_ID = "DELETE FROM client WHERE id = ?;";
 
-    private static final String UPDATE_CLIENT_BY_ID = "UPDATE client SET user_id = ?, " +
-            "phone = ?, date_of_birthday = ?" +
+    private static final String UPDATE_CLIENT_BY_ID = "UPDATE client SET phone = ?, date_of_birthday = ?" +
             "WHERE id = ?;";
 
     @Override
@@ -134,14 +134,15 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 
     @Override
     public Optional<Client> update(Client entity) throws DaoException {
-        Optional<Client> client;
+        Optional<Client> optionalClient;
         Connection connection = super.connection;
-        client = findById(entity.getId());
-        if (client.isPresent()) {
+        optionalClient = findClientByUserId(entity.getUserId());
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_CLIENT_BY_ID)){
-                statement.setInt(1, entity.getUserId());
-                statement.setString(2, entity.getPhone());
-                statement.setDate(3, Date.valueOf(entity.getDateOfBirthday()));
+                statement.setString(1, entity.getPhone());
+                statement.setDate(2, Date.valueOf(entity.getDateOfBirthday()));
+                statement.setInt(3, client.getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
@@ -150,8 +151,8 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
         } else {
             logger.info("Client id = " + entity.getId() + " don't exist.");
         }
-        client = findById(entity.getId());
-        return client;
+        optionalClient = findClientByUserId(entity.getId());
+        return optionalClient;
     }
 
     @Override
@@ -190,7 +191,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
                 .setLastName(resultSet.getString(USERS_LAST_NAME))
                 .setIsActive(resultSet.getBoolean(USERS_ACTIVE))
                 .setDateJoined(LocalDate.parse(resultSet.getString(USERS_DATA_JOINED)))
-                .setPhoto(resultSet.getBytes(USERS_PHOTO));
+                .setPhoto(resultSet.getString(USERS_PHOTO));
         client = builder.build();
         if (resultSet.getString(CLIENT_DATE_OF_BIRTHDAY)!= null){
             client.setDateOfBirthday(LocalDate.parse(resultSet.getString(CLIENT_DATE_OF_BIRTHDAY)));

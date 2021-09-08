@@ -1,6 +1,6 @@
 package by.epam.litvinko.beautysalon.model.validator.impl;
 
-import by.epam.litvinko.beautysalon.controller.command.RequestParameter;
+import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 import by.epam.litvinko.beautysalon.manager.PropertyManager;
 import by.epam.litvinko.beautysalon.model.validator.UserValidator;
 
@@ -28,26 +28,26 @@ public class UserValidatorImpl implements UserValidator {
 
     @Override
     public boolean validate(Map<String, String> formData) {
-        if (!validateUsername(formData.get(RequestParameter.USERNAME))) {
-            formData.put(RequestParameter.USERNAME, EMPTY_ROW);
+        if (!validateUsername(formData.get(USERNAME))) {
+            formData.put(USERNAME, EMPTY_ROW);
         }
-        if (!validatePassword(formData.get(RequestParameter.PASSWORD))) {
-            formData.put(RequestParameter.PASSWORD, EMPTY_ROW);
+        if (!validatePassword(formData.get(PASSWORD))) {
+            formData.put(PASSWORD, EMPTY_ROW);
         }
-        if (!validateFio(formData.get(RequestParameter.FIRSTNAME))) {
-            formData.put(RequestParameter.FIRSTNAME, EMPTY_ROW);
-        }
-        if (!validateFio(formData.get(RequestParameter.LASTNAME))) {
-            formData.put(RequestParameter.LASTNAME, EMPTY_ROW);
-        }
-        if (!validateEmail(formData.get(RequestParameter.EMAIL))) {
-            formData.put(RequestParameter.EMAIL, EMPTY_ROW);
-        }
-        if (!validatePhoneNumber(formData.get(RequestParameter.PHONE))) {
-            formData.put(RequestParameter.PHONE, EMPTY_ROW);
+        validateData(formData);
+        return !formData.containsValue(EMPTY_ROW);
+    }
+
+    @Override
+    public boolean validateEditData(Map<String, String> formData) {
+        validateData(formData);
+        if (!validateDate(formData.get(BIRTHDAY))) {
+            formData.put(BIRTHDAY, EMPTY_ROW);
         }
         return !formData.containsValue(EMPTY_ROW);
     }
+
+
 
     @Override
     public boolean validateUsername(String username) {
@@ -81,5 +81,20 @@ public class UserValidatorImpl implements UserValidator {
 
     private boolean isMatchFounded(String text, String regex) {
         return text != null && text.matches(regex);
+    }
+
+    private void validateData(Map<String, String> formData) {
+        if (!validateFio(formData.get(FIRSTNAME))) {
+            formData.put(FIRSTNAME, EMPTY_ROW);
+        }
+        if (!validateFio(formData.get(LASTNAME))) {
+            formData.put(LASTNAME, EMPTY_ROW);
+        }
+        if (!validateEmail(formData.get(EMAIL))) {
+            formData.put(EMAIL, EMPTY_ROW);
+        }
+        if (!validatePhoneNumber(formData.get(PHONE))) {
+            formData.put(PHONE, EMPTY_ROW);
+        }
     }
 }

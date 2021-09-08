@@ -1,9 +1,11 @@
 package by.epam.litvinko.beautysalon.controller;
 
 import by.epam.litvinko.beautysalon.controller.command.*;
+import by.epam.litvinko.beautysalon.entity.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,9 @@ import java.io.IOException;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/controller", "*.do"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 25)
 public class Controller extends HttpServlet {
 
     private final CommandProvider COMMAND_PROVIDER = CommandProvider.getInstance();

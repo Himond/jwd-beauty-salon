@@ -68,6 +68,7 @@ public class SignInCommand implements Command {
                 request.getSession().setAttribute(WRONG_USERNAME_OR_PASSWORD_SING_IN, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(WRONG_USERNAME_OR_PASSWORD_SING_IN_PATH));
 
             }
+
             router = new Router(LOGIN_JSP, RouterType.REDIRECT);
         }catch (ServiceException e) {
             logger.error("Error at SignInCommand", e);

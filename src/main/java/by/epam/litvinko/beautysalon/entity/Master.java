@@ -1,7 +1,5 @@
 package by.epam.litvinko.beautysalon.entity;
 
-import java.util.Arrays;
-
 public class Master extends User{
 
     private int userId;
@@ -70,7 +68,7 @@ public class Master extends User{
         sb.append(", lastName='").append(getLastName()).append('\'');
         sb.append(", isActive=").append(isActive());
         sb.append(", dateJoined=").append(getDateJoined());
-        sb.append(", photo=").append(Arrays.toString(getPhoto()));
+        sb.append(", photo=").append(getPhoto());
         sb.append(", position=").append(position);
         sb.append(", description='").append(description).append('\'');
         sb.append('}');

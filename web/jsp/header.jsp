@@ -123,8 +123,8 @@
                                                  <hr>
                                                  <button type="submit" class="btn btn-outline-dark"><fmt:message key="salon.signIn.enter"/></button>
                                                  <hr>
-                                                 <label><a href="${pageContext.request.contextPath}/jsp/forgot_password.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
-                                                 <label><a href="${pageContext.request.contextPath}/jsp/signup.jsp" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
+                                                 <label><a href="${pageContext.request.contextPath}/controller?command=go_to_forgot_password_page" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.forgotPassword"/></a></label>
+                                                 <label><a href="${pageContext.request.contextPath}/controller?command=go_to_signup_page" style="color:white; font-size: 15px; text-decoration: none;"><fmt:message key="button.name.createAnAccount"/></a></label>
                                              </div>
                                          </form>
                                      </div>

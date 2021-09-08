@@ -28,12 +28,16 @@ public class RequestAttribute {
     public static final String CHANGE_PASSWORD_ERROR = "changePasswordError";
     public static final String EDIT_PASSWORD_SUCCESSFULLY = "editPassword";
     public static final String EDIT_PASSWORD_ERROR = "editPasswordError";
+    public static final String EDIT_USER_DATA_ERROR = "editProfileError";
+
+
 
     public static final String EMAIL_SENT_PATH = "message.emailSent";
     public static final String EMAIL_NOT_EXISTS_PATH = "message.emailNotExists";
     public static final String CHANGE_PASSWORD_ERROR_PATH = "message.changePasswordError";
     public static final String EDIT_PASSWORD_SUCCESSFULLY_PATH = "message.editPassword";
     public static final String EDIT_PASSWORD_ERROR_PATH = "message.editPasswordError";
+    public static final String EDIT_USER_DATA_ERROR_PATH = "message.editProfileError";
 
 
     private RequestAttribute() {

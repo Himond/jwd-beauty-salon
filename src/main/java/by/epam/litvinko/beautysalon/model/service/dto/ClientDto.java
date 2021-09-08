@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public record ClientDto(int userId, Role role, String firstName, String lastName, String email,
-                      boolean isActive, byte[] photo, String phone, LocalDate dateOfBirth) implements Serializable, Cloneable {
+                        boolean isActive, String photo, String phone, LocalDate dateOfBirth) implements Serializable, Cloneable {
 
     public static ClientDto create(Client client){
         ClientDto clientDto = new ClientDto(client.getUserId(), client.getRole(), client.getFirstName(),

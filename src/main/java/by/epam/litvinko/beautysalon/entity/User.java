@@ -1,7 +1,7 @@
 package by.epam.litvinko.beautysalon.entity;
 
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class User extends AbstractEntity {
 
@@ -13,7 +13,7 @@ public class User extends AbstractEntity {
     private String lastName;
     private boolean isActive;
     private LocalDate dateJoined;
-    private byte[] photo;
+    private String photo;
 
     public User() {
         this.role = Role.CLIENT;
@@ -83,11 +83,11 @@ public class User extends AbstractEntity {
         this.dateJoined = dateJoined;
     }
 
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -107,7 +107,7 @@ public class User extends AbstractEntity {
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (dateJoined != null ? !dateJoined.equals(user.dateJoined) : user.dateJoined != null) return false;
-        return Arrays.equals(photo, user.photo);
+        return photo != null ? photo.equals(user.photo) : user.photo == null;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class User extends AbstractEntity {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (isActive ? 1 : 0);
         result = 31 * result + (dateJoined != null ? dateJoined.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(photo);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
         return result;
     }
 
@@ -129,7 +129,6 @@ public class User extends AbstractEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("role=").append(role);
-        sb.append(", id='").append(getId()).append('\'');
         sb.append(", userName='").append(userName).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
@@ -137,7 +136,7 @@ public class User extends AbstractEntity {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", isActive=").append(isActive);
         sb.append(", dateJoined=").append(dateJoined);
-        sb.append(", photo=").append(Arrays.toString(photo));
+        sb.append(", photo=").append(photo);
         sb.append('}');
         return sb.toString();
     }
@@ -196,7 +195,7 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        public User.Builder setPhoto(byte[] photo){
+        public User.Builder setPhoto(String photo){
             User.this.photo = photo;
             return this;
         }

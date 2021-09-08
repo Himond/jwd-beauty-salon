@@ -58,9 +58,25 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
         } catch (DaoException e) {
+            logger.error("Can't handle forgetPassword request at UserService", e);
             throw new ServiceException("Can't handle forgetPassword request at UserService", e);
         }
         return false;
+    }
+
+    @Override
+    public void updateUserPhoto(String userId, String photo) throws ServiceException {
+        final UserDaoImpl userDao = new UserDaoImpl();
+        final EntityTransaction transaction = new EntityTransaction();
+        try {
+            transaction.init(userDao);
+            userDao.updateUserPhotoById(userId, photo);
+            transaction.end();
+        } catch (DaoException e) {
+            e.printStackTrace();
+            logger.error("Can't update user photo", e);
+            throw new ServiceException("Can't update user photo", e);
+        }
     }
 
     @Override

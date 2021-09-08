@@ -82,7 +82,7 @@ public class Client extends User {
         sb.append(", lastName='").append(getLastName()).append('\'');
         sb.append(", isActive=").append(isActive());
         sb.append(", dateJoined=").append(getDateJoined());
-        sb.append(", photo=").append(Arrays.toString(getPhoto()));
+        sb.append(", photo=").append(getPhoto());
         sb.append(", phone='").append(phone).append('\'');
         sb.append(", dateOfBirthday=").append(dateOfBirthday);
         sb.append(", isRegular=").append(isRegular);

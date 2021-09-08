@@ -4,6 +4,7 @@ import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.entity.User;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,9 @@ public interface UserDao {
 
     Optional<User> findUserByLogin(String login) throws DaoException;
     Optional<User> findUserByEmail(String email) throws DaoException;
+    void updateUserPhotoById(String userId, String photo) throws DaoException;
     List<User> findAllByRoll(Role role) throws DaoException;
     void setPasswordById(Integer id, String password) throws DaoException;
+
 
 }

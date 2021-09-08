@@ -28,15 +28,38 @@
                     <hr>
                     <div class="card mb-3 center-block" style="max-width: 1000px;">
                         <div class="row no-gutters">
-                            <div class="col-md-4">
+                            <div class="col-md-4 center-block text-center">
                                 <c:choose>
                                     <c:when test="${empty user.photo()}">
                                         <img src="${pageContext.request.contextPath}/static/core/img/account.png" class="card-img " alt="...">
                                     </c:when>
                                     <c:otherwise>
-
+                                        <img src="${pageContext.request.contextPath}/uploads/${user.photo()}" class="card-img " alt="..." >
                                     </c:otherwise>
                                 </c:choose>
+                                <button class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#photoModal" type="submit"><fmt:message key="editProfile.page.uploadPhoto"/></button>
+                                <!-- Modal -->
+                                <div class="modal fade" style="padding: 15px" id="photoModal" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body bg-footer">
+                                                <form class="transparent" method="POST" action="${pageContext.request.contextPath}/controller" enctype="multipart/form-data">
+                                                    <input type="hidden" name="command" value="edit_photo">
+                                                    <input type="hidden" type="text" name="user_id" value="${user.userId()}">
+                                                    <div class="form-inner">
+                                                        <h6><fmt:message key="editProfile.page.uploadPhoto"/></h6>
+                                                        <br/>
+                                                        <label for="id_photo"><fmt:message key="placeholder.name.photo"/></label>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" name="image" id="id_photo" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-outline-dark"><fmt:message key="editProfile.button.uploadPhoto"/></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -50,11 +73,11 @@
                                     <div class="card-footer">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <form action="${pageContext.request.contextPath}/controller" method="post">
-                                                <input type="hidden" name="command" value="go_to_edit_password_page_command">
+                                                <input type="hidden" name="command" value="go_to_edit_password_page">
                                                 <button type="submit" class="btn btn-outline-dark"><fmt:message key="dashboard.page.editPassword"/></button>
                                             </form>
                                             <form action="${pageContext.request.contextPath}/controller" method="post">
-                                                <input type="hidden" name="command" value="go_to_edit_profile_page_command">
+                                                <input type="hidden" name="command" value="go_to_edit_profile_page">
                                                 <input type="hidden" name="first_name" value="${user.firstName()}">
                                                 <input type="hidden" name="last_name" value="${user.lastName()}">
                                                 <input type="hidden" name="email" value="${user.email()}">
@@ -91,6 +114,7 @@
 
                         </c:otherwise>
                     </c:choose>
+
                     <figcaption class="text-center">
                         <h3>${user.firstName()} ${user.lastName()}</h3>
                         <span><b>${user.position()}</b></span>

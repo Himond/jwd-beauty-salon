@@ -10,6 +10,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 
+import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -189,7 +190,7 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
                 .setLastName(resultSet.getString(USERS_LAST_NAME))
                 .setIsActive(resultSet.getBoolean(USERS_ACTIVE))
                 .setDateJoined(LocalDate.parse(resultSet.getString(USERS_DATA_JOINED)))
-                .setPhoto(resultSet.getBytes(USERS_PHOTO));
+                .setPhoto(resultSet.getString(USERS_PHOTO));
         master = builder.build();
         return master;
     }

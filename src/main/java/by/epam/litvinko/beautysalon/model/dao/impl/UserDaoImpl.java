@@ -9,12 +9,14 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
@@ -46,8 +48,10 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?;";
 
-    private static final String UPDATE_USER_BY_ID = "UPDATE users SET username = ?, " +
-            "password = ?, email = ?, first_name = ?, last_name = ?, is_active = ?, data_joined = ?, photo = ? " +
+    private static final String UPDATE_USER_BY_ID = "UPDATE users SET email = ?, first_name = ?, last_name = ? " +
+            "WHERE id = ?;";
+
+    private static final String UPDATE_USER_PHOTO_BY_ID = "UPDATE users SET photo = ? " +
             "WHERE id = ?;";
 
     private static final String SELECT_USER_BY_LOGIN = "SELECT users.id, role.role, users.username, " +
@@ -116,7 +120,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setString(5, entity.getFirstName());
             statement.setString(6, entity.getLastName());
             statement.setDate(7, Date.valueOf(LocalDate.now()));
-            statement.setBytes(8, entity.getPhoto());
+            statement.setString(8, entity.getPhoto());
             result = statement.executeUpdate() == 1;
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -155,15 +159,10 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         user = findById(entity.getId());
         if (user.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID)){
-                statement.setString(1, entity.getUserName());
-                statement.setString(2, entity.getPassword());
-                statement.setString(3, entity.getEmail());
-                statement.setString(4, entity.getFirstName());
-                statement.setString(5, entity.getLastName());
-                statement.setBoolean(6, entity.isActive());
-                statement.setDate(7, Date.valueOf(entity.getDateJoined()));
-                statement.setBytes(8, entity.getPhoto());
-                statement.setInt(9, entity.getId());
+                statement.setString(1, entity.getEmail());
+                statement.setString(2, entity.getFirstName());
+                statement.setString(3, entity.getLastName());
+                statement.setInt(4, entity.getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
@@ -215,6 +214,20 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     }
 
     @Override
+    public void updateUserPhotoById(String userId, String photo) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PHOTO_BY_ID)){
+            statement.setString(1, photo);
+            statement.setInt(2, Integer.parseInt(userId));
+            statement.executeUpdate();
+            System.out.println("Complete FILE");
+        } catch (SQLException e) {
+            logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+            throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+        }
+
+    }
+
+    @Override
     public List<User> findAllByRoll(Role role) throws DaoException {
         List<User> users = new ArrayList<>();
         Connection connection = super.connection;
@@ -258,7 +271,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
                 .setLastName(resultSet.getString(USERS_LAST_NAME))
                 .setIsActive(resultSet.getBoolean(USERS_ACTIVE))
                 .setDateJoined(LocalDate.parse(resultSet.getString(USERS_DATA_JOINED)))
-                .setPhoto(resultSet.getBytes(USERS_PHOTO));
+                .setPhoto(resultSet.getString(USERS_PHOTO));
         user = builder.build();
         return user;
     }
