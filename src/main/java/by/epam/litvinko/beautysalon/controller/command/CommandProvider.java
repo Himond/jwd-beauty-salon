@@ -1,10 +1,7 @@
 package by.epam.litvinko.beautysalon.controller.command;
 
 import by.epam.litvinko.beautysalon.controller.command.impl.*;
-import by.epam.litvinko.beautysalon.controller.command.impl.go.GoToEditPasswordPageCommand;
-import by.epam.litvinko.beautysalon.controller.command.impl.go.GoToEditProfilePageCommand;
-import by.epam.litvinko.beautysalon.controller.command.impl.go.GoToForgotPasswordPageCommand;
-import by.epam.litvinko.beautysalon.controller.command.impl.go.GoToSignUpPageCommand;
+import by.epam.litvinko.beautysalon.controller.command.impl.go.*;
 
 import java.util.EnumMap;
 
@@ -23,10 +20,14 @@ public class CommandProvider {
         commands.put(CommandType.EDIT_PASSWORD, new EditPasswordCommand());
         commands.put(CommandType.EDIT_PROFILE, new EditProfileCommand());
         commands.put(CommandType.EDIT_PHOTO, new EditPhotoCommand());
+        commands.put(CommandType.PRODUCT_DETAIL, new ProductDetailCommand());
         commands.put(CommandType.GO_TO_EDIT_PASSWORD_PAGE, new GoToEditPasswordPageCommand());
         commands.put(CommandType.GO_TO_EDIT_PROFILE_PAGE, new GoToEditProfilePageCommand());
         commands.put(CommandType.GO_TO_FORGOT_PASSWORD_PAGE, new GoToForgotPasswordPageCommand());
         commands.put(CommandType.GO_TO_SIGNUP_PAGE, new GoToSignUpPageCommand());
+        commands.put(CommandType.GO_TO_SHOP_PAGE, new GoToShopPageCommand());
+        commands.put(CommandType.GO_TO_MAIN_PAGE, new GoToMainPageCommand());
+        commands.put(CommandType.GO_TO_PROFILE_PAGE, new GoToProfilePageCommand());
     }
 
     public static CommandProvider getInstance() {

@@ -19,17 +19,17 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
 
     private static Logger logger = LogManager.getLogger(ProvideServiceDaoImpl.class);
 
-    private static final String SELECT_ALL_SERVICE = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
+    private static final String SELECT_ALL_SERVICE = "SELECT salon_service.id, salon_service.category_id, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service JOIN salon_category ON salon_service.category_id = salon_category.id;";
 
-    private static final String SELECT_SERVICE_BY_CATEGORY_ID = "SELECT salon_service.id, salon_service.category_id, salon_category.name, salon_service.name, salon_service.name, " +
+    private static final String SELECT_SERVICE_BY_CATEGORY = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +
             "JOIN salon_category ON salon_service.category_id = salon_category.id " +
-            "WHERE salon_service.category_id = ?;";
+            "WHERE salon_category.name = ?;";
 
     private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_service.category_id, salon_category.name, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
@@ -57,7 +57,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
                     ProvideService service = buildProvideService(resultSet);
-                    System.out.println(service);
                     serviceList.add(service);
                 }
             }
@@ -102,7 +101,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             statement.setBoolean(6, entity.isAvailable());
             statement.setDate(7, Date.valueOf(LocalDate.now()));
             statement.setDate(8, Date.valueOf(LocalDate.now()));
-            statement.setBytes(4, entity.getImage());
+            statement.setString(4, entity.getImage());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
@@ -142,7 +141,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
                 statement.setBoolean(6, entity.isAvailable());
                 statement.setDate(7, Date.valueOf(entity.getCreated()));
                 statement.setDate(8, Date.valueOf(LocalDate.now()));
-                statement.setBytes(4, entity.getImage());
+                statement.setString(4, entity.getImage());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
@@ -156,11 +155,11 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
     }
 
     @Override
-    public List<ProvideService> findAllByCategory(Category category) throws DaoException {
+    public List<ProvideService> findAllByCategory(String category) throws DaoException {
         List<ProvideService> serviceList = new ArrayList<>();
         Connection connection = super.connection;
-        try(PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_CATEGORY_ID)) {
-            statement.setInt(1, category.getId());
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_CATEGORY)) {
+            statement.setString(1, category);
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
                     ProvideService service = buildProvideService(resultSet);
@@ -186,8 +185,9 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
                 .setAvailable(resultSet.getBoolean(SERVICE_AVAILABLE))
                 .setCreated(LocalDate.parse(resultSet.getString(SERVICE_CREATED)))
                 .setUpdated(LocalDate.parse(resultSet.getString(SERVICE_UPDATED)))
-                .setImage(resultSet.getBytes(SERVICE_IMAGE));
+                .setImage(resultSet.getString(SERVICE_IMAGE));
         service = builder.build();
+        System.out.println(service);
         return service;
     }
 

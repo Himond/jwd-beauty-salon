@@ -6,7 +6,10 @@ public class RequestAttribute {
     public static final String ROLE = "role";
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
-
+    public static final String PRODUCT_LIST = "productList";
+    public static final String CATEGORY_LIST = "categoryList";
+    public static final String CURRENT_CATEGORY = "currentCategory";
+    public static final String CURRENT_CATEGORY_ID = "currentCategoryId";
 
     public static final String WRONG_USERNAME_OR_PASSWORD_SING_IN = "errorLoginPassMessage";
 

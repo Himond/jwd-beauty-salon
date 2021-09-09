@@ -4,6 +4,8 @@ public final class PagePath {
 
     public static final String ERROR_404_JSP = "/jsp/error/404.jsp";
     public static final String LOGIN_JSP = "jsp/login.jsp";
+    public static final String SHOP_JSP = "jsp/shop.jsp";
+    public static final String PRODUCT_DETAIL_JSP = "jsp/product_detail.jsp";
     public static final String PROFILE_JSP = "jsp/profile.jsp";
     public static final String FORGOT_PASSWORD_JSP = "jsp/forgot_password.jsp";
     public static final String EDIT_PROFILE_JSP = "jsp/edit_profile.jsp";

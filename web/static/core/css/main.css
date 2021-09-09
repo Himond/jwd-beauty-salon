@@ -518,8 +518,7 @@ h2 {
 }
 
 /* скрытый список */
-ul.list li:nth-child(n+4){display:none;}
-.show_hide_list{cursor:pointer;display:inline-block;padding:10px;}
+
 
 .photo-circle-dashboard {
   width: 150px;

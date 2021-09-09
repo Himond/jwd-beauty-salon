@@ -11,6 +11,8 @@
 <head>
     <title><fmt:message key="dashboard.page.title"/></title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -48,6 +50,15 @@
                                                     <input type="hidden" type="text" name="user_id" value="${user.userId()}">
                                                     <div class="form-inner">
                                                         <h6><fmt:message key="editProfile.page.uploadPhoto"/></h6>
+                                                        <c:choose>
+                                                            <c:when test="${empty user.photo()}">
+                                                                <img src="${pageContext.request.contextPath}/static/core/img/account.png" class="card-img " alt="...">
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <img src="${pageContext.request.contextPath}/uploads/${user.photo()}" class="card-img " alt="..." >
+                                                            </c:otherwise>
+                                                        </c:choose>
+
                                                         <br/>
                                                         <label for="id_photo"><fmt:message key="placeholder.name.photo"/></label>
                                                         <div class="custom-file">
@@ -111,7 +122,7 @@
                             <img src="${pageContext.request.contextPath}/static/core/img/teacher_main.jpg" alt="..." />
                         </c:when>
                         <c:otherwise>
-
+                            <img src="${pageContext.request.contextPath}/uploads/${user.photo()}" class="card-img " alt="..." >
                         </c:otherwise>
                     </c:choose>
 

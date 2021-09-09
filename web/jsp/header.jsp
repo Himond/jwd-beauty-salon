@@ -16,8 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-    <link href="../static/fontawesome/css/fontawesome.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/static/fontawesome/css/fontawesome.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/core/css/main.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap-social.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/fontawesome/css/fontawesome.min.css">
@@ -53,17 +53,17 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/jsp/main.jsp"><h5><fmt:message key="salon.base"/></h5></a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/controller?command=go_to_main_page"><h5><fmt:message key="salon.base"/></h5></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.services"/></h5></b></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_shop_page"><b><h5><fmt:message key="salon.services"/></h5></b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
                 <c:if test="${user.role() == 'MASTER' or user.role() == 'CLIENT'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/jsp/profile.jsp"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_profile_page"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
                     </li>
                 </c:if>
 

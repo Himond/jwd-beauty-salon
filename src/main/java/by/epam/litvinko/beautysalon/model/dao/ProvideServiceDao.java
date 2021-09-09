@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ProvideServiceDao {
 
-    List<ProvideService> findAllByCategory(Category category) throws DaoException;
+    List<ProvideService> findAllByCategory(String category) throws DaoException;
 
 }

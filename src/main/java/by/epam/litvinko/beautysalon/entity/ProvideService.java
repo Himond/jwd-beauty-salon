@@ -14,7 +14,7 @@ public class ProvideService extends AbstractEntity {
     private boolean available;
     private LocalDate created;
     private LocalDate updated;
-    private byte[] image;
+    private String image;
 
     public ProvideService() {
     }
@@ -83,11 +83,11 @@ public class ProvideService extends AbstractEntity {
         this.updated = updated;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -98,17 +98,17 @@ public class ProvideService extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        ProvideService that = (ProvideService) o;
+        ProvideService service = (ProvideService) o;
 
-        if (categoryId != that.categoryId) return false;
-        if (serviceTime != that.serviceTime) return false;
-        if (available != that.available) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (created != null ? !created.equals(that.created) : that.created != null) return false;
-        if (updated != null ? !updated.equals(that.updated) : that.updated != null) return false;
-        return Arrays.equals(image, that.image);
+        if (categoryId != service.categoryId) return false;
+        if (serviceTime != service.serviceTime) return false;
+        if (available != service.available) return false;
+        if (name != null ? !name.equals(service.name) : service.name != null) return false;
+        if (description != null ? !description.equals(service.description) : service.description != null) return false;
+        if (price != null ? !price.equals(service.price) : service.price != null) return false;
+        if (created != null ? !created.equals(service.created) : service.created != null) return false;
+        if (updated != null ? !updated.equals(service.updated) : service.updated != null) return false;
+        return image != null ? image.equals(service.image) : service.image == null;
     }
 
     @Override
@@ -122,15 +122,15 @@ public class ProvideService extends AbstractEntity {
         result = 31 * result + (available ? 1 : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (updated != null ? updated.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(image);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
         return result;
     }
+
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ProvideService{");
-        sb.append("id=").append(getId());
-        sb.append(", categoryId=").append(categoryId);
+        sb.append("categoryId=").append(categoryId);
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
@@ -138,7 +138,7 @@ public class ProvideService extends AbstractEntity {
         sb.append(", available=").append(available);
         sb.append(", created=").append(created);
         sb.append(", updated=").append(updated);
-        sb.append(", image=").append(Arrays.toString(image));
+        sb.append(", image='").append(image).append('\'');
         sb.append('}');
         return sb.toString();
     }
@@ -197,7 +197,7 @@ public class ProvideService extends AbstractEntity {
             return this;
         }
 
-        public ProvideService.Builder setImage(byte[] image){
+        public ProvideService.Builder setImage(String image){
             ProvideService.this.image = image;
             return this;
         }
