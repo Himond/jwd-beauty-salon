@@ -28,6 +28,7 @@ public class EditPhotoCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(EditPhotoCommand.class);
     private static final String UPLOAD_DIR = "uploads";
+    private static final String EMPTY_STRING = "";
 
     @Override
     public Router execute(HttpServletRequest request)  {
@@ -39,13 +40,13 @@ public class EditPhotoCommand implements Command {
         String userId = request.getParameter(USER_ID);
 
         try {
-            String applicationDir = request.getServletContext().getRealPath("");
+            String applicationDir = request.getServletContext().getRealPath(EMPTY_STRING);
             String uploadFileDir = applicationDir + UPLOAD_DIR + File.separator;
             File fileSaveDir = new File(uploadFileDir);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdirs();
             }
-            Part filePart = request.getPart("image");
+            Part filePart = request.getPart(IMAGE);
             if (filePart != null) {
                 String fileName = filePart.getSubmittedFileName();
                 for (Part part : request.getParts()) {
