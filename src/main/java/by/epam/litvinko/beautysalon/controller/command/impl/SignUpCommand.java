@@ -27,7 +27,7 @@ public class SignUpCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router;
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
         String username = request.getParameter(USERNAME);
         String firstName = request.getParameter(FIRSTNAME);
         String lastName = request.getParameter(LASTNAME);

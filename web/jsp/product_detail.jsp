@@ -29,27 +29,25 @@
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <c:choose>
-                            <c:when test="${empty product.image()}">
-                                <img class="card-img" src="${pageContext.request.contextPath}/static/core/img/course.jpg"  alt="...">
+                            <c:when test="${empty currentProduct.image()}">
+                                <img class="card-img" src="${pageContext.request.contextPath}/static/core/img/no_image.jpg"  alt="...">
                             </c:when>
                             <c:otherwise>
-                                <img class="card-img"  src="${pageContext.request.contextPath}/uploads/${product.image()}"  alt="..." >
-
+                                <img class="card-img"  src="${pageContext.request.contextPath}/uploads/${currentProduct.image()}"  alt="..." >
                             </c:otherwise>
                         </c:choose>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <div class="card-header"><h3 class="card-title">{{ product.name }}</h3></div>
-                            <i class="card-text"> {{ product.description|linebreaksbr }}</i>
-
-                            <h6>Время процедуры: {{product.time}} мин.</h6>
+                            <div class="card-header"><h3 class="card-title">${currentProduct.name()}</h3></div>
+                            <i class="card-text">${currentProduct.description()}</i>
+                            <h6><fmt:message key="shop.page.service.time"/> ${currentProduct.serviceTime()} <fmt:message key="shop.page.time"/></h6>
                             <div class="card-footer center-block text-center" style="padding: 10px"><big class=" text-black">
-                                 Цена: {{ product.price }} BYN
-                                    <form action="{% url 'cart_add' product.id %}" method="post">
-                                        {{ cart_product_form }}
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-outline-success" value="Add to cart"> <i class="fas fa-shopping-cart"></i> В корзину</button>
+                                <fmt:message key="shop.page.price"/> ${currentProduct.price()} <fmt:message key="shop.page.byn"/>
+                                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                                        <input type="hidden" name="command" value="add_to_cart"/>
+                                        <input type="hidden" name="current_product_id" value=${currentProduct.id()}>
+                                        <button type="submit" class="btn btn-outline-success" value="Add to cart"> <i class="fas fa-shopping-cart"></i> <fmt:message key="shop.page.service.button"/></button>
                                     </form>
                             </big>
 

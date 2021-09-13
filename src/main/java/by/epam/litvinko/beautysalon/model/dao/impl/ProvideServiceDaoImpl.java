@@ -31,7 +31,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "JOIN salon_category ON salon_service.category_id = salon_category.id " +
             "WHERE salon_category.name = ?;";
 
-    private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_service.category_id, salon_category.name, salon_service.name, salon_service.name, " +
+    private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +
@@ -187,7 +187,6 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
                 .setUpdated(LocalDate.parse(resultSet.getString(SERVICE_UPDATED)))
                 .setImage(resultSet.getString(SERVICE_IMAGE));
         service = builder.build();
-        System.out.println(service);
         return service;
     }
 

@@ -58,6 +58,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_shop_page"><b><h5><fmt:message key="salon.services"/></h5></b></a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
@@ -105,7 +106,8 @@
             <div class="col-12">
                  <c:choose>
                      <c:when test="${empty user}">
-                         <button class="btn btn-outline-light"  data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"><fmt:message key="button.name.enter"/></button>
+                     <div class="btn-group" role="group" aria-label="Basic example">
+                         <button class="btn btn-outline-light"  style="margin-top: 14px; margin-bottom: 16px" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"><fmt:message key="button.name.enter"/></button>
                          <!-- Modal -->
                          <div class="modal fade" style="padding: 15px" id="exampleModal" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                              <div class="modal-dialog" role="document">
@@ -131,12 +133,23 @@
                                  </div>
                              </div>
                          </div>
+                         <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                             <input type="hidden" name="command" value="go_to_cart_page"/>
+                             <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><i class="fas fa-cart-arrow-down"></i> ${sessionScope.cart.getTotalPrice()} <fmt:message key="shop.page.byn"/></button>
+                         </form>
+                     </div>
                      </c:when>
                      <c:otherwise>
-                         <form name="LogOutForm" method="POST" action="${pageContext.request.contextPath}/controller">
-                             <input type="hidden" name="command" value="log_out"/>
-                             <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.exit"/></button>
-                         </form>
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                             <form name="LogOutForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                                 <input type="hidden" name="command" value="log_out"/>
+                                 <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.exit"/></button>
+                             </form>
+                             <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                                 <input type="hidden" name="command" value="go_to_cart_page"/>
+                                 <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><i class="fas fa-cart-arrow-down"></i> ${sessionScope.cart.getTotalPrice()} <fmt:message key="shop.page.byn"/></button>
+                             </form>
+                         </div>
                      </c:otherwise>
                  </c:choose>
             </div>

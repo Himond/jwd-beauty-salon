@@ -18,7 +18,7 @@
 
 <div class="container-fluid body-back" style="padding-top:20px;padding-bottom:20px">
     <div class="container center-block text-center">
-        <h3><title><fmt:message key="shop.page.categories"/></title></h3>
+        <h5 style="font-size: 35px;"><fmt:message key="shop.page.categories"/></h5>
         <hr>
         <div class="btn-group" role="group" aria-label="Basic example">
             <input type="hidden" name="current_category" value="all_category">
@@ -30,14 +30,17 @@
             </c:forEach>
         </div>
         <hr>
-        <h3><c:choose>
+        <h3>
+            <c:choose>
             <c:when test="${not empty currentCategory}">
-                ${currentCategory}
+                <h5 style="font-size: 35px;">${currentCategory}</h5>
             </c:when>
             <c:otherwise>
-                <fmt:message key="shop.page.services"/>
+                <h5 style="font-size: 35px;"><fmt:message key="shop.page.services"/></h5>
             </c:otherwise>
-        </c:choose></h3>
+            </c:choose>
+        </h3>
+        ${productNotFound}
     </div>
 
 
@@ -46,7 +49,7 @@
         <div class="projcard-container">
             <div class="projcard projcard-blue">
                 <div class="projcard-innerbox text-left ">
-                    <a href="">
+                    <a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}">
                         <c:choose>
                             <c:when test="${empty product.image()}">
                                 <img class="projcard-img" src="${pageContext.request.contextPath}/static/core/img/course.jpg"  alt="...">
@@ -58,7 +61,7 @@
                         </c:choose>
                     </a>
                     <div class="projcard-textbox">
-                        <div class="projcard-title text-left"><a href="" style="color: black; text-decoration: none;">${product.name()}</a></div>
+                        <div class="projcard-title text-left"><a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}" style="color: black; text-decoration: none;">${product.name()}</a></div>
                         <div class="projcard-subtitle text-left"><i class="far fa-clock"> ${product.serviceTime()} <fmt:message key="shop.page.time"/></i></div>
                         <div class="projcard-bar"></div>
                         <div class="projcard-description text-left">${product.description()}</div>

@@ -2,6 +2,7 @@ package by.epam.litvinko.beautysalon.controller.command.impl;
 
 import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.PagePath;
+import by.epam.litvinko.beautysalon.controller.command.RequestAttribute;
 import by.epam.litvinko.beautysalon.controller.command.Router;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.manager.MessageManager;
@@ -30,7 +31,7 @@ public class EditProfileCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router;
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
         String userId = request.getParameter(USER_ID);
         String firstName = request.getParameter(FIRSTNAME);
         String lastName = request.getParameter(LASTNAME);

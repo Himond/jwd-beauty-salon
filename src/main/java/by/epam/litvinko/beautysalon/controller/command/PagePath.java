@@ -11,15 +11,13 @@ public final class PagePath {
     public static final String EDIT_PROFILE_JSP = "jsp/edit_profile.jsp";
     public static final String EDIT_PASSWORD_JSP = "jsp/edit_password.jsp";
     public static final String SIGNUP_JSP = "jsp/signup.jsp";
+    public static final String CART_DETAIL_JSP = "jsp/cart_detail.jsp";
+    public static final String CREATE_ORDER_JSP = "jsp/created_order.jsp";
     public static final String MAIN_JSP = "jsp/main.jsp";
     public static final String INDEX_JSP = "index.jsp";
     public static final String ERROR_JSP = "/jsp/error/error.jsp";
 
 
-
-
-    public static final String LOG_OUT = "Controller?command=log_out";// FIXME: 25.08.2021
-    public static final String GO_TO_LOGIN_PAGE = "Controller?command=go_to_login_page_command";
     private PagePath() {
     }
 }

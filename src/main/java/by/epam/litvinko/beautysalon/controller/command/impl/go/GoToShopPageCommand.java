@@ -1,6 +1,7 @@
 package by.epam.litvinko.beautysalon.controller.command.impl.go;
 
 import by.epam.litvinko.beautysalon.controller.command.Command;
+import by.epam.litvinko.beautysalon.controller.command.RequestParameter;
 import by.epam.litvinko.beautysalon.controller.command.Router;
 import by.epam.litvinko.beautysalon.entity.Category;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
@@ -31,7 +32,7 @@ public class GoToShopPageCommand implements Command {
         try {
             List<ProvideServicesDto> productList;
             List<Category> categoryList = service.allCategory();
-            Optional<String> currentCategory = Optional.ofNullable(request.getParameter("current_category"));
+            Optional<String> currentCategory = Optional.ofNullable(request.getParameter(RequestParameter.CURRENT_CATEGORY));
             if (currentCategory.isPresent()){
                 String category = currentCategory.get();
                 productList = service.findProvideServiceByCategory(category);
@@ -40,7 +41,6 @@ public class GoToShopPageCommand implements Command {
                 productList = service.allProvideService();
                 request.getSession().removeAttribute(CURRENT_CATEGORY);
             }
-            System.out.println(productList);
             request.getSession().setAttribute(PRODUCT_LIST, productList);
             request.getSession().setAttribute(CATEGORY_LIST, categoryList);
             router = new Router(SHOP_JSP, Router.RouterType.REDIRECT);

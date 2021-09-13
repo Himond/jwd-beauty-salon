@@ -33,7 +33,7 @@ public class EditPhotoCommand implements Command {
     public Router execute(HttpServletRequest request)  {
 
         Router router;
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(LOCALE);
         UserService userService = new UserServiceImpl();
         ClientService clientService = new ClientServiceImpl();
         String userId = request.getParameter(USER_ID);

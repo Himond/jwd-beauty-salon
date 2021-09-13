@@ -1,6 +1,7 @@
 package by.epam.litvinko.beautysalon.controller.command.impl;
 
 import by.epam.litvinko.beautysalon.controller.command.Command;
+import by.epam.litvinko.beautysalon.controller.command.RequestAttribute;
 import by.epam.litvinko.beautysalon.controller.command.Router;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.manager.MessageManager;
@@ -29,7 +30,7 @@ public class EditPasswordCommand implements Command {
         String oldPassword = request.getParameter(PASSWORD);
         String newPassword = request.getParameter(NEW_PASSWORD);
         String newPasswordRep = request.getParameter(PASSWORD_REP);
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
 
         if (!userService.isPasswordsEquals(newPassword, newPasswordRep)){
             request.getSession().setAttribute(WRONG_PASSWORD_SING_UP, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(WRONG_PASSWORD_SING_UP_PATH));

@@ -20,7 +20,7 @@ public class MailSender {
     private static final String MAIL_USER_PASSWORD = "mail.user.password";
     private static final String MAIL_FROM = "mail.from";
     private static final String MAIL_SUBJECT = "BeautySalon";
-    private static final String MAIN_MESSAGE = "Hello, %s! \n" + "Welcome to beauty salon BackStage. \n" + "Your password is %s.";
+    private static final String ORDER_MESSAGE = "Hello, %s! \n" + "Your order will be processed shortly. \n" + "Your order number is %s.";
     private static final String FORGET_PASSWORD_MESSAGE = "Hello, %s! \n" + "Welcome to beauty salon BackStage. \n" + "Your new password is %s \n Change your password in your account, if you wish";
 
 
@@ -33,10 +33,10 @@ public class MailSender {
 
     }
 
-    public static String messageEmailUser(String username, String password) {
-        return String.format(MAIN_MESSAGE,
+    public static String messageOrderSuccessful(String username, int orderId) {
+        return String.format(ORDER_MESSAGE,
                 username,
-                password
+                orderId
         );
     }
 
@@ -54,17 +54,14 @@ public class MailSender {
                         return new PasswordAuthentication(properties.getProperty(MAIL_USER_NAME), properties.getProperty(MAIL_USER_PASSWORD));
                     }
                 });
-        System.out.println(session);
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(properties.getProperty(MAIL_FROM)));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             message.setSubject(MAIL_SUBJECT);
             message.setText(messageText);
-            System.out.println("TUTUTUTUT");
             Transport.send(message);
         } catch (MessagingException e) {
-            System.out.println("MESSAGE ERROR " +  e.getMessage());
             logger.log(Level.ERROR, "MessagingException: " + e.getMessage());
         }
     }

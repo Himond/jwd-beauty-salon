@@ -84,8 +84,8 @@ public class ClientServiceImpl implements ClientService {
             } catch (DaoException ex) {
                 logger.error("Unable to rollback.", e);
             }
-            logger.error("Can't handle signIn request at ClientService.", e);
-            throw new ServiceException("Can't handle signIn request at ClientService.", e);
+            logger.error("Can't handle signUp request at ClientService.", e);
+            throw new ServiceException("Can't handle signUn request at ClientService.", e);
         }finally {
             try {
                 transaction.endTransaction();

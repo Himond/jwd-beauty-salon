@@ -1,8 +1,11 @@
 package by.epam.litvinko.beautysalon.model.dao.impl;
 
+import by.epam.litvinko.beautysalon.entity.Cart;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Order;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.dao.OrderDao;
+import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -16,7 +19,7 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
-public class OrderDaoImpl extends AbstractDao<Integer, Order> {
+public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDao {
 
     private static Logger logger = LogManager.getLogger(OrderDaoImpl.class);
 
@@ -43,6 +46,8 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> {
             "coupon_id = ?, created = ?, is_paid = ?, is_active = ? " +
             "WHERE id = ?;";
 
+    private static final String INSERT_ORDER_ITEM = "INSERT INTO order_item(order_id, service_id) " +
+            "VALUES ( ?, ?)";
 
     @Override
     public List<Order> findAll() throws DaoException {
@@ -153,14 +158,31 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> {
                 statement.setBoolean(5,entity.isActive());
                 statement.executeUpdate();
             } catch (SQLException e) {
-                logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
-                throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+                logger.error("Prepare statement can't be take from connection or unknown field." + e);
+                throw new DaoException("Prepare statement can't be take from connection or unknown field." + e);
             }
         } else {
             logger.info("Order id = " + entity.getId() + " don't exist.");
         }
         order = findById(entity.getId());
         return order;
+    }
+
+    @Override
+    public boolean createOrderItem(Cart cart) throws DaoException {
+        boolean result = false;
+        Connection connection = super.connection;
+        for(ProvideServicesDto service: cart.getServices()){
+            try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_ITEM)){
+                statement.setInt(1, cart.getOrderId());
+                statement.setInt(2, service.id());
+                result = statement.executeUpdate() == 1;
+            } catch (SQLException e) {
+                logger.error("Prepare statement cannot be retrieved from the connection.", e);
+                throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+            }
+        }
+        return  result;
     }
 
     private Order buildOrder(ResultSet resultSet) throws SQLException {
@@ -176,4 +198,6 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> {
         order = builder.build();
         return order;
     }
+
+
 }

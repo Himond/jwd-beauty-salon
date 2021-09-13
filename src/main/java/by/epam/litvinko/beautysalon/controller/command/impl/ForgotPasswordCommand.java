@@ -3,6 +3,8 @@ package by.epam.litvinko.beautysalon.controller.command.impl;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
+
+import by.epam.litvinko.beautysalon.controller.command.RequestAttribute;
 import by.epam.litvinko.beautysalon.controller.command.Router.RouterType;
 import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.Router;
@@ -25,7 +27,7 @@ public class ForgotPasswordCommand implements Command {
         final UserService userService = new UserServiceImpl();
         Router router;
         String email = request.getParameter(EMAIL);
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
 
         if (!userService.isEmailValid(email)){
             request.setAttribute(EMAIL, email);

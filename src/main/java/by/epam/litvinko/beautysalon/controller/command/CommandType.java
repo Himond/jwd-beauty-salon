@@ -10,6 +10,9 @@ public enum CommandType {
     EDIT_PROFILE,
     EDIT_PHOTO,
     PRODUCT_DETAIL,
+    REMOVE_PRODUCT,
+    CREATED_ORDER,
+    ADD_TO_CART,
     GO_TO_MAIN_PAGE,
     GO_TO_PROFILE_PAGE,
     GO_TO_SHOP_PAGE,
@@ -17,5 +20,6 @@ public enum CommandType {
     GO_TO_EDIT_PROFILE_PAGE,
     GO_TO_FORGOT_PASSWORD_PAGE,
     GO_TO_SIGNUP_PAGE,
+    GO_TO_CART_PAGE,
     DEFAULT
 }

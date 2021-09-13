@@ -40,7 +40,7 @@ public class SignInCommand implements Command {
         Router router;
         String username = request.getParameter(USERNAME);
         String password = request.getParameter(PASSWORD);
-        String local = (String) request.getSession().getAttribute(LOCALE_ATTRIBUTE);
+        String local = (String) request.getSession().getAttribute(RequestAttribute.LOCALE);
 
         try {
             Optional<UserDto> optionalUser = userService.signIn(username, password);

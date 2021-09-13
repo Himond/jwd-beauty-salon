@@ -1,7 +1,6 @@
 package by.epam.litvinko.beautysalon.controller;
 
 import by.epam.litvinko.beautysalon.controller.command.*;
-import by.epam.litvinko.beautysalon.entity.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
