@@ -33,7 +33,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
 
     private static final String SELECT_SERVICE_BY_ORDER_ID = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
-            "salon_service.available, salon_service.created, salon_service.updated, salon_service.image, salon_service. " +
+            "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +
             "JOIN order_item ON salon_service.id = order_item.service_id " +
             "WHERE order_item.order_id = ?;";

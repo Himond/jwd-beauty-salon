@@ -34,14 +34,14 @@ public class OrderServiceImpl implements OrderService {
             orderList = orderDao.findOrderByClientId(id);
             transaction.end();
             for (Order order: orderList){
-                transaction.init(orderDao);
+                transaction.init(productDao);
                 order.setServiceList(productDao.findAllByOrderId(order));
                 transaction.end();
             }
             orderDtoList = orderList.stream().map(OrderDto::create).toList();
         } catch (DaoException e) {
-            logger.error("Can't handle find order by clientId request at ShopService.", e);
-            throw new ServiceException("Can't handle find order by clientId request at ShopService.", e);
+            logger.error("Can't handle find order by clientId request at OrderService.", e);
+            throw new ServiceException("Can't handle find order by clientId request at OrderService.", e);
         }
         return orderDtoList;
     }

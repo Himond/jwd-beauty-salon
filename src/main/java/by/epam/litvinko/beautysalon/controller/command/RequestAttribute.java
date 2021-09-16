@@ -10,6 +10,7 @@ public class RequestAttribute {
     public static final String USER_ID = "user_id";
     public static final String ORDER_ID = "orderId";
     public static final String PRODUCT_LIST = "productList";
+    public static final String CLIENT_ORDER_LIST = "clientOrderList";
     public static final String CATEGORY_LIST = "categoryList";
     public static final String CURRENT_CATEGORY = "currentCategory";
     public static final String CURRENT_CATEGORY_ID = "currentCategoryId";

@@ -106,7 +106,51 @@
             </div>
         </div>
     </div>
+
+
+    <div class="container-fluid body-back" style="padding-top:50px;padding-bottom:50px">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+
+            <div class="col-8">
+                <center><h3>История заказов</h3></center>
+                <hr>
+
+                <center><table class="table_blur">
+                    <thead>
+                    <tr>
+                        <th>Номер заказа</th>
+                        <th>Услуга</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                                ${clientOrderList.id()}
+                        </td>
+                        <td>
+                                ${user.lastName()}
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table></center>
+                <hr>
+                <center><h3><fmt:message key="cart.create.rowTwo"/></h3></center>
+                <center><h3><fmt:message key="cart.create.rowThree"/></h3></center>
+
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+
+
+    </div>
+
+
 </c:if>
+
 
 <c:if test="${user.role() == 'MASTER'}">
     <div class="container-fluid  bg-master"  style="padding-top:50px;padding-bottom:50px">

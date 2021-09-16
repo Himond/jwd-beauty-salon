@@ -195,6 +195,7 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
         List<Order> orderList = new ArrayList<>();
         Connection connection = super.connection;
         try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ORDERS_BY_CLIENT_ID)) {
+            statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
                     Order order = buildOrder(resultSet);
@@ -210,12 +211,11 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
 
     private Order buildOrder(ResultSet resultSet) throws SQLException {
         Order order;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Order.Builder builder = Order.newBuilder();
         builder.setId(resultSet.getInt(ORDER_ID))
                 .setClientId(resultSet.getInt(ORDER_CLIENT_ID))
                 .setCouponId(resultSet.getInt(ORDER_COUPON_ID))
-                .setCreated(LocalDate.parse(resultSet.getString(ORDER_CREATED), formatter))
+                .setCreated(LocalDate.parse(resultSet.getString(ORDER_CREATED)))
                 .setIsPaid(resultSet.getBoolean(ORDER_IS_PAID))
                 .setIsPaid(resultSet.getBoolean(ORDER_IS_ACTIVE));
         order = builder.build();
