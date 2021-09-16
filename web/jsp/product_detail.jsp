@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="shop.page.detail.title"/></title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
 </head>
 <body>

@@ -34,6 +34,7 @@ public class RequestAttribute {
     public static final String EDIT_PASSWORD_ERROR = "editPasswordError";
     public static final String EDIT_USER_DATA_ERROR = "editProfileError";
     public static final String PRODUCT_NOT_FOUND = "productNotFound";
+    public static final String COUPON_NOT_FOUND = "couponNotFound";
 
 
     public static final String EMAIL_SENT_PATH = "message.emailSent";
@@ -43,6 +44,7 @@ public class RequestAttribute {
     public static final String EDIT_PASSWORD_ERROR_PATH = "message.editPasswordError";
     public static final String EDIT_USER_DATA_ERROR_PATH = "message.editProfileError";
     public static final String PRODUCT_NOT_FOUND_PATH = "message.productNotFound";
+    public static final String COUPON_NOT_FOUND_PATH = "message.couponNotFound";
 
     private RequestAttribute() {
     }

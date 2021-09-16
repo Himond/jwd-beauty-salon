@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="cart.create.title"/></title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
 </head>
 <body>
@@ -21,21 +21,20 @@
         </div>
 
         <div class="col-8">
-            <center><h3>Запись на услугу</h3></center>
+            <center><h3><fmt:message key="cart.create.rowOne"/></h3></center>
             <hr>
 
             <center><table class="table_blur">
                 <thead>
                 <tr>
-                    <th >Имя</th>
-                    <th>Фамилия</th>
-                    <th>Электронный адрес </th>
-                    <th >Телефон</th>
-                    <th>Номер заказа</th>
+                    <th><fmt:message key="dashboard.page.name"/></th>
+                    <th><fmt:message key="dashboard.page.surname"/></th>
+                    <th><fmt:message key="dashboard.page.email"/></th>
+                    <th><fmt:message key="dashboard.page.phone"/></th>
+                    <th><fmt:message key="cart.create.number"/></th>
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr>
                     <td>
                         ${user.firstName()}
@@ -50,8 +49,8 @@
                 </tbody>
             </table></center>
             <hr>
-            <center><h3>Спасибо!</h3></center>
-            <center><h3>Ваш заказ был успешно сохранен. Наш менеджер свяжется с вами в ближайшее время!</h3></center>
+            <center><h3><fmt:message key="cart.create.rowTwo"/></h3></center>
+            <center><h3><fmt:message key="cart.create.rowThree"/></h3></center>
 
         </div>
         <div class="col-sm">

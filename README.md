@@ -1,7 +1,7 @@
-                            BeautySalonFinalTask
+                                            BeautySalonFinalTask
 
 
 
 
-                            Beauty Salon Database
+                                            Beauty Salon Database
 ![img.png](img.png)

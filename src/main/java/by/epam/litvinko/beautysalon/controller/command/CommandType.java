@@ -13,6 +13,7 @@ public enum CommandType {
     REMOVE_PRODUCT,
     CREATED_ORDER,
     ADD_TO_CART,
+    ADD_COUPON,
     GO_TO_MAIN_PAGE,
     GO_TO_PROFILE_PAGE,
     GO_TO_SHOP_PAGE,

@@ -3,13 +3,17 @@ package by.epam.litvinko.beautysalon.model.service.impl;
 import by.epam.litvinko.beautysalon.entity.*;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
+import by.epam.litvinko.beautysalon.model.dao.CouponDao;
 import by.epam.litvinko.beautysalon.model.dao.EntityTransaction;
 import by.epam.litvinko.beautysalon.model.dao.impl.CategoryDaoImpl;
+import by.epam.litvinko.beautysalon.model.dao.impl.CouponDaoImpl;
 import by.epam.litvinko.beautysalon.model.dao.impl.OrderDaoImpl;
 import by.epam.litvinko.beautysalon.model.dao.impl.ProvideServiceDaoImpl;
 import by.epam.litvinko.beautysalon.model.service.ShopService;
 import by.epam.litvinko.beautysalon.model.service.dto.ClientDto;
 import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
+import by.epam.litvinko.beautysalon.model.validator.SalonValidator;
+import by.epam.litvinko.beautysalon.model.validator.impl.SalonValidatorImpl;
 import by.epam.litvinko.beautysalon.util.MailSender;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -22,6 +26,7 @@ import java.util.Optional;
 public class ShopServiceImpl implements ShopService {
 
     private static final Logger logger = LogManager.getLogger(ShopServiceImpl.class);
+    private final SalonValidator validator = SalonValidatorImpl.getInstance();
 
     @Override
     public List<ProvideServicesDto> allProvideService() throws ServiceException {
@@ -134,6 +139,25 @@ public class ShopServiceImpl implements ShopService {
             }
         }
         return result;
+    }
+
+    @Override
+    public Optional<Coupon> findCouponByCode(String code) throws ServiceException {
+        final CouponDaoImpl couponDao = new CouponDaoImpl();
+        final EntityTransaction transaction = new EntityTransaction();
+        Optional<Coupon> coupon;
+        if (validator.validateCoupon(code)){
+            try {
+                transaction.init(couponDao);
+                coupon = couponDao.findByCode(code);
+                transaction.end();
+                return coupon;
+            } catch (DaoException e) {
+                logger.error("Can't handle find product by id request at ShopService.", e);
+                throw new ServiceException("Can't handle find product by id request at ShopService.", e);
+            }
+        }
+        return Optional.empty();
     }
 
 

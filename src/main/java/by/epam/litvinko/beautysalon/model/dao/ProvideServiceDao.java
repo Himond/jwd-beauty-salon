@@ -9,5 +9,6 @@ import java.util.List;
 public interface ProvideServiceDao {
 
     List<ProvideService> findAllByCategory(String category) throws DaoException;
+    List<ProvideService> findAllByOrderId(Order order) throws DaoException;
 
 }

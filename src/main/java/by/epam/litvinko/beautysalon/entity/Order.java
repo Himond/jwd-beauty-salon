@@ -1,6 +1,8 @@
 package by.epam.litvinko.beautysalon.entity;
 
 import java.time.LocalDate;
+import java.util.List;
+
 
 public class Order extends AbstractEntity {
 
@@ -9,6 +11,7 @@ public class Order extends AbstractEntity {
     private LocalDate created;
     private boolean isPaid;
     private boolean isActive;
+    private List<ProvideService> serviceList;
 
     public Order(){
     }
@@ -53,6 +56,14 @@ public class Order extends AbstractEntity {
         isActive = active;
     }
 
+    public List<ProvideService> getServiceList() {
+        return serviceList;
+    }
+
+    public void setServiceList(List<ProvideService> serviceList) {
+        this.serviceList = serviceList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,7 +76,8 @@ public class Order extends AbstractEntity {
         if (couponId != order.couponId) return false;
         if (isPaid != order.isPaid) return false;
         if (isActive != order.isActive) return false;
-        return created != null ? created.equals(order.created) : order.created == null;
+        if (created != null ? !created.equals(order.created) : order.created != null) return false;
+        return serviceList != null ? serviceList.equals(order.serviceList) : order.serviceList == null;
     }
 
     @Override
@@ -76,6 +88,7 @@ public class Order extends AbstractEntity {
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (isPaid ? 1 : 0);
         result = 31 * result + (isActive ? 1 : 0);
+        result = 31 * result + (serviceList != null ? serviceList.hashCode() : 0);
         return result;
     }
 
@@ -87,6 +100,7 @@ public class Order extends AbstractEntity {
         sb.append(", created=").append(created);
         sb.append(", isPaid=").append(isPaid);
         sb.append(", isActive=").append(isActive);
+        sb.append(", serviceList=").append(serviceList);
         sb.append('}');
         return sb.toString();
     }

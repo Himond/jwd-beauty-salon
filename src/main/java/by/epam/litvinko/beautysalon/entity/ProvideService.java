@@ -2,7 +2,6 @@ package by.epam.litvinko.beautysalon.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class ProvideService extends AbstractEntity {
 

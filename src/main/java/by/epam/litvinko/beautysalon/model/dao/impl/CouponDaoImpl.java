@@ -3,6 +3,7 @@ package by.epam.litvinko.beautysalon.model.dao.impl;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Coupon;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.dao.CouponDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
-public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
+public class CouponDaoImpl extends AbstractDao<Integer, Coupon> implements CouponDao {
 
     private static Logger logger = LogManager.getLogger(CouponDaoImpl.class);
 
@@ -27,6 +28,11 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
             "discount, is_active " +
             "FROM coupon " +
             "WHERE id = ?;";
+
+    private static final String SELECT_COUPON_BY_CODE = "SELECT id, code, valid_from, valid_to, " +
+            "discount, is_active " +
+            "FROM coupon " +
+            "WHERE code = ?;";
 
     private static final String INSERT_COUPON = "INSERT INTO coupon(code, valid_from, " +
             "valid_to, discount) " +
@@ -133,6 +139,25 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
         return coupon;
     }
 
+    @Override
+    public Optional<Coupon> findByCode(String code) throws DaoException {
+        Coupon coupon = null;
+        Connection connection = super.connection;
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_COUPON_BY_CODE)){
+            statement.setString(1, code);
+            statement.executeQuery();
+            try (ResultSet resultSet = statement.getResultSet()){
+                while (resultSet.next()) {
+                    coupon = buildCoupon(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return Optional.ofNullable(coupon);
+    }
+
     private Coupon buildCoupon(ResultSet resultSet) throws SQLException {
         Coupon coupon;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -146,5 +171,6 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> {
         coupon = builder.build();
         return coupon;
     }
+
 
 }

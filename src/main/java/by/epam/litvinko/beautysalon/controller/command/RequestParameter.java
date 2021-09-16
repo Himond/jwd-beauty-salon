@@ -14,6 +14,7 @@ public final class RequestParameter {
     public static final String BIRTHDAY = "date_of_birth";
     public static final String IMAGE = "image";
     public static final String LOCALE = "locale";
+    public static final String COUPON = "coupon";
     public static final String CURRENT_CATEGORY = "current_category";
     public static final String CURRENT_PRODUCT_ID = "current_product_id";
     public static final String RECOVER_EMAIL = "recoverEmail";

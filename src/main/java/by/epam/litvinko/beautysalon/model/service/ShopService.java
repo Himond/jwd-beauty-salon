@@ -2,6 +2,7 @@ package by.epam.litvinko.beautysalon.model.service;
 
 import by.epam.litvinko.beautysalon.entity.Cart;
 import by.epam.litvinko.beautysalon.entity.Category;
+import by.epam.litvinko.beautysalon.entity.Coupon;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.model.service.dto.ClientDto;
 import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
@@ -17,5 +18,6 @@ public interface ShopService {
     List<Category> allCategory() throws ServiceException;
     Optional<ProvideServicesDto> findProvideServiceByID(String id) throws ServiceException;
     boolean createOrder(Cart cart, ClientDto client) throws ServiceException;
+    Optional<Coupon> findCouponByCode(String code) throws ServiceException;
 
 }

@@ -48,20 +48,15 @@ public class Cart extends AbstractEntity {
     public BigDecimal getTotalPrice(){
         Optional<BigDecimal> totalPrice;
         totalPrice = services.stream().map(ProvideServicesDto::price).reduce(BigDecimal::add);
-        if (totalPrice.isPresent()){
-            return totalPrice.get();
-        }
-        return new BigDecimal(0);
+        return totalPrice.orElseGet(() -> new BigDecimal(0));
     }
 
     public BigDecimal getTotalPriceAfterDiscount(){
         Optional<BigDecimal> totalPrice;
         totalPrice = services.stream().map(ProvideServicesDto::price).reduce(BigDecimal::add);
-        if (totalPrice.isPresent()){
-            return totalPrice.get().multiply(BigDecimal.valueOf(coupon.getDiscount() / 100));
-        }
-        return new BigDecimal(0);
+        return totalPrice.map(bigDecimal -> getTotalPrice().subtract(bigDecimal.multiply(BigDecimal.valueOf(coupon.getDiscount()).divide(BigDecimal.valueOf(100))))).orElseGet(() -> new BigDecimal(0));
     }
+
     public void clearCart(){
         services.clear();
     }

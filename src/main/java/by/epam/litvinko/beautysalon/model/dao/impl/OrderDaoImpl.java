@@ -27,6 +27,12 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
             "is_paid, is_active " +
             "FROM salon_order;";
 
+    private static final String SELECT_ALL_ORDERS_BY_CLIENT_ID = "SELECT id, client_id, coupon_id, created, " +
+            "is_paid, is_active " +
+            "FROM salon_order " +
+            "WHERE client_id = ?;";
+
+
     private static final String SELECT_ORDER_BY_ID = "SELECT id, client_id, coupon_id, created, " +
             "is_paid, is_active " +
             "FROM salon_order " +
@@ -133,7 +139,6 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
     public boolean delete(Integer id) throws DaoException {
         boolean result;
         Connection connection = super.connection;
-
         try(PreparedStatement statement = connection.prepareStatement(DELETE_ORDER_BY_ID)) {
             statement.setInt(1, id);
             result = statement.executeUpdate() == 1;
@@ -183,6 +188,24 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
             }
         }
         return  result;
+    }
+
+    @Override
+    public List<Order> findOrderByClientId(int id) throws DaoException {
+        List<Order> orderList = new ArrayList<>();
+        Connection connection = super.connection;
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ORDERS_BY_CLIENT_ID)) {
+            try (ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()) {
+                    Order order = buildOrder(resultSet);
+                    orderList.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return orderList;
     }
 
     private Order buildOrder(ResultSet resultSet) throws SQLException {

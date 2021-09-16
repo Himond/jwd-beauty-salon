@@ -9,8 +9,8 @@ import by.epam.litvinko.beautysalon.model.service.UserService;
 import by.epam.litvinko.beautysalon.model.service.dto.UserDto;
 import by.epam.litvinko.beautysalon.util.MailSender;
 import by.epam.litvinko.beautysalon.util.PasswordEncryptor;
-import by.epam.litvinko.beautysalon.model.validator.UserValidator;
-import by.epam.litvinko.beautysalon.model.validator.impl.UserValidatorImpl;
+import by.epam.litvinko.beautysalon.model.validator.SalonValidator;
+import by.epam.litvinko.beautysalon.model.validator.impl.SalonValidatorImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     private final PasswordEncryptor passwordEncryptor = PasswordEncryptor.getInstance();
-    private final UserValidator validator = UserValidatorImpl.getInstance();
+    private final SalonValidator validator = SalonValidatorImpl.getInstance();
 
     @Override
     public Optional<UserDto> signIn(String userName, String password) throws ServiceException {

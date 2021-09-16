@@ -22,6 +22,7 @@ public class CommandProvider {
         commands.put(CommandType.EDIT_PHOTO, new EditPhotoCommand());
         commands.put(CommandType.PRODUCT_DETAIL, new ProductDetailCommand());
         commands.put(CommandType.ADD_TO_CART, new AddToCartCommand());
+        commands.put(CommandType.ADD_COUPON, new AddCouponCommand());
         commands.put(CommandType.REMOVE_PRODUCT, new RemoveProductFromCartCommand());
         commands.put(CommandType.CREATED_ORDER, new CreateOrderCommand());
         commands.put(CommandType.GO_TO_CART_PAGE, new GoToCartPageCommand());

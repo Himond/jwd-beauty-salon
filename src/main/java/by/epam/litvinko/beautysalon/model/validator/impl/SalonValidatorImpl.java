@@ -2,27 +2,28 @@ package by.epam.litvinko.beautysalon.model.validator.impl;
 
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 import by.epam.litvinko.beautysalon.manager.PropertyManager;
-import by.epam.litvinko.beautysalon.model.validator.UserValidator;
+import by.epam.litvinko.beautysalon.model.validator.SalonValidator;
 
 import java.util.Map;
 
-public class UserValidatorImpl implements UserValidator {
+public class SalonValidatorImpl implements SalonValidator {
 
 
-    private static UserValidatorImpl instance = new UserValidatorImpl();
+    private static SalonValidatorImpl instance = new SalonValidatorImpl();
     private static final String REGEXP_PHONE_NUM = "regexp.phone_number";
     private static final String REGEXP_USERNAME = "regexp.username";
     private static final String REGEXP_USER_FIO= "regexp.user_fio";
     private static final String REGEXP_EMAIL = "regexp.email";
+    private static final String REGEXP_COUPON = "regexp.coupon";
     private static final String REGEXP_PASSWORD = "regexp.password";
     private static final String REGEXP_DATE = "regexp.date";
     private static final PropertyManager manager = PropertyManager.getInstance();
     private static final String EMPTY_ROW = "";
 
-    private UserValidatorImpl() {
+    private SalonValidatorImpl() {
     }
 
-    public static UserValidatorImpl getInstance() {
+    public static SalonValidatorImpl getInstance() {
         return instance;
     }
 
@@ -67,6 +68,11 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public boolean validateEmail(String email) {
         return isMatchFounded(email, manager.getProperty(REGEXP_EMAIL));
+    }
+
+    @Override
+    public boolean validateCoupon(String code) {
+        return isMatchFounded(code, manager.getProperty(REGEXP_COUPON));
     }
 
     @Override

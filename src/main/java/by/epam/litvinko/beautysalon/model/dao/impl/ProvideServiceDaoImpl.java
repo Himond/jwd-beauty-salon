@@ -31,6 +31,13 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "JOIN salon_category ON salon_service.category_id = salon_category.id " +
             "WHERE salon_category.name = ?;";
 
+    private static final String SELECT_SERVICE_BY_ORDER_ID = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
+            "salon_service.description, salon_service.price, salon_service.service_time, " +
+            "salon_service.available, salon_service.created, salon_service.updated, salon_service.image, salon_service. " +
+            "FROM salon_service " +
+            "JOIN order_item ON salon_service.id = order_item.service_id " +
+            "WHERE order_item.order_id = ?;";
+
     private static final String SELECT_SERVICE_BY_ID = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
@@ -160,6 +167,25 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
         Connection connection = super.connection;
         try(PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_CATEGORY)) {
             statement.setString(1, category);
+            try (ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()) {
+                    ProvideService service = buildProvideService(resultSet);
+                    serviceList.add(service);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return serviceList;
+    }
+
+    @Override
+    public List<ProvideService> findAllByOrderId(Order order) throws DaoException {
+        List<ProvideService> serviceList = new ArrayList<>();
+        Connection connection = super.connection;
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_SERVICE_BY_ORDER_ID)) {
+            statement.setInt(1, order.getId());
             try (ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()) {
                     ProvideService service = buildProvideService(resultSet);
