@@ -3,8 +3,10 @@ package by.epam.litvinko.beautysalon.controller.command.impl;
 import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.RequestParameter;
 import by.epam.litvinko.beautysalon.controller.command.Router;
+import by.epam.litvinko.beautysalon.entity.ProvideServiceReview;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.manager.MessageManager;
+import by.epam.litvinko.beautysalon.model.dao.ProvideServiceReviewDao;
 import by.epam.litvinko.beautysalon.model.service.ShopService;
 import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
 import by.epam.litvinko.beautysalon.model.service.impl.ShopServiceImpl;
@@ -14,6 +16,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -36,7 +39,11 @@ public class ProductDetailCommand implements Command {
             Optional<ProvideServicesDto> currentProduct = service.findProvideServiceByID(id);
             if (currentProduct.isPresent()){
                 ProvideServicesDto product = currentProduct.get();
+                System.out.println(product);
+                List<ProvideServiceReview> reviews = service.findReviewByServiceId(product.id());
+                System.out.println(reviews);
                 request.getSession().setAttribute(CURRENT_PRODUCT, product);
+                request.getSession().setAttribute(CURRENT_REVIEW_LIST, reviews);
                 router = new Router(PRODUCT_DETAIL_JSP, Router.RouterType.REDIRECT);
             }else {
                 request.getSession().setAttribute(PRODUCT_NOT_FOUND, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(PRODUCT_NOT_FOUND_PATH));

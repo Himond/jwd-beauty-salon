@@ -114,32 +114,37 @@
             </div>
 
             <div class="col-8">
-                <center><h3>История заказов</h3></center>
+                <center><h3><fmt:message key="dashboard.page.orderHistory"/></h3></center>
                 <hr>
 
                 <center><table class="table_blur">
                     <thead>
                     <tr>
-                        <th>Номер заказа</th>
-                        <th>Услуга</th>
+                        <th><fmt:message key="cart.create.number"/></th>
+                        <th><fmt:message key="shop.page.categories"/></th>
+                        <th><fmt:message key="dashboard.page.dataService"/></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                                ${clientOrderList.id()}
-                        </td>
-                        <td>
-                                ${user.lastName()}
-                        </td>
 
-                    </tr>
+                    <c:forEach var="order" items="${clientOrderList}">
+                        <tr>
+                                <td>
+                                        ${order.id()}
+                                </td>
+                            <td>
+                                    <c:forEach var="product" items="${order.products()}">
+                                        ${product.name()}.
+                                    </c:forEach>
+                            </td>
+                            <td>
+                                    ${order.date()}
+                            </td>
+                        </tr>
+                    </c:forEach>
+
                     </tbody>
                 </table></center>
-                <hr>
-                <center><h3><fmt:message key="cart.create.rowTwo"/></h3></center>
-                <center><h3><fmt:message key="cart.create.rowThree"/></h3></center>
-
             </div>
             <div class="col-sm">
             </div>

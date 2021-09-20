@@ -31,6 +31,7 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_FORGOT_PASSWORD_PAGE, new GoToForgotPasswordPageCommand());
         commands.put(CommandType.GO_TO_SIGNUP_PAGE, new GoToSignUpPageCommand());
         commands.put(CommandType.GO_TO_SHOP_PAGE, new GoToShopPageCommand());
+        commands.put(CommandType.GO_TO_CONTACTS_PAGE, new GoToContactsPageCommand());
         commands.put(CommandType.GO_TO_MAIN_PAGE, new GoToMainPageCommand());
         commands.put(CommandType.GO_TO_PROFILE_PAGE, new GoToProfilePageCommand());
     }

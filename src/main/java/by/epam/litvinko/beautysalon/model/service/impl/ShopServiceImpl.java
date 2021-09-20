@@ -3,12 +3,8 @@ package by.epam.litvinko.beautysalon.model.service.impl;
 import by.epam.litvinko.beautysalon.entity.*;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
-import by.epam.litvinko.beautysalon.model.dao.CouponDao;
 import by.epam.litvinko.beautysalon.model.dao.EntityTransaction;
-import by.epam.litvinko.beautysalon.model.dao.impl.CategoryDaoImpl;
-import by.epam.litvinko.beautysalon.model.dao.impl.CouponDaoImpl;
-import by.epam.litvinko.beautysalon.model.dao.impl.OrderDaoImpl;
-import by.epam.litvinko.beautysalon.model.dao.impl.ProvideServiceDaoImpl;
+import by.epam.litvinko.beautysalon.model.dao.impl.*;
 import by.epam.litvinko.beautysalon.model.service.ShopService;
 import by.epam.litvinko.beautysalon.model.service.dto.ClientDto;
 import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
@@ -78,6 +74,22 @@ public class ShopServiceImpl implements ShopService {
             throw new ServiceException("Can't handle find all categories request at ShopService.", e);
         }
         return categoryList;
+    }
+
+    @Override
+    public List<ProvideServiceReview> findReviewByServiceId(int id) throws ServiceException {
+        final ProvideServiceReviewDaoImpl reviewDao = new ProvideServiceReviewDaoImpl();
+        final EntityTransaction transaction = new EntityTransaction();
+        List<ProvideServiceReview> serviceReviews;
+        try {
+            transaction.init(reviewDao);
+            serviceReviews = reviewDao.findAllByServiceId(id);
+            transaction.end();
+        } catch (DaoException e) {
+            logger.error("Can't handle find all categories request at ShopService.", e);
+            throw new ServiceException("Can't handle find all categories request at ShopService.", e);
+        }
+        return serviceReviews;
     }
 
     @Override

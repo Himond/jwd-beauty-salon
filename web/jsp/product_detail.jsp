@@ -54,6 +54,7 @@
                             </div>
                         </div>
                     </div>
+                    ${currentReviewList}
                 </div>
             </div>
         </div>

@@ -8,10 +8,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
@@ -24,7 +23,7 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service JOIN salon_category ON salon_service.category_id = salon_category.id;";
 
-    private static final String SELECT_SERVICE_BY_CATEGORY = "SELECT salon_service.id, salon_service.category_id, salon_service.name, salon_service.name, " +
+    private static final String SELECT_SERVICE_BY_CATEGORY = "SELECT salon_service.id, salon_service.category_id, salon_service.name, " +
             "salon_service.description, salon_service.price, salon_service.service_time, " +
             "salon_service.available, salon_service.created, salon_service.updated, salon_service.image " +
             "FROM salon_service " +

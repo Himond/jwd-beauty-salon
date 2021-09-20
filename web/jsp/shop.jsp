@@ -12,6 +12,7 @@
 <head>
     <title><fmt:message key="shop.page.title"/></title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+    
 </head>
 <body>
 <jsp:include page="header.jsp"/>

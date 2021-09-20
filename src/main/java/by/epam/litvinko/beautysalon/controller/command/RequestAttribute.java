@@ -15,6 +15,7 @@ public class RequestAttribute {
     public static final String CURRENT_CATEGORY = "currentCategory";
     public static final String CURRENT_CATEGORY_ID = "currentCategoryId";
     public static final String CURRENT_PRODUCT = "currentProduct";
+    public static final String CURRENT_REVIEW_LIST = "currentReviewList";
 
     public static final String WRONG_USERNAME_OR_PASSWORD_SING_IN = "errorLoginPassMessage";
     public static final String WRONG_DATA_SING_UP = "wrongDataSignUp";

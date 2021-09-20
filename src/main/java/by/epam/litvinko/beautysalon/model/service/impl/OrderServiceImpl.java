@@ -30,18 +30,27 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orderList;
         List<OrderDto> orderDtoList;
         try {
-            transaction.init(orderDao);
+            transaction.initTransaction(orderDao, productDao);
             orderList = orderDao.findOrderByClientId(id);
-            transaction.end();
             for (Order order: orderList){
-                transaction.init(productDao);
                 order.setServiceList(productDao.findAllByOrderId(order));
-                transaction.end();
             }
+            transaction.commit();
             orderDtoList = orderList.stream().map(OrderDto::create).toList();
         } catch (DaoException e) {
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Unable to rollback.", e);
+            }
             logger.error("Can't handle find order by clientId request at OrderService.", e);
             throw new ServiceException("Can't handle find order by clientId request at OrderService.", e);
+        }finally {
+            try {
+                transaction.endTransaction();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return orderDtoList;
     }

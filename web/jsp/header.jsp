@@ -60,7 +60,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_contacts_page"><b><h5><fmt:message key="salon.contacts"/></h5></b></a>
                 </li>
                 <c:if test="${user.role() == 'MASTER' or user.role() == 'CLIENT'}">
                     <li class="nav-item">

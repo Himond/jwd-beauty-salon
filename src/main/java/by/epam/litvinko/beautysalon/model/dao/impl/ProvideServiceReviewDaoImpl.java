@@ -1,8 +1,11 @@
 package by.epam.litvinko.beautysalon.model.dao.impl;
 
+import by.epam.litvinko.beautysalon.entity.Order;
+import by.epam.litvinko.beautysalon.entity.ProvideService;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.ProvideServiceReview;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.dao.ProvideServiceReviewDao;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -13,17 +16,21 @@ import java.util.List;
 import java.util.Optional;
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
-public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideServiceReview> {
+public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideServiceReview> implements ProvideServiceReviewDao {
 
     private static Logger logger = LogManager.getLogger(ProvideServiceReviewDaoImpl.class);
 
     private static final String SELECT_ALL_REVIEW = "SELECT id, service_id, client_id, review, " +
-            "is_active, salon_service.price, salon_service.service_time " +
+            "is_active " +
             "FROM service_review;";
 
     private static final String SELECT_REVIEW_BY_ID = "SELECT id, service_id, client_id, review, " +
-            "is_active, salon_service.price, salon_service.service_time " +
+            "is_active " +
             "FROM service_review WHERE id = ?;";
+
+    private static final String SELECT_REVIEW_BY_SERVICE_ID = "SELECT id, service_id, client_id, review, " +
+            "is_active " +
+            "FROM service_review WHERE service_id = ?;";
 
     private static final String INSERT_REVIEW = "INSERT INTO service_review(service_id, client_id, review, " +
             "is_active) " +
@@ -46,7 +53,7 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
                     ProvideServiceReview review = new ProvideServiceReview();
                     review.setId(resultSet.getInt(SERVICE_REVIEW_ID));
                     review.setServiceId(resultSet.getInt(SERVICE_REVIEW_SERVICE_ID));
-                    review.setServiceId(resultSet.getInt(SERVICE_REVIEW_CLIENT_ID));
+                    review.setClientId(resultSet.getInt(SERVICE_REVIEW_CLIENT_ID));
                     review.setReview(resultSet.getString(SERVICE_REVIEW_REVIEW));
                     review.setActive(resultSet.getBoolean(SERVICE_REVIEW_IS_ACTIVE));
                     reviews.add(review);
@@ -136,5 +143,29 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
         }
         review = findById(entity.getId());
         return review;
+    }
+
+    @Override
+    public List<ProvideServiceReview> findAllByServiceId(int id) throws DaoException {
+        List<ProvideServiceReview> reviews = new ArrayList<>();
+        Connection connection = super.connection;
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_REVIEW_BY_SERVICE_ID)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()) {
+                    ProvideServiceReview review = new ProvideServiceReview();
+                    review.setId(resultSet.getInt(SERVICE_REVIEW_ID));
+                    review.setServiceId(resultSet.getInt(SERVICE_REVIEW_SERVICE_ID));
+                    review.setClientId(resultSet.getInt(SERVICE_REVIEW_CLIENT_ID));
+                    review.setReview(resultSet.getString(SERVICE_REVIEW_REVIEW));
+                    review.setActive(resultSet.getBoolean(SERVICE_REVIEW_IS_ACTIVE));
+                    reviews.add(review);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return reviews;
     }
 }
