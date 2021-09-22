@@ -61,7 +61,7 @@
                             <li><fmt:message key="signIn.page.rowSeven"/></li>
                         </ul>
                         <hr>
-                        <a  href="Controller?command=go_to_item_page_command" class="btn btn-outline-dark "><fmt:message key="button.name.ourServices"/></a>
+                        <a  href="${pageContext.request.contextPath}/controller?command=go_to_shop_page" class="btn btn-outline-dark "><fmt:message key="button.name.ourServices"/></a>
                     </div>
 
                 </div>

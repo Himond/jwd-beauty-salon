@@ -1,12 +1,13 @@
 package by.epam.litvinko.beautysalon.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Coupon extends AbstractEntity {
 
     private String code;
-    private LocalDateTime validFrom;
-    private LocalDateTime validTo;
+    private LocalDate validFrom;
+    private LocalDate validTo;
     private int discount;
     private boolean isActive;
 
@@ -29,19 +30,19 @@ public class Coupon extends AbstractEntity {
         this.code = code;
     }
 
-    public LocalDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(LocalDateTime validFrom) {
+    public void setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
     }
 
-    public LocalDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public void setValidTo(LocalDateTime validTo) {
+    public void setValidTo(LocalDate validTo) {
         this.validTo = validTo;
     }
 
@@ -118,12 +119,12 @@ public class Coupon extends AbstractEntity {
             return this;
         }
 
-        public Coupon.Builder setValidFrom(LocalDateTime validFrom){
+        public Coupon.Builder setValidFrom(LocalDate validFrom){
             Coupon.this.validFrom = validFrom;
             return this;
         }
 
-        public Coupon.Builder setValidTo(LocalDateTime validTo){
+        public Coupon.Builder setValidTo(LocalDate validTo){
             Coupon.this.validTo = validTo;
             return this;
         }

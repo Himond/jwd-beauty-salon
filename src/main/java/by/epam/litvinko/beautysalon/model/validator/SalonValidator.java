@@ -11,6 +11,7 @@ public interface SalonValidator {
       boolean validatePhoneNumber(String phoneNumber);
       boolean validateEmail(String email);
       boolean validateCoupon(String email);
+      boolean validateReview(String revieBody);
       boolean validatePassword(String code);
       boolean validateDate(String date);
 }

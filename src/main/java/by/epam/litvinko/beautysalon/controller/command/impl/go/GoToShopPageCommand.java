@@ -43,7 +43,7 @@ public class GoToShopPageCommand implements Command {
             }
             request.getSession().setAttribute(PRODUCT_LIST, productList);
             request.getSession().setAttribute(CATEGORY_LIST, categoryList);
-            router = new Router(SHOP_JSP, Router.RouterType.REDIRECT);
+            router = new Router(SHOP_JSP, Router.RouterType.FORWARD);
         }catch (ServiceException e) {
             logger.error("Error at GoToShopPageCommand", e);
             request.setAttribute(EXCEPTION, e);

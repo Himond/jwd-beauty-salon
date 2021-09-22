@@ -33,7 +33,7 @@ public class GoToProfilePageCommand implements Command {
         try {
             List<OrderDto> orderDtoList = orderService.findOrderByUserId(client.clientId());
             request.getSession().setAttribute(CLIENT_ORDER_LIST, orderDtoList);
-            router = new Router(PROFILE_JSP, Router.RouterType.REDIRECT);
+            router = new Router(PROFILE_JSP, Router.RouterType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Error at ForgetPasswordCommand", e);
             request.setAttribute(EXCEPTION, e);

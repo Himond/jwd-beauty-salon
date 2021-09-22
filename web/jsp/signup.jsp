@@ -56,7 +56,10 @@
                 <h5 class="card-text"><fmt:message key="signUp.page.rowThree"/></h5>
             </div>
             <div class="card-footer text-muted">
-                <button type="submit" class="btn btn-outline-dark"><fmt:message key="button.name.editPersonalData"/></button>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="go_to_profile_page">
+                    <button type="submit" class="btn btn-outline-dark"><fmt:message key="button.name.editPersonalData"/></button>
+                </form>
             </div>
         </div>
 

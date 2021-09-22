@@ -8,6 +8,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -88,8 +89,8 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> implements Coupo
         Connection connection = super.connection;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_COUPON)){
             statement.setString(1, entity.getCode());
-            statement.setDate(2, Date.valueOf(entity.getValidFrom().toLocalDate()));
-            statement.setDate(3, Date.valueOf(entity.getValidTo().toLocalDate()));
+            statement.setDate(2, Date.valueOf(entity.getValidFrom()));
+            statement.setDate(3, Date.valueOf(entity.getValidTo()));
             statement.setInt(4, entity.getDiscount());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
@@ -122,8 +123,8 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> implements Coupo
         if (coupon.isPresent()) {
             try (PreparedStatement statement = connection.prepareStatement(UPDATE_COUPON_BY_ID)){
                 statement.setString(1, entity.getCode());
-                statement.setDate(2, Date.valueOf(entity.getValidFrom().toLocalDate()));
-                statement.setDate(3, Date.valueOf(entity.getValidFrom().toLocalDate()));
+                statement.setDate(2, Date.valueOf(entity.getValidFrom()));
+                statement.setDate(3, Date.valueOf(entity.getValidFrom()));
                 statement.setInt(4, entity.getDiscount());
                 statement.setBoolean(5, entity.isActive());
                 statement.setInt(6, entity.getId());
@@ -160,12 +161,11 @@ public class CouponDaoImpl extends AbstractDao<Integer, Coupon> implements Coupo
 
     private Coupon buildCoupon(ResultSet resultSet) throws SQLException {
         Coupon coupon;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Coupon.Builder builder = Coupon.newBuilder();
         builder.setId(resultSet.getInt(COUPON_ID))
                 .setCode(resultSet.getString(COUPON_CODE))
-                .setValidFrom(LocalDateTime.parse(resultSet.getString(COUPON_VALID_FROM), formatter))
-                .setValidTo(LocalDateTime.parse(resultSet.getString(COUPON_VALID_TO), formatter))
+                .setValidFrom(LocalDate.parse(resultSet.getString(COUPON_VALID_FROM)))
+                .setValidTo(LocalDate.parse(resultSet.getString(COUPON_VALID_TO)))
                 .setDiscount(resultSet.getInt(COUPON_DISCOUNT))
                 .setIsActive(resultSet.getBoolean(COUPON_IS_ACTIVE));
         coupon = builder.build();

@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
         try {
             transaction.init(userDao);
             Optional<User> user = userDao.findUserByLogin(userName);
-            transaction.end();
             if(user.isPresent() && passwordEncryptor.checkHash(password, user.get().getPassword())){
                 UserDto userDto = UserDto.create(user.get());
                 return Optional.of(userDto);
@@ -38,6 +37,12 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             logger.error("Can't handle signIn request at UserService.", e);
             throw new ServiceException("Can't handle signIn request at UserService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return Optional.empty();
     }
@@ -49,7 +54,6 @@ public class UserServiceImpl implements UserService {
         try {
             transaction.init(userDao);
             Optional<User> optionalUser = userDao.findUserByEmail(email);
-            transaction.end();
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 String newPassword = PasswordEncryptor.generateRandomPassword();
@@ -60,6 +64,12 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             logger.error("Can't handle forgetPassword request at UserService", e);
             throw new ServiceException("Can't handle forgetPassword request at UserService", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return false;
     }
@@ -71,11 +81,16 @@ public class UserServiceImpl implements UserService {
         try {
             transaction.init(userDao);
             userDao.updateUserPhotoById(userId, photo);
-            transaction.end();
         } catch (DaoException e) {
             e.printStackTrace();
             logger.error("Can't update user photo", e);
             throw new ServiceException("Can't update user photo", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
     }
 
@@ -87,13 +102,18 @@ public class UserServiceImpl implements UserService {
         try {
             transaction.init(userDao);
             Optional<User> optionalUser = userDao.findById(userId);
-            transaction.end();
             if (optionalUser.isPresent() && passwordEncryptor.checkHash(oldPassword, optionalUser.get().getPassword())) {
                 userDao.setPasswordById(userId, passwordEncryptor.getHash(newPassword));
                 return true;
             }
         } catch (DaoException e) {
             throw new ServiceException("Can't handle editPassword request at UserService", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return false;
     }

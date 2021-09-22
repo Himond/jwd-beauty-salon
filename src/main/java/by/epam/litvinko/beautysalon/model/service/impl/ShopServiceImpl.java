@@ -15,8 +15,12 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
+import static by.epam.litvinko.beautysalon.model.dao.ColumnName.COUPON_IS_ACTIVE;
 
 
 public class ShopServiceImpl implements ShopService {
@@ -33,11 +37,16 @@ public class ShopServiceImpl implements ShopService {
         try {
             transaction.init(allServicesDao);
             productList = allServicesDao.findAll();
-            transaction.end();
             productListDto = productList.stream().map(s -> new ProvideServicesDto(s.getId(), s.getCategoryId(), s.getName(), s.getDescription(), s.getPrice(), s.getServiceTime(), s.getImage())).toList();
         } catch (DaoException e) {
             logger.error("Can't handle find all products request at ShopService.", e);
             throw new ServiceException("Can't handle find all products request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return productListDto;
     }
@@ -51,11 +60,16 @@ public class ShopServiceImpl implements ShopService {
         try {
             transaction.init(provideServiceDao);
             productList = provideServiceDao.findAllByCategory(category);
-            transaction.end();
             productListDto = productList.stream().map(s -> new ProvideServicesDto(s.getId(), s.getCategoryId(), s.getName(), s.getDescription(), s.getPrice(), s.getServiceTime(), s.getImage())).toList();
         } catch (DaoException e) {
             logger.error("Can't handle find products by category request at ShopService.", e);
             throw new ServiceException("Can't handle find products by category request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return productListDto;
     }
@@ -68,10 +82,15 @@ public class ShopServiceImpl implements ShopService {
         try {
             transaction.init(allCategoryDao);
             categoryList = allCategoryDao.findAll();
-            transaction.end();
         } catch (DaoException e) {
             logger.error("Can't handle find all categories request at ShopService.", e);
             throw new ServiceException("Can't handle find all categories request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return categoryList;
     }
@@ -84,10 +103,16 @@ public class ShopServiceImpl implements ShopService {
         try {
             transaction.init(reviewDao);
             serviceReviews = reviewDao.findAllByServiceId(id);
-            transaction.end();
+
         } catch (DaoException e) {
             logger.error("Can't handle find all categories request at ShopService.", e);
             throw new ServiceException("Can't handle find all categories request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return serviceReviews;
     }
@@ -100,7 +125,6 @@ public class ShopServiceImpl implements ShopService {
         try {
             transaction.init(provideServiceDao);
             productOptional = provideServiceDao.findById(Integer.parseInt(id));
-            transaction.end();
             if (productOptional.isPresent()){
                 ProvideService product = productOptional.get();
                 ProvideServicesDto productDto = ProvideServicesDto.create(product);
@@ -109,6 +133,12 @@ public class ShopServiceImpl implements ShopService {
         } catch (DaoException e) {
             logger.error("Can't handle find product by id request at ShopService.", e);
             throw new ServiceException("Can't handle find product by id request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return Optional.empty();
     }
@@ -154,6 +184,84 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public boolean createCategory(Category category) throws ServiceException {
+        final EntityTransaction transaction = new EntityTransaction();
+        final CategoryDaoImpl categoryDao = new CategoryDaoImpl();
+        boolean result;
+        try {
+            transaction.init(categoryDao);
+            result = categoryDao.create(category);
+            return result;
+        } catch (DaoException e) {
+            logger.error("Can't handle create category for product request at ShopService.", e);
+            throw new ServiceException("Can't handle create category for product request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean createCoupon(String code, String discount, String validTo) throws ServiceException {
+        final EntityTransaction transaction = new EntityTransaction();
+        final CouponDaoImpl couponDao = new CouponDaoImpl();
+        boolean result;
+
+        Coupon coupon;
+        Coupon.Builder builder = Coupon.newBuilder();
+        builder.setCode(code)
+                .setValidFrom(LocalDate.now())
+                .setValidTo(LocalDate.parse(validTo))
+                .setDiscount(Integer.parseInt(discount));
+        coupon = builder.build();
+        try {
+            transaction.init(couponDao);
+            result = couponDao.create(coupon);
+            return result;
+        } catch (DaoException e) {
+            logger.error("Can't handle create coupon for product request at ShopService.", e);
+            throw new ServiceException("Can't handle create coupon for product request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean addReview(int clientId, int productId, String reviewBody) throws ServiceException {
+        final EntityTransaction transaction = new EntityTransaction();
+        final ProvideServiceReviewDaoImpl reviewDao = new ProvideServiceReviewDaoImpl();
+        boolean result = false;
+        if (validator.validateReview(reviewBody)){
+            try {
+                transaction.init(reviewDao);
+                ProvideServiceReview review = new ProvideServiceReview();
+                review.setServiceId(productId);
+                review.setClientId(clientId);
+                review.setReview(reviewBody);
+                result = reviewDao.create(review);
+                return result;
+            } catch (DaoException e) {
+                logger.error("Can't handle create review for product request at ShopService.", e);
+                throw new ServiceException("Can't handle create review for product request at ShopService.", e);
+            }finally {
+                try {
+                    transaction.end();
+                } catch (DaoException e) {
+                    logger.error("Error closing transaction.", e);
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Optional<Coupon> findCouponByCode(String code) throws ServiceException {
         final CouponDaoImpl couponDao = new CouponDaoImpl();
         final EntityTransaction transaction = new EntityTransaction();
@@ -162,11 +270,16 @@ public class ShopServiceImpl implements ShopService {
             try {
                 transaction.init(couponDao);
                 coupon = couponDao.findByCode(code);
-                transaction.end();
                 return coupon;
             } catch (DaoException e) {
                 logger.error("Can't handle find product by id request at ShopService.", e);
                 throw new ServiceException("Can't handle find product by id request at ShopService.", e);
+            }finally {
+                try {
+                    transaction.end();
+                } catch (DaoException e) {
+                    logger.error("Error closing transaction.", e);
+                }
             }
         }
         return Optional.empty();

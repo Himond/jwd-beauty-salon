@@ -1,6 +1,8 @@
 package by.epam.litvinko.beautysalon.controller.command;
 
 import by.epam.litvinko.beautysalon.controller.command.impl.*;
+import by.epam.litvinko.beautysalon.controller.command.impl.admin.AddCategoryCommand;
+import by.epam.litvinko.beautysalon.controller.command.impl.admin.CreateCouponCommand;
 import by.epam.litvinko.beautysalon.controller.command.impl.go.*;
 
 import java.util.EnumMap;
@@ -23,13 +25,17 @@ public class CommandProvider {
         commands.put(CommandType.PRODUCT_DETAIL, new ProductDetailCommand());
         commands.put(CommandType.ADD_TO_CART, new AddToCartCommand());
         commands.put(CommandType.ADD_COUPON, new AddCouponCommand());
+        commands.put(CommandType.ADD_CATEGORY, new AddCategoryCommand());
+        commands.put(CommandType.ADD_REVIEW, new AddReviewCommand());
         commands.put(CommandType.REMOVE_PRODUCT, new RemoveProductFromCartCommand());
         commands.put(CommandType.CREATED_ORDER, new CreateOrderCommand());
+        commands.put(CommandType.CREATE_COUPON, new CreateCouponCommand());
         commands.put(CommandType.GO_TO_CART_PAGE, new GoToCartPageCommand());
         commands.put(CommandType.GO_TO_EDIT_PASSWORD_PAGE, new GoToEditPasswordPageCommand());
         commands.put(CommandType.GO_TO_EDIT_PROFILE_PAGE, new GoToEditProfilePageCommand());
         commands.put(CommandType.GO_TO_FORGOT_PASSWORD_PAGE, new GoToForgotPasswordPageCommand());
         commands.put(CommandType.GO_TO_SIGNUP_PAGE, new GoToSignUpPageCommand());
+        commands.put(CommandType.GO_TO_SIGNIN_PAGE, new GoToSignInPageCommand());
         commands.put(CommandType.GO_TO_SHOP_PAGE, new GoToShopPageCommand());
         commands.put(CommandType.GO_TO_CONTACTS_PAGE, new GoToContactsPageCommand());
         commands.put(CommandType.GO_TO_MAIN_PAGE, new GoToMainPageCommand());

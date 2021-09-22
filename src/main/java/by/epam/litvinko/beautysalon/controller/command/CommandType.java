@@ -14,6 +14,9 @@ public enum CommandType {
     CREATED_ORDER,
     ADD_TO_CART,
     ADD_COUPON,
+    ADD_CATEGORY,
+    CREATE_COUPON,
+    ADD_REVIEW,
     GO_TO_MAIN_PAGE,
     GO_TO_PROFILE_PAGE,
     GO_TO_SHOP_PAGE,
@@ -22,6 +25,7 @@ public enum CommandType {
     GO_TO_EDIT_PROFILE_PAGE,
     GO_TO_FORGOT_PASSWORD_PAGE,
     GO_TO_SIGNUP_PAGE,
+    GO_TO_SIGNIN_PAGE,
     GO_TO_CART_PAGE,
     DEFAULT
 }

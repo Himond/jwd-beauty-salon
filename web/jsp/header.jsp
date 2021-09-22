@@ -67,6 +67,11 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_profile_page"><b><h5><fmt:message key="salon.profile"/></h5></b></a>
                     </li>
                 </c:if>
+                <c:if test="${user.role() == 'ADMINISTRATOR'}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=go_to_admin_page"><b><h5><fmt:message key="salon.admin"/></h5></b></a>
+                    </li>
+                </c:if>
 
             </ul>
         </div>

@@ -149,13 +149,8 @@
             <div class="col-sm">
             </div>
         </div>
-
-
     </div>
-
-
 </c:if>
-
 
 <c:if test="${user.role() == 'MASTER'}">
     <div class="container-fluid  bg-master"  style="padding-top:50px;padding-bottom:50px">
@@ -190,13 +185,6 @@
         </div>
     </div>
 </c:if>
-
-
-
-
-
-
-
 
 <jsp:include page="footer.jsp"/>
 </body>

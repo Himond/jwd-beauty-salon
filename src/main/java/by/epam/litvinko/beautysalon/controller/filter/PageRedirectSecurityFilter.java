@@ -5,18 +5,15 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
-//@WebFilter( urlPatterns = { "/jsp/*" },
-     //initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
+@WebFilter( urlPatterns = { "/jsp/shop.jsp", "/jsp/profile.jsp", "/jsp/product_detail.jsp" },
+     initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
 public class PageRedirectSecurityFilter implements Filter {
 
     private String indexPath;
 
     public void init(FilterConfig config) throws ServletException {
         indexPath = config.getInitParameter("INDEX_PATH");
-
     }
 
     @Override

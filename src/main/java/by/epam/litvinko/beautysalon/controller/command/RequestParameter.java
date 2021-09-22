@@ -16,8 +16,12 @@ public final class RequestParameter {
     public static final String LOCALE = "locale";
     public static final String COUPON = "coupon";
     public static final String CURRENT_CATEGORY = "current_category";
+    public static final String REVIEW_BODY = "review_body";
     public static final String CURRENT_PRODUCT_ID = "current_product_id";
-    public static final String RECOVER_EMAIL = "recoverEmail";
+    public static final String NEW_CATEGORY_NAME = "new_category_name";
+    public static final String COUPON_CODE = "coupon_code";
+    public static final String COUPON_VALID_TO = "coupon_valid_to";
+    public static final String COUPON_DISCOUNT = "coupon_discount";
 
     private RequestParameter() {
     }

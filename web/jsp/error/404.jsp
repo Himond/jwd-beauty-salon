@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
@@ -16,7 +15,8 @@
 <body>
 <jsp:include page="/jsp/header.jsp"/>
 <div class="container-fluid bg-class text-center" style="padding-top:200px;padding-bottom:200px">
-    Ошибка 404
+    <h1 class="tx-cool">404</h1>
+    <h1 class="tx-cool"><fmt:message key="error.404"/></h1>
 </div>
 <jsp:include page="/jsp/footer.jsp"/>
 </body>

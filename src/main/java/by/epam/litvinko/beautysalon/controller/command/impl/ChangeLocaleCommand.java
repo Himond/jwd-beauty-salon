@@ -16,6 +16,7 @@ public class ChangeLocaleCommand implements Command {
         final HttpSession session = request.getSession();
         final String locale = request.getParameter(LOCALE);
         final String previous_request = (String) session.getAttribute(PREV_REQUEST);
+        System.out.println(previous_request);
         session.setAttribute(RequestAttribute.LOCALE, locale);
         Router router = new Router(previous_request, Router.RouterType.REDIRECT);
         return router;

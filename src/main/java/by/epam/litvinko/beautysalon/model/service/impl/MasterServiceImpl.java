@@ -24,7 +24,6 @@ public class MasterServiceImpl implements MasterService {
         try {
             transaction.init(masterDao);
             Optional<Master> master = masterDao.findMasterByUserId(user.id());
-            transaction.end();
             if(master.isPresent()){
                 MasterDto masterDto = MasterDto.create(master.get());
                 return Optional.of(masterDto);
@@ -32,6 +31,12 @@ public class MasterServiceImpl implements MasterService {
         } catch (DaoException e) {
             logger.error("Can't handle signIn request at MasterService.", e);
             throw new ServiceException("Can't handle signIn request at MasterService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return Optional.empty();
     }

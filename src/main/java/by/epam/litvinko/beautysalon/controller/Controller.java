@@ -33,6 +33,7 @@ public class Controller extends HttpServlet {
         System.out.println(commandName);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
         Router router = command.execute(request);
+        System.out.println(router.getPagePath());
         switch (router.getRouterType()) {
             case REDIRECT:
                 response.sendRedirect(router.getPagePath());

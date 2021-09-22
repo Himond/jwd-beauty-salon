@@ -36,7 +36,6 @@ public class ClientServiceImpl implements ClientService {
         try {
             transaction.init(clientDao);
             Optional<Client> client = clientDao.findClientByUserId(user.id());
-            transaction.end();
             if(client.isPresent()){
                 ClientDto clientDto = ClientDto.create(client.get());
                 return Optional.of(clientDto);
@@ -44,6 +43,12 @@ public class ClientServiceImpl implements ClientService {
         } catch (DaoException e) {
             logger.error("Can't handle signIn request at ClientService.", e);
             throw new ServiceException("Can't handle signIn request at ClientService.", e);
+        }finally {
+            try {
+                transaction.endTransaction();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return Optional.empty();
     }
@@ -55,11 +60,9 @@ public class ClientServiceImpl implements ClientService {
         final EntityTransaction transaction = new EntityTransaction();
         boolean check;
         try {
-            transaction.init(userDao);
+            transaction.initTransaction(userDao, clientDao);
             Optional<User> user = userDao.findUserByLogin(userName);
-            transaction.end();
             if (user.isEmpty()){
-                transaction.initTransaction(userDao, clientDao);
                 Client newClient = (Client) Client.newBuilder()
                         .setPhone(phone)
                         .setUserName(userName)
@@ -144,7 +147,6 @@ public class ClientServiceImpl implements ClientService {
         try {
             transaction.init(clientDao);
             Optional<Client> client = clientDao.findClientByUserId(Integer.parseInt(userId));
-            transaction.end();
             if(client.isPresent()){
                 ClientDto clientDto = ClientDto.create(client.get());
                 return Optional.of(clientDto);
@@ -152,6 +154,12 @@ public class ClientServiceImpl implements ClientService {
         } catch (DaoException e) {
             logger.error("Can't handle find client request at ClientService.", e);
             throw new ServiceException("Can't handle find client request at ClientService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
         }
         return Optional.empty();
     }

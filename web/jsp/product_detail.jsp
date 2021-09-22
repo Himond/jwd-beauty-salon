@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 
-<div class="container-fluid body-back" style="padding-top:50px;padding-bottom:50px">
+<div class="container-fluid body-back center-block" style="padding-top:50px;padding-bottom:50px">
     <div class="row">
 
         <div class="col-sm">
@@ -54,7 +54,6 @@
                             </div>
                         </div>
                     </div>
-                    ${currentReviewList}
                 </div>
             </div>
         </div>
@@ -62,6 +61,53 @@
         <div class="col-sm">
         </div>
     </div>
+
+</div>
+<div class="container-fluid body-back text-center" style="padding-top:20px;padding-bottom:20px;">
+    <h5 style="font-size: 35px;"><b><fmt:message key="shop.page.service.review"/> ${currentProduct.name()}</b></h5>
+    <hr>
+    <c:choose>
+        <c:when test="${currentReviewList.size() == 0}">
+            <h6 style="font-size: 25px;" class="city-name"><fmt:message key="shop.page.service.emptyReview"/></h6>
+        </c:when>
+        <c:when test="${currentReviewList.size() == 1}">
+            <c:forEach var="review" items="${currentReviewList}">
+                <h6 style="font-size: 25px;" class="city-name">${review.getClientFirstName()} ${review.getClientLastName()}</h6>
+                <i class="text-testimonial" >${review.getReview()}</i>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <div class="owl-carousel block-items-review body-back" >
+                <c:forEach var="review" items="${currentReviewList}">
+                    <div class="item body-back">
+                        <div class="inner-testimonial body-back">
+                            <h6 style="font-size: 25px;" class="city-name">${review.getClientFirstName()} ${review.getClientLastName()}</h6>
+                            <i class="text-testimonial" >${review.getReview()}</i>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:otherwise>
+    </c:choose>
+</div>
+<div class="container-fluid body-back text-center center-block" style="padding-top:20px;padding-bottom:20px;">
+<c:choose>
+    <c:when test="${empty user}">
+        <i><fmt:message key="shop.page.service.addReview"/> <a href="${pageContext.request.contextPath}/controller?command=go_to_signin_page"><fmt:message key="shop.page.service.enter"/></a> <fmt:message key="shop.page.service.orReview"/> <a href="${pageContext.request.contextPath}/controller?command=go_to_signup_page"><fmt:message key="shop.page.service.register"/></a>!</i>
+    </c:when>
+    <c:otherwise>
+        <form class="transparent center-block" method="post" action="${pageContext.request.contextPath}/controller">
+            <input type="hidden" name="command" value="add_review">
+            <div class="form-inner center-block">
+                <label for="message-com"><fmt:message key="shop.page.service.comment"/></label>
+                <input type="hidden" name="current_product_id" value=${currentProduct.id()}>
+                <input type="text" pattern="^[a-zA-Zа-яА-я0-9_.,!?]{5,100}$" name="review_body" rows="2" id="message-com" required>
+                    ${wrongDataSignUp}
+                <button type="submit" class="btn btn-outline-dark btn-block btn-rounded" ><b><fmt:message key="shop.page.service.addComment"/></b></button>
+            </div>
+        </form>
+    </c:otherwise>
+</c:choose>
 
 </div>
 

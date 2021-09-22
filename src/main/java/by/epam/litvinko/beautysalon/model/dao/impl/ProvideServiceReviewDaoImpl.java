@@ -28,13 +28,16 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
             "is_active " +
             "FROM service_review WHERE id = ?;";
 
-    private static final String SELECT_REVIEW_BY_SERVICE_ID = "SELECT id, service_id, client_id, review, " +
-            "is_active " +
-            "FROM service_review WHERE service_id = ?;";
+    private static final String SELECT_REVIEW_BY_SERVICE_ID = "SELECT service_review.id, service_review.service_id, service_review.client_id, service_review.review, " +
+            "service_review.is_active, users.first_name, users.last_name " +
+            "FROM service_review " +
+            "JOIN client ON service_review.client_id = client.id " +
+            "JOIN users ON client.user_id = users.id " +
+            "WHERE service_id = ?;";
 
-    private static final String INSERT_REVIEW = "INSERT INTO service_review(service_id, client_id, review, " +
-            "is_active) " +
-            "VALUES (?, ?, ?, ?)";
+    private static final String INSERT_REVIEW = "INSERT INTO service_review(service_id, client_id, " +
+            "review) " +
+            "VALUES (?, ?, ?)";
 
 
     private static final String DELETE_REVIEW_BY_ID = "DELETE FROM service_review WHERE id = ?;";
@@ -99,7 +102,6 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
             statement.setInt(1, entity.getServiceId());
             statement.setInt(2, entity.getClientId());
             statement.setString(3, entity.getReview());
-            statement.setBoolean(4, entity.isActive());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);
@@ -159,6 +161,8 @@ public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideSer
                     review.setClientId(resultSet.getInt(SERVICE_REVIEW_CLIENT_ID));
                     review.setReview(resultSet.getString(SERVICE_REVIEW_REVIEW));
                     review.setActive(resultSet.getBoolean(SERVICE_REVIEW_IS_ACTIVE));
+                    review.setClientFirstName(resultSet.getString(USERS_FIRST_NAME));
+                    review.setClientLastName(resultSet.getString(USERS_LAST_NAME));
                     reviews.add(review);
                 }
             }

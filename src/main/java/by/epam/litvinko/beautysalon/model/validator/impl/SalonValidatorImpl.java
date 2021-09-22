@@ -15,6 +15,7 @@ public class SalonValidatorImpl implements SalonValidator {
     private static final String REGEXP_USER_FIO= "regexp.user_fio";
     private static final String REGEXP_EMAIL = "regexp.email";
     private static final String REGEXP_COUPON = "regexp.coupon";
+    private static final String REGEXP_REVIEW = "regexp.review";
     private static final String REGEXP_PASSWORD = "regexp.password";
     private static final String REGEXP_DATE = "regexp.date";
     private static final PropertyManager manager = PropertyManager.getInstance();
@@ -73,6 +74,11 @@ public class SalonValidatorImpl implements SalonValidator {
     @Override
     public boolean validateCoupon(String code) {
         return isMatchFounded(code, manager.getProperty(REGEXP_COUPON));
+    }
+
+    @Override
+    public boolean validateReview(String reviewBody) {
+        return isMatchFounded(reviewBody, manager.getProperty(REGEXP_REVIEW));
     }
 
     @Override
