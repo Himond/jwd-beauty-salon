@@ -19,6 +19,7 @@ public class ColumnName {
     public static final String CLIENT_PHONE = "phone";
     public static final String CLIENT_DATE_OF_BIRTHDAY = "date_of_birthday";
     public static final String CLIENT_IS_REGULAR = "is_regular";
+    public static final String CLIENT_MONEY = "money";
 
     //Master Table
     public static final String MASTER_ID = "id";

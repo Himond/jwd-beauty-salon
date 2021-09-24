@@ -22,7 +22,8 @@ public final class RequestParameter {
     public static final String COUPON_CODE = "coupon_code";
     public static final String COUPON_VALID_TO = "coupon_valid_to";
     public static final String COUPON_DISCOUNT = "coupon_discount";
-
+    public static final String CARD_NUMBER = "card_number";
+    public static final String AMOUNT = "amount";
     private RequestParameter() {
     }
 

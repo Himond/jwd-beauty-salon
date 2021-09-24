@@ -39,6 +39,8 @@ public class RequestAttribute {
     public static final String COUPON_NOT_FOUND = "couponNotFound";
     public static final String WRONG_CATEGORY = "wrongCategory";
     public static final String WRONG_COUPON = "wrongCoupon";
+    public static final String NOT_ENOUGH_MONEY = "notEnoughMoney";
+    public static final String OPERATION_NOT_SUPPORTED = "operationNotSupported";
 
     public static final String EMAIL_SENT_PATH = "message.emailSent";
     public static final String EMAIL_NOT_EXISTS_PATH = "message.emailNotExists";
@@ -50,6 +52,8 @@ public class RequestAttribute {
     public static final String COUPON_NOT_FOUND_PATH = "message.couponNotFound";
     public static final String WRONG_CATEGORY_PATH = "message.wrongCategory";
     public static final String WRONG_COUPON_PATH = "message.wrongCoupon";
+    public static final String NOT_ENOUGH_MONEY_PATH = "message.notEnoughMoney";
+    public static final String OPERATION_NOT_SUPPORTED_PATH = "message.operationNotSupported";
 
     private RequestAttribute() {
     }

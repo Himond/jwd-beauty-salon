@@ -4,15 +4,16 @@ import by.epam.litvinko.beautysalon.entity.Client;
 import by.epam.litvinko.beautysalon.entity.Role;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record ClientDto(int userId, int clientId, Role role, String firstName, String lastName, String email,
-                        boolean isActive, String photo, String phone, LocalDate dateOfBirth) implements Serializable, Cloneable {
+                        boolean isActive, String photo, String phone, LocalDate dateOfBirth, BigDecimal account) implements Serializable, Cloneable {
 
     public static ClientDto create(Client client){
         ClientDto clientDto = new ClientDto(client.getUserId(), client.getId(), client.getRole(), client.getFirstName(),
                 client.getLastName(), client.getEmail(), client.isActive(), client.getPhoto(),
-                client.getPhone(), client.getDateOfBirthday());
+                client.getPhone(), client.getDateOfBirthday(), client.getCurrentAccount());
         return clientDto;
 
     }

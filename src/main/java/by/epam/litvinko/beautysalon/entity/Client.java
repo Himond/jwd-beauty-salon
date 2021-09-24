@@ -1,12 +1,13 @@
 package by.epam.litvinko.beautysalon.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class Client extends User {
 
     private int userId;
     private String phone;
+    private BigDecimal currentAccount;
     private LocalDate dateOfBirthday;
     private boolean isRegular;
 
@@ -46,6 +47,15 @@ public class Client extends User {
         isRegular = regular;
     }
 
+    public BigDecimal getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(BigDecimal currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,14 +67,17 @@ public class Client extends User {
         if (userId != client.userId) return false;
         if (isRegular != client.isRegular) return false;
         if (phone != null ? !phone.equals(client.phone) : client.phone != null) return false;
+        if (currentAccount != null ? !currentAccount.equals(client.currentAccount) : client.currentAccount != null)
+            return false;
         return dateOfBirthday != null ? dateOfBirthday.equals(client.dateOfBirthday) : client.dateOfBirthday == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (int) (userId ^ (userId >>> 32));
+        result = 31 * result + userId;
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (currentAccount != null ? currentAccount.hashCode() : 0);
         result = 31 * result + (dateOfBirthday != null ? dateOfBirthday.hashCode() : 0);
         result = 31 * result + (isRegular ? 1 : 0);
         return result;
@@ -84,6 +97,7 @@ public class Client extends User {
         sb.append(", dateJoined=").append(getDateJoined());
         sb.append(", photo=").append(getPhoto());
         sb.append(", phone='").append(phone).append('\'');
+        sb.append(", currentAccount='").append(currentAccount).append('\'');
         sb.append(", dateOfBirthday=").append(dateOfBirthday);
         sb.append(", isRegular=").append(isRegular);
         sb.append('}');
@@ -111,6 +125,11 @@ public class Client extends User {
 
         public Client.Builder setDateOfBirthday(LocalDate dateOfBirthday) {
             Client.this.dateOfBirthday = dateOfBirthday;
+            return this;
+        }
+
+        public Client.Builder setCurrentAccount(BigDecimal money) {
+            Client.this.currentAccount = money;
             return this;
         }
 

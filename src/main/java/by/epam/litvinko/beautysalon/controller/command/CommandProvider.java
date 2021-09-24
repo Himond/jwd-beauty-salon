@@ -30,7 +30,10 @@ public class CommandProvider {
         commands.put(CommandType.REMOVE_PRODUCT, new RemoveProductFromCartCommand());
         commands.put(CommandType.CREATED_ORDER, new CreateOrderCommand());
         commands.put(CommandType.CREATE_COUPON, new CreateCouponCommand());
+        commands.put(CommandType.TOP_UP_AN_ACCOUNT, new TopUpAnAccountCommand());
+        commands.put(CommandType.GO_TO_ADMIN_PAGE, new GoToAdminPageCommand());
         commands.put(CommandType.GO_TO_CART_PAGE, new GoToCartPageCommand());
+        commands.put(CommandType.GO_TO_TOP_UP_AN_ACCOUNT_PAGE, new GoToTopUpAccountCommand());
         commands.put(CommandType.GO_TO_EDIT_PASSWORD_PAGE, new GoToEditPasswordPageCommand());
         commands.put(CommandType.GO_TO_EDIT_PROFILE_PAGE, new GoToEditProfilePageCommand());
         commands.put(CommandType.GO_TO_FORGOT_PASSWORD_PAGE, new GoToForgotPasswordPageCommand());

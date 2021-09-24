@@ -106,6 +106,8 @@
                     <button class="btn btn-outline-dark" type="submit" value="Apply"><fmt:message key="cart.button.accept"/></button>
                 </form></center>
                 <hr>
+                <center>${notEnoughMoney}</center>
+                <center>${operationNotSupported}</center>
                 <center><h3>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a href="${pageContext.request.contextPath}/controller?command=go_to_shop_page" class="btn btn-outline-success"><fmt:message key="cart.button.continue"/></a>

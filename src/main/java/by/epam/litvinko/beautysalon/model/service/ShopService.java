@@ -16,7 +16,7 @@ public interface ShopService {
     List<Category> allCategory() throws ServiceException;
     List<ProvideServiceReview> findReviewByServiceId(int id) throws ServiceException;
     Optional<ProvideServicesDto> findProvideServiceByID(String id) throws ServiceException;
-    boolean createOrder(Cart cart, ClientDto client) throws ServiceException;
+    Optional<ClientDto> createOrder(Cart cart, ClientDto client) throws ServiceException;
     boolean createCategory(Category category) throws ServiceException;
     boolean createCoupon(String code, String discount, String validTo) throws ServiceException;
     boolean addReview(int clientId, int productId, String reviewBody) throws ServiceException;

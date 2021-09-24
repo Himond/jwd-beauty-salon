@@ -5,6 +5,7 @@ import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Order;
 import by.epam.litvinko.beautysalon.exception.DaoException;
 import by.epam.litvinko.beautysalon.model.dao.OrderDao;
+import by.epam.litvinko.beautysalon.model.service.dto.ClientDto;
 import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -38,11 +39,11 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
             "FROM salon_order " +
             "WHERE id = ?;";
 
-    private static final String INSERT_ORDER = "INSERT INTO salon_order(client_id, coupon_id, created) " +
-            "VALUES ( ?, ?, ?)";
+    private static final String INSERT_ORDER = "INSERT INTO salon_order(client_id, coupon_id, created, is_paid) " +
+            "VALUES ( ?, ?, ?, ?)";
 
-    private static final String INSERT_ORDER_WITHOUT_COUPON = "INSERT INTO salon_order(client_id, created) " +
-            "VALUES ( ?, ?)";
+    private static final String INSERT_ORDER_WITHOUT_COUPON = "INSERT INTO salon_order(client_id, created, is_paid) " +
+            "VALUES ( ?, ?, ?)";
 
     private static final String DELETE_ORDER_BY_CLIENT_ID = "DELETE FROM salon_order WHERE client_id = ?;";
 
@@ -100,6 +101,7 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
             try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_WITHOUT_COUPON,  Statement.RETURN_GENERATED_KEYS)){
                 statement.setInt(1, entity.getClientId());
                 statement.setDate(2, Date.valueOf(entity.getCreated()));
+                statement.setBoolean(3, entity.isPaid());
                 result = statement.executeUpdate() == 1;
                 ResultSet generatedKeys = statement.getGeneratedKeys();
                 int orderId;
@@ -118,6 +120,7 @@ public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDa
                 statement.setInt(1, entity.getClientId());
                 statement.setInt(2, entity.getCouponId());
                 statement.setDate(3, Date.valueOf(entity.getCreated()));
+                statement.setBoolean(4, entity.isPaid());
                 result = statement.executeUpdate() == 1;
                 ResultSet generatedKeys = statement.getGeneratedKeys();
                 int orderId;

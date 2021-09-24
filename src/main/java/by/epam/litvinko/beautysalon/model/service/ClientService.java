@@ -16,5 +16,6 @@ public interface ClientService {
     Map<String, String> isFormValid(String userName, String firstName, String lastName, String email, String phone, String password);
     Map<String, String> isEditFormValid(String firstName, String lastName, String email, String phone, String date);
     boolean isPasswordsEquals(String password, String passwordRep);
+    Optional<ClientDto> topUpAccount(int clientId, String cardNumber, String amount) throws ServiceException;
 
 }

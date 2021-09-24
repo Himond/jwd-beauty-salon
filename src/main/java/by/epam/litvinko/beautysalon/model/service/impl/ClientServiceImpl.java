@@ -17,6 +17,7 @@ import by.epam.litvinko.beautysalon.model.validator.impl.SalonValidatorImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class ClientServiceImpl implements ClientService {
             if (user.isEmpty()){
                 Client newClient = (Client) Client.newBuilder()
                         .setPhone(phone)
+                        .setCurrentAccount(BigDecimal.ZERO)
                         .setUserName(userName)
                         .setFirstName(firstName)
                         .setLastName(lastName)
@@ -74,6 +76,7 @@ public class ClientServiceImpl implements ClientService {
                 check = userDao.create(newClient);
                 newClient.setUserId(newClient.getId());
                 clientDao.create(newClient);
+                clientDao.createAccount(newClient.getId());
                 transaction.commit();
                 if (check){
                     newClient.setActive(true);
@@ -128,8 +131,8 @@ public class ClientServiceImpl implements ClientService {
             } catch (DaoException ex) {
                 logger.error("Unable to rollback.", e);
             }
-            logger.error("Can't handle signIn request at ClientService.", e);
-            throw new ServiceException("Can't handle signIn request at ClientService.", e);
+            logger.error("Can't handle edit data request at ClientService.", e);
+            throw new ServiceException("Can't handle edit data  request at ClientService.", e);
         }finally {
             try {
                 transaction.endTransaction();
@@ -165,6 +168,34 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Optional<ClientDto> topUpAccount(int clientId, String cardNumber, String amount) throws ServiceException {
+        final ClientDaoImpl clientDao = new ClientDaoImpl();
+        final EntityTransaction transaction = new EntityTransaction();
+        if(!validator.validateCardNumber(cardNumber)){
+            return Optional.empty();
+        }
+        try {
+            transaction.init(clientDao);
+            Optional<Client> client = clientDao.topUpAccount(clientId, cardNumber, amount);
+            if(client.isPresent()){
+                ClientDto clientDto = ClientDto.create(client.get());
+                return Optional.of(clientDto);
+            }
+        } catch (DaoException e) {
+            logger.error("Can't handle add money request at ClientService.", e);
+            throw new ServiceException("Can't handle add money request at ClientService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    @Override
     public Map<String, String> isFormValid(String username, String firstName, String lastName, String email, String phone, String password) {
         Map<String, String> userParameters = new HashMap<>();
         userParameters.put(RequestParameter.USERNAME, username);
@@ -193,6 +224,7 @@ public class ClientServiceImpl implements ClientService {
     public boolean isPasswordsEquals(String password, String passwordRep) {
         return password.equals(passwordRep);
     }
+
 
 
 }

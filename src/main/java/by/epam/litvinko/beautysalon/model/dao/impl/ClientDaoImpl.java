@@ -9,6 +9,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,31 +26,43 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
     private static final String SELECT_ALL_CLIENT = "SELECT client.id, client.user_id, " +
             "client.phone, client.date_of_birthday, client.is_regular,  users.id, role.role, " +
             "users.username, users.password, users.email, users.first_name, users.last_name, " +
-            "users.is_active, users.data_joined, users.photo " +
+            "users.is_active, users.data_joined, users.photo, client_account.money " +
             "FROM client " +
             "JOIN users ON client.user_id = users.id " +
+            "JOIN client_account ON client.id = client_account.client_id " +
             "JOIN role ON users.role_id = role.id;";
 
     private static final String SELECT_CLIENT_BY_ID = "SELECT client.id, client.user_id, " +
             "client.phone, client.date_of_birthday, client.is_regular,  users.id, role.role, " +
             "users.username, users.password, users.email, users.first_name, users.last_name, " +
-            "users.is_active, users.data_joined, users.photo " +
+            "users.is_active, users.data_joined, users.photo, client_account.money " +
             "FROM client " +
             "JOIN users ON client.user_id = users.id " +
+            "JOIN client_account ON client.id = client_account.client_id " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE client.id = ?;";
 
     private static final String SELECT_CLIENT_BY_USER_ID = "SELECT client.id, client.user_id, " +
             "client.phone, client.date_of_birthday, client.is_regular,  users.id, role.role, " +
             "users.username, users.password, users.email, users.first_name, users.last_name, " +
-            "users.is_active, users.data_joined, users.photo " +
+            "users.is_active, users.data_joined, users.photo, client_account.money " +
             "FROM client " +
             "JOIN users ON client.user_id = users.id " +
+            "JOIN client_account ON client.id = client_account.client_id " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE client.user_id = ?;";
 
     private static final String INSERT_CLIENT = "INSERT INTO client(user_id, phone) " +
             "VALUES (?, ?)";
+
+    private static final String INSERT_ACCOUNT = "INSERT INTO client_account(client_id) " +
+            "VALUES (?)";
+
+    private static final  String TOP_UP_ACCOUNT = "UPDATE client_account SET card_number = ?, money = money + ? " +
+            "WHERE client_id = ?;";
+
+    private static final  String PAY_FOR_ORDER = "UPDATE client_account SET money = money - ? " +
+            "WHERE client_id = ?;";
 
     private static final String DELETE_CLIENT_BY_ID = "DELETE FROM client WHERE id = ?;";
 
@@ -174,6 +187,52 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
         return Optional.ofNullable(client);
     }
 
+    @Override
+    public boolean createAccount(int clientId) throws DaoException {
+        boolean result;
+        Connection connection = super.connection;
+        try(PreparedStatement statement = connection.prepareStatement(INSERT_ACCOUNT)) {
+            statement.setInt(1, clientId);
+            result = statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return result;
+    }
+
+    @Override
+    public Optional<Client> topUpAccount(int clientId, String cardNumber, String amount) throws DaoException {
+        Optional<Client> optionalClient;
+        Connection connection = super.connection;
+        try (PreparedStatement statement = connection.prepareStatement(TOP_UP_ACCOUNT)){
+            statement.setString(1, cardNumber);
+            statement.setBigDecimal(2, BigDecimal.valueOf(Long.parseLong(amount)));
+            statement.setInt(3, clientId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+            throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+        }
+        optionalClient = findById(clientId);
+        return optionalClient;
+    }
+
+    @Override
+    public Optional<Client> payForOrder(int clientId, BigDecimal price) throws DaoException {
+        Optional<Client> optionalClient;
+        Connection connection = super.connection;
+        try (PreparedStatement statement = connection.prepareStatement(PAY_FOR_ORDER)){
+            statement.setBigDecimal(1, price);
+            statement.setInt(2, clientId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+            throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());
+        }
+        optionalClient = findById(clientId);
+        return optionalClient;
+    }
 
 
     private Client buildClient(ResultSet resultSet) throws SQLException {
@@ -182,6 +241,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
         builder.setUserId(resultSet.getInt(CLIENT_USERS_ID))
                 .setPhone(resultSet.getString(CLIENT_PHONE))
                 .setIsRegular(resultSet.getBoolean(CLIENT_IS_REGULAR))
+                .setCurrentAccount(resultSet.getBigDecimal(CLIENT_MONEY))
                 .setId(resultSet.getInt(CLIENT_ID))
                 .setRole(Role.valueOf(resultSet.getString(ROLE_ROLE).toUpperCase(Locale.ROOT)))
                 .setUserName(resultSet.getString(USERS_USERNAME))

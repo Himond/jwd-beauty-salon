@@ -78,6 +78,7 @@
                                     <li><i class="card-text"><fmt:message key="dashboard.page.email"/> ${user.email()}</i></li>
                                     <li><i class="card-text"><fmt:message key="dashboard.page.phone"/> ${user.phone()}</i></li>
                                     <li><i class="card-text"><fmt:message key="dashboard.page.data"/> ${user.dateOfBirth().toString()}</i></li>
+                                    <li><i class="card-text"><fmt:message key="dashboard.page.account"/> ${user.account()} <fmt:message key="shop.page.byn"/></i></li>
                                         ${editPassword}
                                     <div class="card-footer">
                                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -93,6 +94,10 @@
                                                 <input type="hidden" name="phone" value="${user.phone()}">
                                                 <input type="hidden" name="date_of_birth" value="${user.dateOfBirth().toString()}">
                                                 <button type="submit" class="btn btn-outline-dark"><fmt:message key="dashboard.page.editProfile"/></button>
+                                            </form>
+                                            <form action="${pageContext.request.contextPath}/controller" method="post">
+                                                <input type="hidden" name="command" value="go_to_top_up_an_account_page">
+                                                <button type="submit" class="btn btn-outline-dark"><fmt:message key="dashboard.page.topUpAccount"/></button>
                                             </form>
                                         </div>
                                     </div>

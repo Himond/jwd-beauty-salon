@@ -10,6 +10,7 @@ public interface SalonValidator {
       boolean validateFio(String fio);
       boolean validatePhoneNumber(String phoneNumber);
       boolean validateEmail(String email);
+      boolean validateCardNumber(String cardNumber);
       boolean validateCoupon(String email);
       boolean validateReview(String revieBody);
       boolean validatePassword(String code);

@@ -14,6 +14,7 @@ import by.epam.litvinko.beautysalon.util.MailSender;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -144,24 +145,36 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public boolean createOrder(Cart cart, ClientDto client) throws ServiceException {
+    public Optional<ClientDto> createOrder(Cart cart, ClientDto client) throws ServiceException {
         final OrderDaoImpl orderDao = new OrderDaoImpl();
+        final ClientDaoImpl clientDao = new ClientDaoImpl();
         final EntityTransaction transaction = new EntityTransaction();
 
-        boolean result = false;
         Order order;
+        Optional<Client> clientPay;
+        ClientDto clientDto = null;
+        BigDecimal totalPrice = cart.getCoupon() != null ? cart.getTotalPriceAfterDiscount() : cart.getTotalPrice();
+
+        if(client.account().compareTo(totalPrice) < 0){
+            return Optional.empty();
+        }
+
         try {
-            transaction.initTransaction(orderDao);
+            transaction.initTransaction(orderDao, clientDao);
             order = Order.newBuilder()
                     .setIsPaid(true)
                     .setClientId(client.clientId())
                     .setCouponId(cart.getCoupon() != null ? cart.getCoupon().getId() : 0)
                     .setCreated(LocalDate.now())
                     .build();
-            orderDao.create(order);
-            if (order.getId() != 0){
-                cart.setOrderId(order.getId());
-                result = orderDao.createOrderItem(cart);
+            clientPay = clientDao.payForOrder(client.clientId(), totalPrice);
+            if(clientPay.isPresent()){
+                clientDto = ClientDto.create(clientPay.get());
+                orderDao.create(order);
+                if (order.getId() != 0){
+                    cart.setOrderId(order.getId());
+                    orderDao.createOrderItem(cart);
+                }
             }
             transaction.commit();
             MailSender.send(client.email(), MailSender.messageOrderSuccessful(client.firstName(), order.getId()));
@@ -180,7 +193,7 @@ public class ShopServiceImpl implements ShopService {
                 logger.error("Error closing transaction.", e);
             }
         }
-        return result;
+        return Optional.ofNullable(clientDto);
     }
 
     @Override
