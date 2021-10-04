@@ -28,7 +28,7 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
             productList = service.allProvideService();
             categoryList = service.allCategory();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // FIXME: 04.10.2021 
         }
     }
 
@@ -60,7 +60,7 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
             productList = service.allProvideService();
             categoryList = service.allCategory();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // FIXME: 04.10.2021 
         }
     }
 
