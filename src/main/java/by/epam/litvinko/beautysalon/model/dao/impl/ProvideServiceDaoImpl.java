@@ -45,8 +45,8 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             "WHERE salon_service.id = ?;";
 
     private static final String INSERT_SERVICE = "INSERT INTO salon_service(category_id, name, description, " +
-            "price, service_time, available, created, updated, image) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "price, service_time, created, updated, image) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     private static final String DELETE_SERVICE_BY_ID = "DELETE FROM salon_service WHERE id = ?;";
@@ -104,10 +104,9 @@ public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> 
             statement.setString(3, entity.getDescription());
             statement.setBigDecimal(4, entity.getPrice());
             statement.setInt(5, entity.getServiceTime());
-            statement.setBoolean(6, entity.isAvailable());
+            statement.setDate(6, Date.valueOf(LocalDate.now()));
             statement.setDate(7, Date.valueOf(LocalDate.now()));
-            statement.setDate(8, Date.valueOf(LocalDate.now()));
-            statement.setString(4, entity.getImage());
+            statement.setString(8, entity.getImage());
             result = statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Prepare statement cannot be retrieved from the connection.", e);

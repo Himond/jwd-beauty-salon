@@ -32,10 +32,13 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:300,100' rel='stylesheet' type='text/css'>
 
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
+
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/owl-carousel/owl.carousel.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery/custom.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery/profile.js"></script>
+
 
 </head>
 <body>
@@ -150,10 +153,32 @@
                                  <input type="hidden" name="command" value="log_out"/>
                                  <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.exit"/></button>
                              </form>
-                             <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
-                                 <input type="hidden" name="command" value="go_to_cart_page"/>
-                                 <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><i class="fas fa-cart-arrow-down"></i> ${sessionScope.cart.getTotalPrice()} <fmt:message key="shop.page.byn"/></button>
-                             </form>
+
+                             <c:choose>
+                                 <c:when test="${user.role() == 'ADMINISTRATOR'}">
+                                     <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                                         <input type="hidden" name="command" value="go_to_admin_order_page"/>
+                                         <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.currentAdminOrders"/></button>
+                                     </form>
+                                 </c:when>
+                                 <c:otherwise>
+                                     <c:choose>
+                                         <c:when test="${user.role() == 'MASTER'}">
+                                             <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                                                 <input type="hidden" name="command" value="go_to_master_order_page"/>
+                                                 <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><fmt:message key="button.name.currentMasterOrders"/></button>
+                                             </form>
+                                         </c:when>
+                                         <c:otherwise>
+                                             <form name="CartForm" method="POST" action="${pageContext.request.contextPath}/controller">
+                                                 <input type="hidden" name="command" value="go_to_cart_page"/>
+                                                 <button type="submit" style="margin-top: 14px" class="btn btn-outline-light"><i class="fas fa-cart-arrow-down"></i> ${sessionScope.cart.getTotalPrice()} <fmt:message key="shop.page.byn"/></button>
+                                             </form>
+                                         </c:otherwise>
+                                     </c:choose>
+                                 </c:otherwise>
+                             </c:choose>
+
                          </div>
                      </c:otherwise>
                  </c:choose>

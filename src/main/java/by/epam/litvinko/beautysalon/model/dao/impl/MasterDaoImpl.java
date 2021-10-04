@@ -1,5 +1,6 @@
 package by.epam.litvinko.beautysalon.model.dao.impl;
 
+import by.epam.litvinko.beautysalon.entity.Category;
 import by.epam.litvinko.beautysalon.model.dao.AbstractDao;
 import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Position;
@@ -53,6 +54,9 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
             "JOIN users ON master.user_id = users.id " +
             "JOIN role ON users.role_id = role.id " +
             "WHERE master.user_id = ?;";
+
+    private static final String SELECT_ALL_POSITION = "SELECT id, position " +
+            "FROM position;";
 
     private static final String INSERT_MASTER = "INSERT INTO master(user_id, position_id, description) " +
             "VALUES (?, ?, ?)";
@@ -173,6 +177,25 @@ public class MasterDaoImpl extends AbstractDao<Integer, Master> implements Maste
             throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
         }
         return Optional.ofNullable(master);
+    }
+
+    @Override
+    public List<Position> allPosition() throws DaoException {
+        List<Position> positionList = new ArrayList<>();
+        Position position;
+        Connection connection = super.connection;
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_POSITION)) {
+            try (ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()) {
+                    position = Position.valueOf(resultSet.getString(POSITION_POSITION).toUpperCase());
+                    positionList.add(position);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Prepare statement cannot be retrieved from the connection.", e);
+            throw new DaoException("Prepare statement cannot be retrieved from the connection.", e);
+        }
+        return positionList;
     }
 
     private Master buildMaster(ResultSet resultSet) throws SQLException {

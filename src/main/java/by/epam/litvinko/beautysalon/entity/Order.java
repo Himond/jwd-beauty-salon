@@ -56,6 +56,7 @@ public class Order extends AbstractEntity {
         isActive = active;
     }
 
+
     public List<ProvideService> getServiceList() {
         return serviceList;
     }

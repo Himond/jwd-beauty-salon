@@ -37,7 +37,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 center-block">
                         <div class="card-body">
                             <div class="card-header"><h3 class="card-title">${currentProduct.name()}</h3></div>
                             <i class="card-text">${currentProduct.description()}</i>
@@ -50,7 +50,6 @@
                                         <button type="submit" class="btn btn-outline-success" value="Add to cart"> <i class="fas fa-shopping-cart"></i> <fmt:message key="shop.page.service.button"/></button>
                                     </form>
                             </big>
-
                             </div>
                         </div>
                     </div>
@@ -96,16 +95,18 @@
         <i><fmt:message key="shop.page.service.addReview"/> <a href="${pageContext.request.contextPath}/controller?command=go_to_signin_page"><fmt:message key="shop.page.service.enter"/></a> <fmt:message key="shop.page.service.orReview"/> <a href="${pageContext.request.contextPath}/controller?command=go_to_signup_page"><fmt:message key="shop.page.service.register"/></a>!</i>
     </c:when>
     <c:otherwise>
-        <form class="transparent center-block" method="post" action="${pageContext.request.contextPath}/controller">
-            <input type="hidden" name="command" value="add_review">
-            <div class="form-inner center-block">
-                <label for="message-com"><fmt:message key="shop.page.service.comment"/></label>
-                <input type="hidden" name="current_product_id" value=${currentProduct.id()}>
-                <input type="text" pattern="^[a-zA-Zа-яА-я0-9_.,!?]{5,100}$" name="review_body" rows="2" id="message-com" required>
-                    ${wrongDataSignUp}
-                <button type="submit" class="btn btn-outline-dark btn-block btn-rounded" ><b><fmt:message key="shop.page.service.addComment"/></b></button>
-            </div>
-        </form>
+        <c:if test="${user.role() == 'CLIENT'}">
+            <form class="transparent center-block" method="post" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="add_review">
+                <div class="form-inner center-block">
+                    <label for="message-com"><fmt:message key="shop.page.service.comment"/></label>
+                    <input type="hidden" name="current_product_id" value=${currentProduct.id()}>
+                    <input type="text" pattern="^[a-zA-Zа-яА-я0-9_.,!?]{5,100}$" name="review_body" rows="2" id="message-com" required>
+                        ${wrongDataSignUp}
+                    <button type="submit" class="btn btn-outline-dark btn-block btn-rounded" ><b><fmt:message key="shop.page.service.addComment"/></b></button>
+                </div>
+            </form>
+        </c:if>
     </c:otherwise>
 </c:choose>
 

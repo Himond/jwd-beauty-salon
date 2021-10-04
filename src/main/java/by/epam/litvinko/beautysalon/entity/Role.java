@@ -3,7 +3,8 @@ package by.epam.litvinko.beautysalon.entity;
 public enum Role {
     ADMINISTRATOR(1, "administrator"),
     MASTER(2, "master"),
-    CLIENT(3, "client");
+    CLIENT(3, "client"),
+    GUEST(4, "guest");
 
     private String role;
     private int id;

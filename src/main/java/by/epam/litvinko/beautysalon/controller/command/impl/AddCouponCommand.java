@@ -46,7 +46,7 @@ public class AddCouponCommand implements Command {
             }
             router = new Router(CART_DETAIL_JSP, Router.RouterType.REDIRECT);
         }catch (ServiceException e) {
-            logger.error("Error at AddToCartCommand", e);
+            logger.error("Error at AddCouponCommand", e);
             request.setAttribute(EXCEPTION, e);
             router = new Router(ERROR_JSP, Router.RouterType.REDIRECT);
         }

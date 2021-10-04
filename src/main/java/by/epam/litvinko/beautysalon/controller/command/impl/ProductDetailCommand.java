@@ -41,10 +41,10 @@ public class ProductDetailCommand implements Command {
                 List<ProvideServiceReview> reviews = service.findReviewByServiceId(product.id());
                 request.getSession().setAttribute(CURRENT_PRODUCT, product);
                 request.getSession().setAttribute(CURRENT_REVIEW_LIST, reviews);
-                router = new Router(PRODUCT_DETAIL_JSP, Router.RouterType.FORWARD);
+                router = new Router(PRODUCT_DETAIL_JSP, Router.RouterType.REDIRECT);
             }else {
                 request.getSession().setAttribute(PRODUCT_NOT_FOUND, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(PRODUCT_NOT_FOUND_PATH));
-                router = new Router(SHOP_JSP, Router.RouterType.FORWARD);
+                router = new Router(SHOP_JSP, Router.RouterType.REDIRECT);
             }
         }catch (ServiceException e) {
             logger.error("Error at ProductDetailCommand", e);

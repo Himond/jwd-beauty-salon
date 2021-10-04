@@ -41,7 +41,7 @@ public class TopUpAnAccountCommand implements Command {
             }else {
                 request.getSession().setAttribute(WRONG_DATA_SING_UP, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(WRONG_DATA_SING_UP_PATH));
             }
-            router = new Router(PROFILE_JSP, Router.RouterType.FORWARD);
+            router = new Router(PROFILE_JSP, Router.RouterType.REDIRECT);
         }catch (ServiceException e) {
             logger.error("Error at TopUpAnAccountCommand", e);
             request.setAttribute(EXCEPTION, e);

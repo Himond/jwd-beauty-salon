@@ -1,6 +1,12 @@
 package by.epam.litvinko.beautysalon.controller;
 
 import by.epam.litvinko.beautysalon.controller.command.*;
+import by.epam.litvinko.beautysalon.entity.Cart;
+import by.epam.litvinko.beautysalon.entity.Category;
+import by.epam.litvinko.beautysalon.exception.ServiceException;
+import by.epam.litvinko.beautysalon.model.service.ShopService;
+import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
+import by.epam.litvinko.beautysalon.model.service.impl.ShopServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
+import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
 
 @WebServlet(name = "Controller", urlPatterns = {"/controller", "*.do"})
@@ -33,17 +42,13 @@ public class Controller extends HttpServlet {
         System.out.println(commandName);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
         Router router = command.execute(request);
-        System.out.println(router.getPagePath());
         switch (router.getRouterType()) {
-            case REDIRECT:
-                response.sendRedirect(router.getPagePath());
-                break;
-            case FORWARD:
+            case REDIRECT -> response.sendRedirect(router.getPagePath());
+            case FORWARD -> {
                 RequestDispatcher dispatcher = request.getRequestDispatcher(router.getPagePath());
                 dispatcher.forward(request, response);
-                break;
-            default:
-                response.sendRedirect(PagePath.ERROR_404_JSP);
+            }
+            default -> response.sendRedirect(PagePath.ERROR_404_JSP);
         }
     }
 

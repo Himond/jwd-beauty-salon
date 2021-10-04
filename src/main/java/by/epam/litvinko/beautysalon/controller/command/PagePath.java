@@ -16,6 +16,8 @@ public final class PagePath {
     public static final String CREATE_ORDER_JSP = "jsp/created_order.jsp";
     public static final String TOP_UP_AN_ACCOUNT_JSP = "jsp/top_up_an_account.jsp";
     public static final String MAIN_JSP = "jsp/main.jsp";
+    public static final String ADMIN_ORDERS_JSP = "jsp/admin_orders.jsp";
+    public static final String MASTER_ORDERS_JSP = "jsp/master_orders.jsp";
     public static final String CONTACTS_JSP = "jsp/contacts.jsp";
     public static final String INDEX_JSP = "index.jsp";
     public static final String ERROR_JSP = "/jsp/error/error.jsp";

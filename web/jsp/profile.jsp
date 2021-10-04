@@ -126,7 +126,7 @@
                     <thead>
                     <tr>
                         <th><fmt:message key="cart.create.number"/></th>
-                        <th><fmt:message key="shop.page.categories"/></th>
+                        <th><fmt:message key="shop.page.services"/></th>
                         <th><fmt:message key="dashboard.page.dataService"/></th>
                     </tr>
                     </thead>

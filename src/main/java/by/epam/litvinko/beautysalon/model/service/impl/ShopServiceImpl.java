@@ -218,6 +218,28 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public boolean createProduct(ProvideService service) throws ServiceException {
+        final EntityTransaction transaction = new EntityTransaction();
+        final ProvideServiceDaoImpl serviceDao = new ProvideServiceDaoImpl();
+        boolean result;
+        try {
+            transaction.init(serviceDao);
+            result = serviceDao.create(service);
+            return result;
+        } catch (DaoException e) {
+            logger.error("Can't handle create product for product request at ShopService.", e);
+            throw new ServiceException("Can't handle create product for product request at ShopService.", e);
+        }finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Error closing transaction.", e);
+            }
+        }
+
+    }
+
+    @Override
     public boolean createCoupon(String code, String discount, String validTo) throws ServiceException {
         final EntityTransaction transaction = new EntityTransaction();
         final CouponDaoImpl couponDao = new CouponDaoImpl();

@@ -219,7 +219,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
             statement.setString(1, photo);
             statement.setInt(2, Integer.parseInt(userId));
             statement.executeUpdate();
-            System.out.println("Complete FILE");
         } catch (SQLException e) {
             logger.error("Prepare statement can't be take from connection or unknown field." + e.getMessage());
             throw new DaoException("Prepare statement can't be take from connection or unknown field." + e.getMessage());

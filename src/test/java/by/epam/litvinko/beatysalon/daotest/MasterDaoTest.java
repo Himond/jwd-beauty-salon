@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class MasterDaoTest {
 
@@ -54,8 +55,9 @@ public class MasterDaoTest {
 
     @Test
     public void createMasterTest() throws DaoException {
-        boolean actual = masterDao.create(newMaster);
-        Assert.assertTrue(actual);
+        List<Position> actual = masterDao.allPosition();
+        System.out.println(actual);
+        Assert.assertTrue(true);
     }
 
 

@@ -46,7 +46,7 @@ public class ForgotPasswordCommand implements Command {
             }
             router = new Router(LOGIN_JSP, RouterType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Error at ForgetPasswordCommand", e);
+            logger.error("Error at ForgotPasswordCommand", e);
             request.setAttribute(EXCEPTION, e);
             router = new Router(ERROR_JSP, RouterType.REDIRECT);
         }

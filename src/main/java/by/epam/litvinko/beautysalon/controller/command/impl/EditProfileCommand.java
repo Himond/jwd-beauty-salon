@@ -56,7 +56,7 @@ public class EditProfileCommand implements Command {
             }
             router = new Router(PROFILE_JSP, Router.RouterType.REDIRECT);
         }catch (ServiceException e) {
-            logger.error("Error at SignInCommand", e);
+            logger.error("Error at EditProfileCommand", e);
             request.setAttribute(EXCEPTION, e);
             router = new Router(ERROR_JSP, Router.RouterType.REDIRECT);
         }

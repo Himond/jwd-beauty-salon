@@ -12,7 +12,7 @@
 <head>
     <title><fmt:message key="shop.page.title"/></title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
-    
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/core/css/styles.css">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -27,14 +27,14 @@
 
             <c:forEach var="category" items="${categoryList}">
                 <input type="hidden" name="current_category" value=${category.getName()}>
-                <a href="${pageContext.request.contextPath}/controller?command=go_to_shop_page&current_category=${category.getName()}"  class="btn btn-outline-dark">${category.getName()}</a>
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_shop_page&current_category=${category.getId()}"  class="btn btn-outline-dark">${category.getName()}</a>
             </c:forEach>
         </div>
         <hr>
         <h3>
             <c:choose>
             <c:when test="${not empty currentCategory}">
-                <h5 style="font-size: 35px;">${currentCategory}</h5>
+                <h5 style="font-size: 35px;">${currentCategory.getName()}</h5>
             </c:when>
             <c:otherwise>
                 <h5 style="font-size: 35px;"><fmt:message key="shop.page.services"/></h5>
@@ -43,39 +43,90 @@
         </h3>
         ${productNotFound}
     </div>
+    <c:choose>
+        <c:when test="${empty productListByCategory}">
+            <div id="main" class="center-block">
+                <ul id="holder">
+                    <c:forEach var="product" items="${productList}">
+                        <li>
 
+                            <div class="projcard-container">
+                                <div class="projcard projcard-blue">
+                                    <div class="projcard-innerbox text-left ">
+                                        <a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}">
+                                            <c:choose>
+                                                <c:when test="${empty product.image()}">
+                                                    <img class="projcard-img" src="${pageContext.request.contextPath}/static/core/img/course.jpg"  alt="...">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img class="projcard-img"  src="${pageContext.request.contextPath}/uploads/${product.image()}"  alt="..." >
 
-    <c:forEach var="product" items="${productList}">
-    <div class="container center-block">
-        <div class="projcard-container">
-            <div class="projcard projcard-blue">
-                <div class="projcard-innerbox text-left ">
-                    <a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}">
-                        <c:choose>
-                            <c:when test="${empty product.image()}">
-                                <img class="projcard-img" src="${pageContext.request.contextPath}/static/core/img/course.jpg"  alt="...">
-                            </c:when>
-                            <c:otherwise>
-                                <img class="projcard-img"  src="${pageContext.request.contextPath}/uploads/${product.image()}"  alt="..." >
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </a>
+                                        <div class="projcard-textbox">
+                                            <div class="projcard-title text-left"><a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}" style="color: black; text-decoration: none;">${product.name()}</a></div>
+                                            <div class="projcard-subtitle text-left"><i class="far fa-clock"> ${product.serviceTime()} <fmt:message key="shop.page.time"/></i></div>
+                                            <div class="projcard-bar"></div>
+                                            <div class="projcard-description text-left">${product.description()}</div>
+                                            <div class="projcard-tagbox">
+                                                <span class="projcard-tag"><b><fmt:message key="shop.page.price"/> ${product.price()} <fmt:message key="shop.page.byn"/></b></span>
+                                                <span class="projcard-tag" style="color:red"><fmt:message key="shop.page.discount"/></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            </c:otherwise>
-                        </c:choose>
-                    </a>
-                    <div class="projcard-textbox">
-                        <div class="projcard-title text-left"><a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}" style="color: black; text-decoration: none;">${product.name()}</a></div>
-                        <div class="projcard-subtitle text-left"><i class="far fa-clock"> ${product.serviceTime()} <fmt:message key="shop.page.time"/></i></div>
-                        <div class="projcard-bar"></div>
-                        <div class="projcard-description text-left">${product.description()}</div>
-                        <div class="projcard-tagbox">
-                            <span class="projcard-tag"><b><fmt:message key="shop.page.price"/> ${product.price()} <fmt:message key="shop.page.byn"/></b></span>
-                            <span class="projcard-tag" style="color:red"><fmt:message key="shop.page.discount"/></span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:when>
+        <c:otherwise>
+    <div id="main" class="center-block">
+        <ul id="holder">
+            <c:forEach var="product" items="${productListByCategory}">
+            <li>
+                <div class="container center-block">
+                    <div class="projcard-container">
+                        <div class="projcard projcard-blue">
+                            <div class="projcard-innerbox text-left ">
+                                <a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}">
+                                    <c:choose>
+                                        <c:when test="${empty product.image()}">
+                                            <img class="projcard-img" src="${pageContext.request.contextPath}/static/core/img/course.jpg"  alt="...">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class="projcard-img"  src="${pageContext.request.contextPath}/uploads/${product.image()}"  alt="..." >
+
+                                        </c:otherwise>
+                                    </c:choose>
+                                </a>
+                                <div class="projcard-textbox">
+                                    <div class="projcard-title text-left"><a href="${pageContext.request.contextPath}/controller?command=product_detail&current_product_id=${product.id()}" style="color: black; text-decoration: none;">${product.name()}</a></div>
+                                    <div class="projcard-subtitle text-left"><i class="far fa-clock"> ${product.serviceTime()} <fmt:message key="shop.page.time"/></i></div>
+                                    <div class="projcard-bar"></div>
+                                    <div class="projcard-description text-left">${product.description()}</div>
+                                    <div class="projcard-tagbox">
+                                        <span class="projcard-tag"><b><fmt:message key="shop.page.price"/> ${product.price()} <fmt:message key="shop.page.byn"/></b></span>
+                                        <span class="projcard-tag" style="color:red"><fmt:message key="shop.page.discount"/></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </li>
+            </c:forEach>
+        </ul>
     </div>
-    </c:forEach>
+        </c:otherwise>
+    </c:choose>
+
+
+
+
 </div>
 
 <div class="container-fluid bg-wall" style="padding-top:20px;padding-bottom:20px; ">
@@ -112,5 +163,8 @@
 </div>
 
 <jsp:include page="footer.jsp"/>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery/script.js"></script>
 </body>
 </html>

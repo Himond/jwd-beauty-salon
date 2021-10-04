@@ -6,7 +6,7 @@ import by.epam.litvinko.beautysalon.exception.DaoException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public interface ClientDao {
+public interface ClientDao  {
 
     Optional<Client> findClientByUserId(Integer id) throws DaoException;
     boolean createAccount(int clientId) throws DaoException;

@@ -20,6 +20,8 @@ public final class RequestParameter {
     public static final String CURRENT_PRODUCT_ID = "current_product_id";
     public static final String NEW_CATEGORY_NAME = "new_category_name";
     public static final String COUPON_CODE = "coupon_code";
+    public static final String NEW_MASTER_DESCRIPTION = "new_master_description";
+    public static final String ORDER_ITEM_ID = "order_item_id";
     public static final String COUPON_VALID_TO = "coupon_valid_to";
     public static final String COUPON_DISCOUNT = "coupon_discount";
     public static final String CARD_NUMBER = "card_number";

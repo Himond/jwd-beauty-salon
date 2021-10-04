@@ -1,9 +1,11 @@
 package by.epam.litvinko.beatysalon.daotest;
 
+import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.model.connection.DatabaseConnectionPool;
 import by.epam.litvinko.beautysalon.model.dao.impl.OrderDaoImpl;
 import by.epam.litvinko.beautysalon.entity.Order;
 import by.epam.litvinko.beautysalon.exception.DaoException;
+import by.epam.litvinko.beautysalon.model.service.impl.OrderServiceImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.List;
 
 public class OrderDaoTest {
     private Connection connection = null;
@@ -30,14 +33,20 @@ public class OrderDaoTest {
     }
 
     @Test
-    public void findAllOrdersTest() throws DaoException {
-        int actual = orderDao.findAll().size();
-        Assert.assertEquals(2, actual);
+    public void findAllOrdersTest() throws DaoException, ServiceException {
+        OrderServiceImpl service = new OrderServiceImpl();
+        List<List<Integer>> ordersItem = orderDao.findOrderByMasterId(1);
+        System.out.println(ordersItem);
+        for (List<Integer> order: ordersItem){
+            System.out.println(order);
+        }
+        Assert.assertEquals(2, 2);
     }
 
     @Test
     public void findOrderByIdTest() throws DaoException {
-        Order actual = orderDao.findById(1).get();
+        Order actual = orderDao.findById(39).get();
+        System.out.println(actual);
         Assert.assertNotNull(actual);
     }
 
