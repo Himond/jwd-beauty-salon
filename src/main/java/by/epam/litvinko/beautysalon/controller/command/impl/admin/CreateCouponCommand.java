@@ -21,6 +21,9 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.E
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.LOCALE;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 
+/**
+ * The type Create coupon command.
+ */
 public class CreateCouponCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(CreateCouponCommand.class);

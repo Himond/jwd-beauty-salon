@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Client service.
+ */
 public class ClientServiceImpl implements ClientService {
 
     private static final Logger logger = LogManager.getLogger(ClientServiceImpl.class);

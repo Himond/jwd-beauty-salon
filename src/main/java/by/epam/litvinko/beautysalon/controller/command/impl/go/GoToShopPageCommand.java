@@ -8,6 +8,7 @@ import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -19,6 +20,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
 
+/**
+ * The type Go to shop page command.
+ */
 public class GoToShopPageCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(GoToShopPageCommand.class);
@@ -26,8 +30,9 @@ public class GoToShopPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws ServletException, IOException {
         Router router;
-        List<ProvideServicesDto> currentProductList = (List<ProvideServicesDto>) request.getSession().getAttribute(PRODUCT_LIST);
-        List<Category> currentCategoryList = (List<Category>) request.getSession().getAttribute(CATEGORY_LIST);
+        ServletContext servletContext = request.getServletContext();
+        List<ProvideServicesDto> currentProductList = (List<ProvideServicesDto>) servletContext.getAttribute(PRODUCT_LIST);
+        List<Category> currentCategoryList = (List<Category>) servletContext.getAttribute(CATEGORY_LIST);
         Optional<String> currentCategory = Optional.ofNullable(request.getParameter(RequestParameter.CURRENT_CATEGORY));
         if (currentCategory.isPresent()){
             String categoryId = currentCategory.get();

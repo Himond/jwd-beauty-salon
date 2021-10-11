@@ -15,6 +15,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+/**
+ * The type Database connection pool.
+ */
 public class DatabaseConnectionPool {
 
     private static Logger logger = LogManager.getLogger(DatabaseConnectionPool.class);
@@ -47,6 +50,11 @@ public class DatabaseConnectionPool {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static DatabaseConnectionPool getInstance() {
         if (!instanceInitialized.get()) {
             lock.lock();
@@ -59,6 +67,11 @@ public class DatabaseConnectionPool {
         return instance;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         ProxyConnection proxyConnection = null;
         try {
@@ -71,6 +84,12 @@ public class DatabaseConnectionPool {
         return proxyConnection;
     }
 
+    /**
+     * Release connection boolean.
+     *
+     * @param connection the connection
+     * @return the boolean
+     */
     public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.error("wild connection is detected");
@@ -86,6 +105,9 @@ public class DatabaseConnectionPool {
         return true;
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {

@@ -9,11 +9,21 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The type Entity transaction.
+ */
 public class EntityTransaction {
 
     private static Logger logger = LogManager.getLogger(EntityTransaction.class);
     private Connection connection;
 
+    /**
+     * Init transaction.
+     *
+     * @param dao  the dao
+     * @param daos the daos
+     * @throws DaoException the dao exception
+     */
     public void initTransaction(AbstractDao dao, AbstractDao... daos) throws DaoException {
         if (connection == null) {
             connection = DatabaseConnectionPool.getInstance().getConnection();
@@ -30,6 +40,11 @@ public class EntityTransaction {
         }
     }
 
+    /**
+     * Init.
+     *
+     * @param dao the dao
+     */
     public void init(AbstractDao dao) {
         if (connection == null) {
             connection = DatabaseConnectionPool.getInstance().getConnection();
@@ -37,6 +52,11 @@ public class EntityTransaction {
         dao.setConnection(connection);
     }
 
+    /**
+     * End transaction.
+     *
+     * @throws DaoException the dao exception
+     */
     public void endTransaction() throws DaoException {
         if (connection == null) {
             throw new DaoException("Connection has been lost.");
@@ -51,6 +71,11 @@ public class EntityTransaction {
         connection = null;
     }
 
+    /**
+     * End.
+     *
+     * @throws DaoException the dao exception
+     */
     public void end() throws DaoException {
         if (connection == null) {
             throw new DaoException("Connection has been lost.");
@@ -59,6 +84,11 @@ public class EntityTransaction {
         connection = null;
     }
 
+    /**
+     * Commit.
+     *
+     * @throws DaoException the dao exception
+     */
     public void commit() throws DaoException {
         try {
             connection.commit();
@@ -68,6 +98,11 @@ public class EntityTransaction {
         }
     }
 
+    /**
+     * Rollback.
+     *
+     * @throws DaoException the dao exception
+     */
     public void rollback() throws DaoException {
         try {
             connection.rollback();

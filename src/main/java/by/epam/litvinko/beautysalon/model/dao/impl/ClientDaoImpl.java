@@ -19,6 +19,9 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Client dao.
+ */
 public class ClientDaoImpl extends AbstractDao<Integer, Client> implements ClientDao {
 
     private static Logger logger = LogManager.getLogger(ClientDaoImpl.class);

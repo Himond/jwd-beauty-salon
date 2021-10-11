@@ -6,6 +6,9 @@ import by.epam.litvinko.beautysalon.controller.command.Router;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Log out command.
+ */
 public class LogOutCommand implements Command {
 
     @Override

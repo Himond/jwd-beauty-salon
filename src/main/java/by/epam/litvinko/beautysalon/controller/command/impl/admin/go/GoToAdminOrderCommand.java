@@ -2,8 +2,6 @@ package by.epam.litvinko.beautysalon.controller.command.impl.admin.go;
 
 import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.Router;
-import by.epam.litvinko.beautysalon.entity.Category;
-import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.model.service.MasterService;
 import by.epam.litvinko.beautysalon.model.service.OrderService;
@@ -24,6 +22,9 @@ import java.util.Map;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Go to admin order command.
+ */
 public class GoToAdminOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger(GoToAdminOrderCommand.class);
     private final OrderService service = new OrderServiceImpl();

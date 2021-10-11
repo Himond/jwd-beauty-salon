@@ -1,8 +1,10 @@
 package by.epam.litvinko.beautysalon.entity;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 
+/**
+ * The type User.
+ */
 public class User extends AbstractEntity {
 
     private Role role;
@@ -15,78 +17,171 @@ public class User extends AbstractEntity {
     private LocalDate dateJoined;
     private String photo;
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
         this.role = Role.CLIENT;
     }
 
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     * Gets user name.
+     *
+     * @return the user name
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Sets user name.
+     *
+     * @param userName the user name
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Gets password.
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets password.
+     *
+     * @param password the password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets first name.
+     *
+     * @return the first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets first name.
+     *
+     * @param firstName the first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets last name.
+     *
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets last name.
+     *
+     * @param lastName the last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Is active boolean.
+     *
+     * @return the boolean
+     */
     public boolean isActive() {
         return isActive;
     }
 
+    /**
+     * Sets active.
+     *
+     * @param active the active
+     */
     public void setActive(boolean active) {
         isActive = active;
     }
 
+    /**
+     * Gets date joined.
+     *
+     * @return the date joined
+     */
     public LocalDate getDateJoined() {
         return dateJoined;
     }
 
+    /**
+     * Sets date joined.
+     *
+     * @param dateJoined the date joined
+     */
     public void setDateJoined(LocalDate dateJoined) {
         this.dateJoined = dateJoined;
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public String getPhoto() {
         return photo;
     }
 
+    /**
+     * Sets photo.
+     *
+     * @param photo the photo
+     */
     public void setPhoto(String photo) {
         this.photo = photo;
     }
@@ -141,65 +236,141 @@ public class User extends AbstractEntity {
         return sb.toString();
     }
 
+    /**
+     * New builder user . builder.
+     *
+     * @return the user . builder
+     */
     public static User.Builder newBuilder(){
         return new User().new Builder();
     }
 
+    /**
+     * The type Builder.
+     */
     public class Builder{
 
+        /**
+         * Instantiates a new Builder.
+         */
         public Builder() {
         }
 
+        /**
+         * Set id user . builder.
+         *
+         * @param id the id
+         * @return the user . builder
+         */
         public User.Builder setId(int id){
             User.this.setId(id);
             return this;
         }
 
+        /**
+         * Set role user . builder.
+         *
+         * @param role the role
+         * @return the user . builder
+         */
         public User.Builder setRole(Role role){
             User.this.role = role;
             return this;
         }
 
+        /**
+         * Set user name user . builder.
+         *
+         * @param userName the user name
+         * @return the user . builder
+         */
         public User.Builder setUserName(String userName){
             User.this.userName = userName;
             return this;
         }
 
+        /**
+         * Set password user . builder.
+         *
+         * @param password the password
+         * @return the user . builder
+         */
         public User.Builder setPassword(String password){
             User.this.password = password;
             return this;
         }
 
+        /**
+         * Set email user . builder.
+         *
+         * @param email the email
+         * @return the user . builder
+         */
         public User.Builder setEmail(String email){
             User.this.email = email;
             return this;
         }
 
+        /**
+         * Set first name user . builder.
+         *
+         * @param firstName the first name
+         * @return the user . builder
+         */
         public User.Builder setFirstName(String firstName){
             User.this.firstName = firstName;
             return this;
         }
 
+        /**
+         * Set last name user . builder.
+         *
+         * @param lastName the last name
+         * @return the user . builder
+         */
         public User.Builder setLastName(String lastName){
             User.this.lastName = lastName;
             return this;
         }
 
+        /**
+         * Set is active user . builder.
+         *
+         * @param isActive the is active
+         * @return the user . builder
+         */
         public User.Builder setIsActive(boolean isActive){
             User.this.isActive = isActive;
             return this;
         }
 
+        /**
+         * Set date joined user . builder.
+         *
+         * @param dateJoined the date joined
+         * @return the user . builder
+         */
         public User.Builder setDateJoined(LocalDate dateJoined){
             User.this.dateJoined = dateJoined;
             return this;
         }
 
+        /**
+         * Set photo user . builder.
+         *
+         * @param photo the photo
+         * @return the user . builder
+         */
         public User.Builder setPhoto(String photo){
             User.this.photo = photo;
             return this;
         }
 
+        /**
+         * Build user.
+         *
+         * @return the user
+         */
         public User build(){
             return User.this;
         }

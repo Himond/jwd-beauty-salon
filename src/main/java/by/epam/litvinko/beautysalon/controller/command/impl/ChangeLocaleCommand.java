@@ -9,6 +9,9 @@ import by.epam.litvinko.beautysalon.controller.command.Router;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Change locale command.
+ */
 public class ChangeLocaleCommand implements Command {
 
     @Override

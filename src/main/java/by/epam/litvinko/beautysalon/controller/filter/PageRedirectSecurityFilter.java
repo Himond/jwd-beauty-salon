@@ -14,6 +14,9 @@ import java.util.EnumMap;
 import java.util.List;
 
 
+/**
+ * The type Page redirect security filter.
+ */
 @WebFilter( urlPatterns = {"/jsp/*"},
 initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp") })
 public class PageRedirectSecurityFilter implements Filter {

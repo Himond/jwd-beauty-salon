@@ -21,6 +21,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Master service.
+ */
 public class MasterServiceImpl implements MasterService {
 
     private static final Logger logger = LogManager.getLogger(MasterServiceImpl.class);

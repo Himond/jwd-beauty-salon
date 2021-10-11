@@ -5,7 +5,6 @@ import by.epam.litvinko.beautysalon.controller.command.Router;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.model.service.OrderService;
 import by.epam.litvinko.beautysalon.model.service.dto.MasterDto;
-import by.epam.litvinko.beautysalon.model.service.dto.OrderDto;
 import by.epam.litvinko.beautysalon.model.service.impl.OrderServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,6 +18,9 @@ import java.util.Map;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Go to master order page command.
+ */
 public class GoToMasterOrderPageCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(GoToMasterOrderPageCommand.class);

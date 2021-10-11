@@ -7,6 +7,9 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * The type Local filter.
+ */
 @WebFilter(filterName = "LocalFilter", urlPatterns = {"*.jsp"})
 public class LocalFilter implements Filter {
 

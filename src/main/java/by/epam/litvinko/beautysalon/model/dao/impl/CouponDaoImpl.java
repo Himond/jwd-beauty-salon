@@ -17,6 +17,9 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Coupon dao.
+ */
 public class CouponDaoImpl extends AbstractDao<Integer, Coupon> implements CouponDao {
 
     private static Logger logger = LogManager.getLogger(CouponDaoImpl.class);

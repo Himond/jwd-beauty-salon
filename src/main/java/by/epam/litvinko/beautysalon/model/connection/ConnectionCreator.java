@@ -12,6 +12,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * The type Connection creator.
+ */
 public class ConnectionCreator {
 
     private static Logger logger = LogManager.getLogger(ConnectionCreator.class);
@@ -41,6 +44,12 @@ public class ConnectionCreator {
     private ConnectionCreator() {
     }
 
+    /**
+     * Create connection connection.
+     *
+     * @return the connection
+     * @throws DatabaseConnectionException the database connection exception
+     */
     static Connection createConnection() throws DatabaseConnectionException {
         Connection connection;
         try {

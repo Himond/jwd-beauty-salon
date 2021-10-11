@@ -6,10 +6,11 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
 <fmt:setBundle basename="pagecontent"/>
+<%@ taglib uri="customtag" prefix="mytag" %>
 <html>
 <head>
     <title><fmt:message key="editProfile.page.title"/></title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+    <mytag:image/>
 </head>
 <body>
 <jsp:include page="header.jsp"/>

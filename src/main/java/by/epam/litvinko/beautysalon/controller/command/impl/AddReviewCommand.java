@@ -4,7 +4,7 @@ import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.RequestParameter;
 import by.epam.litvinko.beautysalon.controller.command.Router;
 import by.epam.litvinko.beautysalon.entity.ProvideServiceReview;
-import by.epam.litvinko.beautysalon.entity.Role;
+
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.manager.MessageManager;
 import by.epam.litvinko.beautysalon.model.service.ShopService;
@@ -22,6 +22,9 @@ import java.util.Locale;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Add review command.
+ */
 public class AddReviewCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddReviewCommand.class);

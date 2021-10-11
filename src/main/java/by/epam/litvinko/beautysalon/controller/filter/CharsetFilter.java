@@ -5,6 +5,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+/**
+ * The type Charset filter.
+ */
 @WebFilter(urlPatterns = {"/Controller"}, initParams = {
         @WebInitParam(name = "characterEncoding", value = "UTF-8", description = "Encoding Param")})
 public class CharsetFilter implements Filter {

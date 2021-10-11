@@ -18,6 +18,9 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 
+/**
+ * The type Edit password command.
+ */
 public class EditPasswordCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(EditPasswordCommand.class);

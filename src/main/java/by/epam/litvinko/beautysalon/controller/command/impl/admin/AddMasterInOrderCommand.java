@@ -20,6 +20,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.ORDER_ITEM_ID;
 
+/**
+ * The type Add master in order command.
+ */
 public class AddMasterInOrderCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddMasterInOrderCommand.class);

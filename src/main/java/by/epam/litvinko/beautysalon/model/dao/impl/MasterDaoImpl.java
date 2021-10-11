@@ -21,6 +21,9 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Master dao.
+ */
 public class MasterDaoImpl extends AbstractDao<Integer, Master> implements MasterDao {
 
     private static Logger logger = LogManager.getLogger(MasterDaoImpl.class);

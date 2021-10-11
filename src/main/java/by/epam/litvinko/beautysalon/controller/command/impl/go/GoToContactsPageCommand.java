@@ -10,6 +10,9 @@ import java.io.IOException;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.CONTACTS_JSP;
 
 
+/**
+ * The type Go to contacts page command.
+ */
 public class GoToContactsPageCommand implements Command {
 
     @Override

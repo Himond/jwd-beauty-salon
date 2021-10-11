@@ -22,6 +22,9 @@ import java.util.Optional;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Add to cart command.
+ */
 public class AddToCartCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddToCartCommand.class);

@@ -6,11 +6,11 @@
   <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
 <fmt:setBundle basename="pagecontent"/>
-
+<%@ taglib uri="customtag" prefix="mytag" %>
 <html>
 <head>
     <title><fmt:message key="account.page.title"/></title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+    <mytag:image/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://bootstraptema.ru/snippets/form/2017/jquery.payform.min.js"></script>

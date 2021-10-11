@@ -22,6 +22,9 @@ import java.util.Optional;
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Create order command.
+ */
 public class CreateOrderCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(CreateOrderCommand.class);

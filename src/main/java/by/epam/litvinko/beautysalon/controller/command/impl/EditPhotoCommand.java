@@ -24,6 +24,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.ERROR_JSP
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.PROFILE_JSP;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 
+/**
+ * The type Edit photo command.
+ */
 public class EditPhotoCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(EditPhotoCommand.class);

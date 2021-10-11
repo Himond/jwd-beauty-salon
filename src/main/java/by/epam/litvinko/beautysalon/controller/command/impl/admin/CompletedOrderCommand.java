@@ -22,6 +22,9 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 
 
+/**
+ * The type Completed order command.
+ */
 public class CompletedOrderCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(CompletedOrderCommand.class);

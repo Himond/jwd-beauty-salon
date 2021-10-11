@@ -7,10 +7,11 @@
 
 <fmt:setBundle basename="pagecontent"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="customtag" prefix="mytag" %>
 <html>
 <head>
     <title>Error</title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+    <mytag:image/>
 </head>
 <body>
 <jsp:include page="/jsp/header.jsp"/>

@@ -3,6 +3,9 @@ package by.epam.litvinko.beautysalon.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * The type Provide service.
+ */
 public class ProvideService extends AbstractEntity {
 
     private int categoryId;
@@ -15,77 +18,170 @@ public class ProvideService extends AbstractEntity {
     private LocalDate updated;
     private String image;
 
+    /**
+     * Instantiates a new Provide service.
+     */
     public ProvideService() {
     }
 
+    /**
+     * Gets category id.
+     *
+     * @return the category id
+     */
     public int getCategoryId() {
         return categoryId;
     }
 
+    /**
+     * Sets category id.
+     *
+     * @param categoryId the category id
+     */
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets price.
+     *
+     * @return the price
+     */
     public BigDecimal getPrice() {
         return price;
     }
 
+    /**
+     * Sets price.
+     *
+     * @param price the price
+     */
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
+    /**
+     * Gets service time.
+     *
+     * @return the service time
+     */
     public int getServiceTime() {
         return serviceTime;
     }
 
+    /**
+     * Sets service time.
+     *
+     * @param serviceTime the service time
+     */
     public void setServiceTime(int serviceTime) {
         this.serviceTime = serviceTime;
     }
 
+    /**
+     * Is available boolean.
+     *
+     * @return the boolean
+     */
     public boolean isAvailable() {
         return available;
     }
 
+    /**
+     * Sets available.
+     *
+     * @param available the available
+     */
     public void setAvailable(boolean available) {
         this.available = available;
     }
 
+    /**
+     * Gets created.
+     *
+     * @return the created
+     */
     public LocalDate getCreated() {
         return created;
     }
 
+    /**
+     * Sets created.
+     *
+     * @param created the created
+     */
     public void setCreated(LocalDate created) {
         this.created = created;
     }
 
+    /**
+     * Gets updated.
+     *
+     * @return the updated
+     */
     public LocalDate getUpdated() {
         return updated;
     }
 
+    /**
+     * Sets updated.
+     *
+     * @param updated the updated
+     */
     public void setUpdated(LocalDate updated) {
         this.updated = updated;
     }
 
+    /**
+     * Gets image.
+     *
+     * @return the image
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     * Sets image.
+     *
+     * @param image the image
+     */
     public void setImage(String image) {
         this.image = image;
     }
@@ -142,65 +238,141 @@ public class ProvideService extends AbstractEntity {
         return sb.toString();
     }
 
+    /**
+     * New builder provide service . builder.
+     *
+     * @return the provide service . builder
+     */
     public static ProvideService.Builder newBuilder(){
         return new ProvideService().new Builder();
     }
 
+    /**
+     * The type Builder.
+     */
     public class Builder{
 
+        /**
+         * Instantiates a new Builder.
+         */
         public Builder() {
         }
 
+        /**
+         * Set id provide service . builder.
+         *
+         * @param id the id
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setId(int id){
             ProvideService.this.setId(id);
             return this;
         }
 
+        /**
+         * Set category id provide service . builder.
+         *
+         * @param categoryId the category id
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setCategoryId(int categoryId){
             ProvideService.this.categoryId = categoryId;
             return this;
         }
 
+        /**
+         * Set name provide service . builder.
+         *
+         * @param name the name
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setName(String name){
             ProvideService.this.name = name;
             return this;
         }
 
+        /**
+         * Set description provide service . builder.
+         *
+         * @param description the description
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setDescription(String description){
             ProvideService.this.description = description;
             return this;
         }
 
+        /**
+         * Set price provide service . builder.
+         *
+         * @param price the price
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setPrice(BigDecimal price){
             ProvideService.this.price = price;
             return this;
         }
 
+        /**
+         * Set service time provide service . builder.
+         *
+         * @param serviceTime the service time
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setServiceTime(int serviceTime){
             ProvideService.this.serviceTime = serviceTime;
             return this;
         }
 
+        /**
+         * Set available provide service . builder.
+         *
+         * @param available the available
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setAvailable(boolean available){
             ProvideService.this.available = available;
             return this;
         }
 
+        /**
+         * Set created provide service . builder.
+         *
+         * @param created the created
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setCreated(LocalDate created){
             ProvideService.this.created = created;
             return this;
         }
 
+        /**
+         * Set updated provide service . builder.
+         *
+         * @param updated the updated
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setUpdated(LocalDate updated){
             ProvideService.this.updated = updated;
             return this;
         }
 
+        /**
+         * Set image provide service . builder.
+         *
+         * @param image the image
+         * @return the provide service . builder
+         */
         public ProvideService.Builder setImage(String image){
             ProvideService.this.image = image;
             return this;
         }
 
+        /**
+         * Build provide service.
+         *
+         * @return the provide service
+         */
         public ProvideService build(){
             return ProvideService.this;
         }

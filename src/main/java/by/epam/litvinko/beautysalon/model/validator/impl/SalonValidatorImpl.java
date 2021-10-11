@@ -6,6 +6,9 @@ import by.epam.litvinko.beautysalon.model.validator.SalonValidator;
 
 import java.util.Map;
 
+/**
+ * The type Salon validator.
+ */
 public class SalonValidatorImpl implements SalonValidator {
 
 
@@ -25,6 +28,11 @@ public class SalonValidatorImpl implements SalonValidator {
     private SalonValidatorImpl() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static SalonValidatorImpl getInstance() {
         return instance;
     }

@@ -20,6 +20,9 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.LOCALE;
 
+/**
+ * The type Top up an account command.
+ */
 public class TopUpAnAccountCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(TopUpAnAccountCommand.class);

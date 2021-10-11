@@ -6,22 +6,28 @@ import by.epam.litvinko.beautysalon.entity.ProvideService;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.manager.MessageManager;
 import by.epam.litvinko.beautysalon.model.service.ShopService;
+import by.epam.litvinko.beautysalon.model.service.dto.ProvideServicesDto;
 import by.epam.litvinko.beautysalon.model.service.impl.ShopServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Locale;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 
+/**
+ * The type Add product command.
+ */
 public class AddProductCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddProductCommand.class);
@@ -61,6 +67,9 @@ public class AddProductCommand implements Command {
                 newProduct.setImage(fileName);
                 if (service.createProduct(newProduct)){
                     request.getSession().setAttribute(SUCCESS_OPERATION, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(SUCCESS_OPERATION_PATH));
+                    ServletContext servletContext = request.getServletContext();
+                    List<ProvideServicesDto> productList = service.allProvideService();
+                    servletContext.setAttribute(PRODUCT_LIST, productList);
                 }else {
                     request.getSession().setAttribute(FAILED_OPERATION, MessageManager.valueOf(local.toUpperCase(Locale.ROOT)).getMessage(FAILED_OPERATION_PATH));
                 }

@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.CART_DETAIL_JSP;
 
+/**
+ * The type Go to cart page command.
+ */
 public class GoToCartPageCommand implements Command {
 
     @Override

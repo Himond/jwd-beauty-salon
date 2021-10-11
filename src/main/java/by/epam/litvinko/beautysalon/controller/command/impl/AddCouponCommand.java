@@ -22,6 +22,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.COUPON;
 
+/**
+ * The type Add coupon command.
+ */
 public class AddCouponCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddCouponCommand.class);

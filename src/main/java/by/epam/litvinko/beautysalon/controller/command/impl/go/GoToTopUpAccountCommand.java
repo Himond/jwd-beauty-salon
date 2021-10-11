@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.TOP_UP_AN_ACCOUNT_JSP;
 
+/**
+ * The type Go to top up account command.
+ */
 public class GoToTopUpAccountCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws ServletException, IOException {

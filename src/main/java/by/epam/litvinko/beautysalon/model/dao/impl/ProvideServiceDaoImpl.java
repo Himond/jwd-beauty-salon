@@ -14,6 +14,9 @@ import java.util.*;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Provide service dao.
+ */
 public class ProvideServiceDaoImpl extends AbstractDao<Integer, ProvideService> implements ProvideServiceDao {
 
     private static Logger logger = LogManager.getLogger(ProvideServiceDaoImpl.class);

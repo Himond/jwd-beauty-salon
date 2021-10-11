@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.LOGIN_JSP;
 
+/**
+ * The type Go to sign in page command.
+ */
 public class GoToSignInPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

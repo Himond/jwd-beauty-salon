@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.EDIT_PASSWORD_JSP;
 
+/**
+ * The type Go to edit password page command.
+ */
 public class GoToEditPasswordPageCommand implements Command {
 
     @Override

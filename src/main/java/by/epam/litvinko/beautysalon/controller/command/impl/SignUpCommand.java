@@ -18,6 +18,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Sign up command.
+ */
 public class SignUpCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(SignUpCommand.class);

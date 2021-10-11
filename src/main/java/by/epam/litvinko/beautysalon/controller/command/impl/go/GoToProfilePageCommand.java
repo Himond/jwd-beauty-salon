@@ -2,14 +2,10 @@ package by.epam.litvinko.beautysalon.controller.command.impl.go;
 
 import by.epam.litvinko.beautysalon.controller.command.Command;
 import by.epam.litvinko.beautysalon.controller.command.Router;
-import by.epam.litvinko.beautysalon.entity.Cart;
-import by.epam.litvinko.beautysalon.entity.Client;
-import by.epam.litvinko.beautysalon.entity.Master;
 import by.epam.litvinko.beautysalon.entity.Role;
 import by.epam.litvinko.beautysalon.exception.ServiceException;
 import by.epam.litvinko.beautysalon.model.service.OrderService;
 import by.epam.litvinko.beautysalon.model.service.dto.ClientDto;
-import by.epam.litvinko.beautysalon.model.service.dto.MasterDto;
 import by.epam.litvinko.beautysalon.model.service.dto.OrderDto;
 import by.epam.litvinko.beautysalon.model.service.impl.OrderServiceImpl;
 import org.apache.log4j.LogManager;
@@ -24,6 +20,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 
+/**
+ * The type Go to profile page command.
+ */
 public class GoToProfilePageCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(GoToProfilePageCommand.class);
@@ -42,7 +41,7 @@ public class GoToProfilePageCommand implements Command {
             }
             router = new Router(PROFILE_JSP, Router.RouterType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Error at ForgetPasswordCommand", e);
+            logger.error("Error at GoToProfilePageCommand", e);
             request.setAttribute(EXCEPTION, e);
             router = new Router(ERROR_JSP, Router.RouterType.REDIRECT);
         }

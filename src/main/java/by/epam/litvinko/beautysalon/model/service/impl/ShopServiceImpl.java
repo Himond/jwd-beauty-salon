@@ -24,6 +24,9 @@ import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.COUPON_IS_ACTIVE;
 
 
+/**
+ * The type Shop service.
+ */
 public class ShopServiceImpl implements ShopService {
 
     private static final Logger logger = LogManager.getLogger(ShopServiceImpl.class);

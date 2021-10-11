@@ -15,6 +15,9 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 
+/**
+ * The type Order service.
+ */
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderServiceImpl.class);

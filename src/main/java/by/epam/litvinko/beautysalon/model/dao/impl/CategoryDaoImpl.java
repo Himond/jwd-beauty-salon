@@ -16,6 +16,9 @@ import java.util.Optional;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Category dao.
+ */
 public class CategoryDaoImpl extends AbstractDao<Integer, Category> {
 
     private static Logger logger = LogManager.getLogger(CategoryDaoImpl.class);

@@ -1,16 +1,32 @@
 package by.epam.litvinko.beautysalon.entity;
 
+/**
+ * The type Category.
+ */
 public class Category extends AbstractEntity {
 
     private String name;
 
+    /**
+     * Instantiates a new Category.
+     */
     public Category() {
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }

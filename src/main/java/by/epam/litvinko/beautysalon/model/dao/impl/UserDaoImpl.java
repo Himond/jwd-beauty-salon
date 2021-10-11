@@ -18,6 +18,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * The type User dao.
+ */
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
     private static Logger logger = LogManager.getLogger(UserDaoImpl.class);

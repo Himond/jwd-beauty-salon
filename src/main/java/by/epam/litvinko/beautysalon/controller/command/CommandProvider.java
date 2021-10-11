@@ -8,11 +8,17 @@ import by.epam.litvinko.beautysalon.controller.command.impl.go.*;
 
 import java.util.EnumMap;
 
+/**
+ * The type Command provider.
+ */
 public class CommandProvider {
 
     private static CommandProvider instance;
     private final EnumMap<CommandType, Command> commands = new EnumMap(CommandType.class);
 
+    /**
+     * Instantiates a new Command provider.
+     */
     public CommandProvider() {
         commands.put(CommandType.SIGN_IN, new SignInCommand());
         commands.put(CommandType.DEFAULT, new DefaultCommand());
@@ -52,6 +58,11 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_PROFILE_PAGE, new GoToProfilePageCommand());
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static CommandProvider getInstance() {
         if (instance == null) {
             instance = new CommandProvider();
@@ -59,6 +70,12 @@ public class CommandProvider {
         return instance;
     }
 
+    /**
+     * Gets command.
+     *
+     * @param commandName the command name
+     * @return the command
+     */
     public Command getCommand(String commandName) {
         if (commandName == null) {
             return commands.get(CommandType.DEFAULT);

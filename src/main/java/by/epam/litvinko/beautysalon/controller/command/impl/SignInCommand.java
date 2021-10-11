@@ -28,6 +28,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 
+/**
+ * The type Sign in command.
+ */
 public class SignInCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(SignInCommand.class);

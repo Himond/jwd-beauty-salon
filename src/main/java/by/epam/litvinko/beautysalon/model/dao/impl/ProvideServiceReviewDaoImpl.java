@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Provide service review dao.
+ */
 public class ProvideServiceReviewDaoImpl extends AbstractDao<Integer, ProvideServiceReview> implements ProvideServiceReviewDao {
 
     private static Logger logger = LogManager.getLogger(ProvideServiceReviewDaoImpl.class);

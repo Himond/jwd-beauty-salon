@@ -7,11 +7,12 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
 <fmt:setBundle basename="pagecontent"/>
+<%@ taglib uri="customtag" prefix="mytag" %>
 
 <html>
 <head>
     <title><fmt:message key="shop.page.title"/></title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/core/img/ico.png" type="image/png">
+    <mytag:image/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/core/css/styles.css">
 </head>
 <body>

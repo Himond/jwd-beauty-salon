@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.EDIT_PROFILE_JSP;
 
+/**
+ * The type Go to edit profile page command.
+ */
 public class GoToEditProfilePageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.epam.litvinko.beautysalon.controller.command.PagePath.FORGOT_PASSWORD_JSP;
 
+/**
+ * The type Go to forgot password page command.
+ */
 public class GoToForgotPasswordPageCommand implements Command {
 
     @Override

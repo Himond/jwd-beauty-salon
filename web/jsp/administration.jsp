@@ -7,9 +7,10 @@
 </c:if>
 
 <fmt:setBundle basename="pagecontent"/>
+<%@ taglib uri="customtag" prefix="mytag" %>
 <html>
 <head>
-    <link rel="shortcut icon" href="../static/core/img/ico.png" type="image/png">
+    <mytag:image/>
     <title><fmt:message key="admin.orders.title"/></title>
 </head>
 <body>

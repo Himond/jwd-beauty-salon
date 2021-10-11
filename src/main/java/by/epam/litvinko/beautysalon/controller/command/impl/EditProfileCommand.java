@@ -23,6 +23,9 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 
+/**
+ * The type Edit profile command.
+ */
 public class EditProfileCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(EditProfileCommand.class);

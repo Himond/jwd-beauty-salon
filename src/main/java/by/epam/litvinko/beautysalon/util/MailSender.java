@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The type Mail sender.
+ */
 public class MailSender {
 
     private static final Logger logger = LogManager.getLogger(MailSender.class);
@@ -33,6 +36,13 @@ public class MailSender {
 
     }
 
+    /**
+     * Message order successful string.
+     *
+     * @param username the username
+     * @param orderId  the order id
+     * @return the string
+     */
     public static String messageOrderSuccessful(String username, int orderId) {
         return String.format(ORDER_MESSAGE,
                 username,
@@ -40,6 +50,13 @@ public class MailSender {
         );
     }
 
+    /**
+     * Message forget password string.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the string
+     */
     public static String messageForgetPassword(String username, String password) {
         return String.format(FORGET_PASSWORD_MESSAGE,
                 username,
@@ -47,6 +64,12 @@ public class MailSender {
         );
     }
 
+    /**
+     * Send.
+     *
+     * @param emailTo     the email to
+     * @param messageText the message text
+     */
     public static void send(String emailTo, String messageText) {
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {

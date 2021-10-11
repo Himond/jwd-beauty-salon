@@ -23,6 +23,9 @@ import static by.epam.litvinko.beautysalon.controller.command.PagePath.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*;
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.EXCEPTION;
 
+/**
+ * The type Product detail command.
+ */
 public class ProductDetailCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(ProductDetailCommand.class);

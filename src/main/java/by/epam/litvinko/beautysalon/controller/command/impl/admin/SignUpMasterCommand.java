@@ -23,12 +23,14 @@ import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.*
 import static by.epam.litvinko.beautysalon.controller.command.RequestAttribute.WRONG_PASSWORD_SING_UP_PATH;
 import static by.epam.litvinko.beautysalon.controller.command.RequestParameter.*;
 
+/**
+ * The type Sign up master command.
+ */
 public class SignUpMasterCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(SignUpMasterCommand.class);
     private final MasterService masterService = new MasterServiceImpl();
     private final ClientService clientService = new ClientServiceImpl();
-
 
     @Override
     public Router execute(HttpServletRequest request) throws ServletException, IOException {

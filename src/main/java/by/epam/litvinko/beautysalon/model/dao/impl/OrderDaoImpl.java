@@ -17,6 +17,9 @@ import java.util.*;
 
 import static by.epam.litvinko.beautysalon.model.dao.ColumnName.*;
 
+/**
+ * The type Order dao.
+ */
 public class OrderDaoImpl extends AbstractDao<Integer, Order> implements OrderDao {
 
     private static Logger logger = LogManager.getLogger(OrderDaoImpl.class);

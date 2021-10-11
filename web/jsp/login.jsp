@@ -7,12 +7,12 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
 <fmt:setBundle basename="pagecontent"/>
-
+<%@ taglib uri="customtag" prefix="mytag" %>
 <html>
 <head>
 
     <title><fmt:message key="title.signIn"/></title>
-    <link rel="shortcut icon" href="../static/core/img/ico.png" type="image/png">
+    <mytag:image/>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>

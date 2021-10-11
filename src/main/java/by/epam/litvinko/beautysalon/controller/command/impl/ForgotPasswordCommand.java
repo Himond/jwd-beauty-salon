@@ -18,6 +18,9 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+/**
+ * The type Forgot password command.
+ */
 public class ForgotPasswordCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger(ForgotPasswordCommand.class);
